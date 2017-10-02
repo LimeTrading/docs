@@ -1,4 +1,5 @@
 # Market data
+<aside class="notice">The stock symbols use Nasdaq CMS convention. Option symbols are encoded as OCC. The date is the unix timestamp.</aside>
 
 ## Get current quote
 
@@ -10,7 +11,7 @@ curl
     'https://api.just2trade.com/marketdata/quote?symbol=AAPL'
 ```
 
-> The above command returns JSON structured like this:
+> Returns the following structure:
 
 ```json
 {
@@ -35,4 +36,39 @@ curl
 }
 ```
 The query retrieves current realtime quote for the specified symbol.
-<aside class="notice">The stock symbols use Nasdaq CMS convention. Option symbols are encoded as OCC. The date is the unix timestamp.</aside>
+
+## Get quotes history
+
+```shell
+curl
+    -X GET
+    --header 'Accept: application/json'
+    --header 'Authorization: Bearer token'
+    'https://api.just2trade.com/marketdata/history?symbol=AAPL&period=day&from=1483228800&to=1483488000
+```
+
+> Returns an array of candles:
+
+```json
+[
+  {
+    "timestamp": 1483074000,
+    "period": "Day",
+    "open": 116.65,
+    "high": 117.2,
+    "low": 115.43,
+    "close": 115.82,
+    "volume": 24541183
+  },
+  {
+    "timestamp": 1483419600,
+    "period": "Day",
+    "open": 115.8,
+    "high": 116.33,
+    "low": 114.76,
+    "close": 116.15,
+    "volume": 24719541
+  }
+]
+```
+The query returns candles aggregated by specified period. The supported periods are: `minute`, `hour`, `day`, `week`, `month`, `quarter`, `year`. The historical data is not available for options.
