@@ -246,6 +246,9 @@
                   <li>
                     <a href="#get-order-details" class="toc-h2 toc-link" data-title="Trading">Get order details</a>
                   </li>
+                  <li>
+                    <a href="#cancel-an-order" class="toc-h2 toc-link" data-title="Trading">Cancel an order</a>
+                  </li>
               </ul>
           </li>
           <li>
@@ -278,6 +281,10 @@
       <div class="content">
         <h1 id='introduction'>Introduction</h1>
 <p>We believe that modern financial mechanics is a problem of IT and code, not finance. We are seeking for the elegance of integrations by elimitating the unnecessary complexity of financial infrastructure. All our API calls are based on REST concepts and can be made with any language that supports standard HTTP. We made the trading as easy possible, just plain json and POST.</p>
+
+<p>The OpenAPI specification is available <a href="https://api.just2trade.com/docs/v1/swagger.json">here</a></p>
+
+<p>The client utility is available <a href="https://api.just2trade.com/docs">here</a> </p>
 <h1 id='symbology'>Symbology</h1><h2 id='cms-for-stocks'>CMS for stocks</h2>
 <p>The CMS convention is used to code stocks and ETFs. There is a space between the root and the suffix.</p>
 
@@ -450,8 +457,8 @@
   </span><span class="s2">"validation_message"</span><span class="p">:</span><span class="w"> </span><span class="s2">"You cannot sell more shares than your effective long position (effective long position = long position less open sell orders) using one order ticket. Please check your pending order(s) for potential outstanding duplicate order(s). Industry regulations require that two order tickets be submitted: one to sell your effective long position and one to sell your desired short position."</span><span class="w">
 </span><span class="p">}</span><span class="w">
 </span></code></pre>
-<p>The method verifies an order and responds with the validation message if the order can not be placed at the moment.</p>
-<h3 id='parameters'>Parameters</h3>
+<p>The method verifies an order and responds with the validation message if the order can not be placed at the moment. The order is not sent to market.</p>
+<h3 id='request'>Request</h3>
 <table><thead>
 <tr>
 <th>parameter</th>
@@ -517,7 +524,65 @@
 <td>Optional reject reason</td>
 </tr>
 </tbody></table>
-<h2 id='place-an-order'>Place an order</h2><h2 id='get-order-details'>Get order details</h2><pre class="highlight shell tab-shell"><code>curl -X GET
+<h2 id='place-an-order'>Place an order</h2><pre class="highlight shell tab-shell"><code>curl -X POST
+  --header <span class="s1">'Content-Type: application/json'</span>
+  --header <span class="s1">'Accept: application/json'</span>
+  --header <span class="s1">'Authorization: Bearer token'</span>
+  -d <span class="s1">'{ \ 
+   "account_number": "12345678@vision", \ 
+   "symbol": "BAC", \ 
+   "quantity": 1, \ 
+   "price": 20, \ 
+   "stop_price": 0, \ 
+   "time_in_force": "day", \ 
+   "order_type": "limit", \ 
+   "side": "buy", \ 
+   "comment": "any comment", \ 
+   "exchange": "Auto" \ 
+ }'</span> <span class="s1">'https://api.just2trade.com/orders/place'</span>
+</code></pre>
+<blockquote>
+<p>Request example</p>
+</blockquote>
+<pre class="highlight json tab-json"><code><span class="p">{</span><span class="w">
+  </span><span class="s2">"account_number"</span><span class="p">:</span><span class="w"> </span><span class="s2">"12345678@vision"</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"symbol"</span><span class="p">:</span><span class="w"> </span><span class="s2">"BAC"</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"quantity"</span><span class="p">:</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"price"</span><span class="p">:</span><span class="w"> </span><span class="mf">20.0</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"stop_price"</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"time_in_force"</span><span class="p">:</span><span class="w"> </span><span class="s2">"day"</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"order_type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"limit"</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"side"</span><span class="p">:</span><span class="w"> </span><span class="s2">"buy"</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"comment"</span><span class="p">:</span><span class="w"> </span><span class="s2">"any comment"</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"exchange"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Auto"</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre>
+<blockquote>
+<p>Response example</p>
+</blockquote>
+<pre class="highlight json tab-json"><code><span class="p">{</span><span class="w">
+  </span><span class="s2">"success"</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"data"</span><span class="p">:</span><span class="w"> </span><span class="s2">"201710041710516537"</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre>
+<p>The order is validated with exactly same logic as the <a href="#validate-an-order">validate</a>. The order is sent to market on successful validation pass, in which case the method returns the following:</p>
+<h3 id='response-2'>Response</h3>
+<table><thead>
+<tr>
+<th>name</th>
+<th>value</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>success</td>
+<td>true</td>
+</tr>
+<tr>
+<td>data</td>
+<td>the id assigned to the order</td>
+</tr>
+</tbody></table>
+<h2 id='get-order-details'>Get order details</h2><pre class="highlight shell tab-shell"><code>curl -X GET
   --header <span class="s1">'Accept: application/json'</span>
   --header <span class="s1">'Authorization: Bearer token'</span>
   <span class="s1">'https://api.just2trade.com/orders/20171003209384646'</span>
@@ -540,16 +605,91 @@
 </span><span class="p">}</span><span class="w">
 </span></code></pre>
 <p>Get the order details by the specified order id</p>
-<h3 id='request'>Request</h3>
+<h3 id='request-2'>Request</h3>
 <table><thead>
 <tr>
-<th>parameter</th>
+<th>name</th>
 <th>description</th>
 </tr>
 </thead><tbody>
 <tr>
 <td>id</td>
 <td>Required. The order id</td>
+</tr>
+</tbody></table>
+<h3 id='response-3'>Response</h3>
+<table><thead>
+<tr>
+<th>name</th>
+<th>description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>client_id</td>
+<td>the order id</td>
+</tr>
+<tr>
+<td>exchange</td>
+<td>the routing instructions</td>
+</tr>
+<tr>
+<td>quantity</td>
+<td>number of shares or contracts requested by the order</td>
+</tr>
+<tr>
+<td>executed_quantity</td>
+<td>number of shares or contracts executed by this time</td>
+</tr>
+<tr>
+<td>order_status</td>
+<td>the order status. Possible values are <code>new</code>, <code>pendingNew</code>, <code>partiallyFilled</code>, <code>filled</code>, <code>pendingCancel</code>, <code>cancel</code>, <code>pendingReplace</code>, <code>replaced</code>, <code>rejected</code>, <code>doneForDay</code></td>
+</tr>
+<tr>
+<td>price</td>
+<td>limit price if applicable</td>
+</tr>
+<tr>
+<td>stop_price</td>
+<td>stop price is applicable</td>
+</tr>
+<tr>
+<td>time_in_force</td>
+<td>order duration instructions</td>
+</tr>
+<tr>
+<td>order_type</td>
+<td>type of the order</td>
+</tr>
+<tr>
+<td>order_side</td>
+<td>side of the order</td>
+</tr>
+<tr>
+<td>symbol</td>
+<td>security symbol</td>
+</tr>
+</tbody></table>
+<h2 id='cancel-an-order'>Cancel an order</h2><pre class="highlight shell tab-shell"><code>curl -X POST
+  --header <span class="s1">'Content-Type: application/json'</span>
+  --header <span class="s1">'Accept: application/json'</span>
+  --header <span class="s1">'Authorization: Bearer token'</span>
+  -d <span class="s1">'{ \ 
+   "message": "string" \ 
+ }'</span> <span class="s1">'https://api.just2trade.com/orders/20171003209384646/cancel'</span>
+</code></pre>
+<p>Cancel the specified order</p>
+<h3 id='request-3'>Request</h3>
+<p>the order is identified by its id on the url. The request can also contain optional info</p>
+
+<table><thead>
+<tr>
+<th>name</th>
+<th>description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>message</td>
+<td>Optional, any string</td>
 </tr>
 </tbody></table>
 <h1 id='market-data'>Market data</h1>
@@ -665,7 +805,7 @@
 </thead><tbody>
 <tr>
 <td>code</td>
-<td><code>not_found</code>, <code>validation_error</code></td>
+<td><code>not_found</code>, <code>validation_error</code>, <code>authorization_error</code></td>
 </tr>
 <tr>
 <td>message</td>
