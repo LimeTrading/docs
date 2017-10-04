@@ -16,26 +16,35 @@ curl
 ```json
 {
   "symbol": "AAPL",
-  "ask": 154.2,
-  "ask_size": 3,
-  "bid": 154.05,
-  "bid_size": 1,
-  "last": 154.1,
-  "last_size": 10,
-  "volume": 14894,
-  "date": 1506715200,
-  "high": 0,
-  "low": 0,
-  "open": 0,
-  "close": 154.12,
+  "ask": 154.61,
+  "ask_size": 5,
+  "bid": 154.6,
+  "bid_size": 14,
+  "last": 154.61,
+  "last_size": 100,
+  "volume": 9461271,
+  "date": 1507049383,
+  "high": 155.09,
+  "low": 153.91,
+  "open": 154.01,
+  "close": 153.81,
   "week52_high": 164.94,
   "week52_low": 104.08,
-  "change": 0.55,
+  "change": 0.52,
   "change_pc": 0,
   "open_interest": 0
 }
 ```
 The query retrieves current realtime quote for the specified symbol.
+
+### Request
+parameter | description
+---- | ----
+symbol | Required. The security symbol, stocks in Nasdaq CMS convention, options in OCC
+
+### Response
+The data depends on current time of day.
+
 
 ## Get quotes history
 
@@ -71,4 +80,12 @@ curl
   }
 ]
 ```
-The query returns candles aggregated by specified period. The supported periods are: `minute`, `hour`, `day`, `week`, `month`, `quarter`, `year`. The historical data is not available for options.
+The query returns candle structures aggregated by specified period
+
+### Request
+parameter | description
+---- | ----
+symbol | Required. The security symbol, stocks in Nasdaq CMS convention. Options are not supported
+period | Required. The supported periods are: `minute`, `hour`, `day`, `week`, `month`, `quarter`, `year`
+from | Required. Start of the period, unix timestamp
+to | Required. End of the period, unix timestamp

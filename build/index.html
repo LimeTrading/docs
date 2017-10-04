@@ -5,6 +5,7 @@
     <meta charset="utf-8">
     <meta content="IE=edge,chrome=1" http-equiv="X-UA-Compatible">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <link href="images/favicon.ico" rel="icon" type="image/ico" />
     <title>Just2Trade API Reference</title>
 
     <style>
@@ -201,7 +202,7 @@
       <script src="javascripts/all.js"></script>
   </head>
 
-  <body class="index" data-languages="[&quot;shell&quot;]">
+  <body class="index" data-languages="[&quot;curl&quot;,&quot;javascript&quot;]">
     <a href="#" id="nav-button">
       <span>
         NAV
@@ -211,7 +212,8 @@
     <div class="toc-wrapper">
       <img src="images/logo.png" class="logo" alt="Logo" />
         <div class="lang-selector">
-              <a href="#" data-language-name="shell">shell</a>
+              <a href="#" data-language-name="curl">curl</a>
+              <a href="#" data-language-name="javascript">javascript</a>
         </div>
         <div class="search">
           <input type="text" class="search" id="input-search" placeholder="Search">
@@ -222,10 +224,46 @@
             <a href="#introduction" class="toc-h1 toc-link" data-title="Introduction">Introduction</a>
           </li>
           <li>
+            <a href="#symbology" class="toc-h1 toc-link" data-title="Symbology">Symbology</a>
+              <ul class="toc-list-h2">
+                  <li>
+                    <a href="#cms-for-stocks" class="toc-h2 toc-link" data-title="Symbology">CMS for stocks</a>
+                  </li>
+                  <li>
+                    <a href="#occ-for-options" class="toc-h2 toc-link" data-title="Symbology">OCC for options</a>
+                  </li>
+              </ul>
+          </li>
+          <li>
+            <a href="#trading" class="toc-h1 toc-link" data-title="Trading">Trading</a>
+              <ul class="toc-list-h2">
+                  <li>
+                    <a href="#validate-an-order" class="toc-h2 toc-link" data-title="Trading">Validate an order</a>
+                  </li>
+                  <li>
+                    <a href="#place-an-order" class="toc-h2 toc-link" data-title="Trading">Place an order</a>
+                  </li>
+                  <li>
+                    <a href="#get-order-details" class="toc-h2 toc-link" data-title="Trading">Get order details</a>
+                  </li>
+              </ul>
+          </li>
+          <li>
             <a href="#market-data" class="toc-h1 toc-link" data-title="Market data">Market data</a>
               <ul class="toc-list-h2">
                   <li>
                     <a href="#get-current-quote" class="toc-h2 toc-link" data-title="Market data">Get current quote</a>
+                  </li>
+                  <li>
+                    <a href="#get-quotes-history" class="toc-h2 toc-link" data-title="Market data">Get quotes history</a>
+                  </li>
+              </ul>
+          </li>
+          <li>
+            <a href="#errors" class="toc-h1 toc-link" data-title="Errors">Errors</a>
+              <ul class="toc-list-h2">
+                  <li>
+                    <a href="#http-status-codes" class="toc-h2 toc-link" data-title="Errors">HTTP Status Codes</a>
                   </li>
               </ul>
           </li>
@@ -239,44 +277,435 @@
       <div class="dark-box"></div>
       <div class="content">
         <h1 id='introduction'>Introduction</h1>
-<p>Welcome to the Kittn API!</p>
-<h1 id='market-data'>Market data</h1><h2 id='get-current-quote'>Get current quote</h2><pre class="highlight shell tab-shell"><code>curl
+<p>We believe that modern financial mechanics is a problem of IT and code, not finance. We are seeking for the elegance of integrations by elimitating the unnecessary complexity of financial infrastructure. All our API calls are based on REST concepts and can be made with any language that supports standard HTTP. We made the trading as easy possible, just plain json and POST.</p>
+<h1 id='symbology'>Symbology</h1><h2 id='cms-for-stocks'>CMS for stocks</h2>
+<p>The CMS convention is used to code stocks and ETFs. There is a space between the root and the suffix.</p>
+
+<blockquote>
+<p>As an example, the <strong>Bank of America warrant class A</strong> will be coded as <code>BAC WSA</code>, <strong>Berkshire Hathaway class B</strong> is coded as <code>BRK B</code></p>
+</blockquote>
+
+<table><thead>
+<tr>
+<th>Security Categorization</th>
+<th>CMS Suffix</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>Preferred</td>
+<td>PR</td>
+</tr>
+<tr>
+<td>Preferred Class class A</td>
+<td>PRA</td>
+</tr>
+<tr>
+<td>Class “A”</td>
+<td>A</td>
+</tr>
+<tr>
+<td>Preferred when distributed</td>
+<td>PRWD</td>
+</tr>
+<tr>
+<td>When distributed</td>
+<td>WD</td>
+</tr>
+<tr>
+<td>Warrants</td>
+<td>WS</td>
+</tr>
+<tr>
+<td>Warrants Class “A”</td>
+<td>WSA</td>
+</tr>
+<tr>
+<td>Called</td>
+<td>CL</td>
+</tr>
+<tr>
+<td>Class “A” Called</td>
+<td>ACL</td>
+</tr>
+<tr>
+<td>Preferred called</td>
+<td>PRCL</td>
+</tr>
+<tr>
+<td>Preferred “A” called</td>
+<td>PRACL</td>
+</tr>
+<tr>
+<td>Preferred “A” when issued</td>
+<td>PRAWI</td>
+</tr>
+<tr>
+<td>Emerging Company Marketplace</td>
+<td>EC</td>
+</tr>
+<tr>
+<td>Partial Paid</td>
+<td>PP</td>
+</tr>
+<tr>
+<td>Convertible</td>
+<td>CV</td>
+</tr>
+<tr>
+<td>Convertible called</td>
+<td>CVCL</td>
+</tr>
+<tr>
+<td>Class Convertible</td>
+<td>ACV</td>
+</tr>
+<tr>
+<td>Preferred (class A) Convertible</td>
+<td>PRACV</td>
+</tr>
+<tr>
+<td>Preferred (class A) when Distributed</td>
+<td>PRAWD</td>
+</tr>
+<tr>
+<td>Rights</td>
+<td>RT</td>
+</tr>
+<tr>
+<td>Units</td>
+<td>U</td>
+</tr>
+<tr>
+<td>When issued</td>
+<td>WI</td>
+</tr>
+<tr>
+<td>Rights when issued</td>
+<td>RTWI</td>
+</tr>
+<tr>
+<td>Preferred when issued</td>
+<td>PRWI</td>
+</tr>
+<tr>
+<td>Class &quot;A&quot; when issued</td>
+<td>AWI</td>
+</tr>
+<tr>
+<td>Warrrant when issued</td>
+<td>WSWI</td>
+</tr>
+</tbody></table>
+<h2 id='occ-for-options'>OCC for options</h2>
+<blockquote>
+<p>For example, symbol <code>AAPL  171103C00155000</code> is translated to a call on AAPL expiring on November 3rd 2017, with its strike price of $155.00</p>
+</blockquote>
+
+<p>Option symbols are coded according to the OCC standard. The OCC option symbol consists of 4 parts:</p>
+
+<ul>
+<li>Root symbol of the underlying stock or ETF, padded with spaces to 6 characters</li>
+<li>Expiration date, 6 digits in the format yymmdd</li>
+<li>Option type, either P or C, for put or call</li>
+<li>Strike price, as the price x 1000, front padded with 0s to 8 digits</li>
+</ul>
+<h1 id='trading'>Trading</h1><h2 id='validate-an-order'>Validate an order</h2><pre class="highlight shell tab-shell"><code>curl -X POST
+  --header <span class="s1">'Content-Type: application/json'</span>
+  --header <span class="s1">'Accept: application/json'</span>
+  --header <span class="s1">'Authorization: Bearer token'</span>
+  -d <span class="s1">'{ \ 
+   "account_number": "12345678@vision", \ 
+   "symbol": "string", \ 
+   "quantity": 1, \ 
+   "price": 21.0, \ 
+   "stop_price": 0, \ 
+   "time_in_force": "day", \ 
+   "order_type": "limit", \ 
+   "side": "buy", \ 
+   "comment": "string", \ 
+   "exchange": "string" \ 
+ }'</span> <span class="s1">'https://api.just2trade.com/orders/validate'</span>
+</code></pre>
+<blockquote>
+<p>Request example</p>
+</blockquote>
+<pre class="highlight json tab-json"><code><span class="p">{</span><span class="w">
+  </span><span class="s2">"account_number"</span><span class="p">:</span><span class="w"> </span><span class="s2">"12345678@vision"</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"symbol"</span><span class="p">:</span><span class="w"> </span><span class="s2">"BAC"</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"quantity"</span><span class="p">:</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"price"</span><span class="p">:</span><span class="w"> </span><span class="mf">21.0</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"stop_price"</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"time_in_force"</span><span class="p">:</span><span class="w"> </span><span class="s2">"day"</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"order_type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"limit"</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"side"</span><span class="p">:</span><span class="w"> </span><span class="s2">"buy"</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"comment"</span><span class="p">:</span><span class="w"> </span><span class="s2">"any comment"</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"exchange"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Auto"</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre>
+<blockquote>
+<p>Response example</p>
+</blockquote>
+<pre class="highlight json tab-json"><code><span class="p">{</span><span class="w">
+  </span><span class="s2">"is_valid"</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"validation_message"</span><span class="p">:</span><span class="w"> </span><span class="s2">"You cannot sell more shares than your effective long position (effective long position = long position less open sell orders) using one order ticket. Please check your pending order(s) for potential outstanding duplicate order(s). Industry regulations require that two order tickets be submitted: one to sell your effective long position and one to sell your desired short position."</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre>
+<p>The method verifies an order and responds with the validation message if the order can not be placed at the moment.</p>
+<h3 id='parameters'>Parameters</h3>
+<table><thead>
+<tr>
+<th>parameter</th>
+<th>description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>account_number</td>
+<td>Required. The account number in the format of <code>123456578@vision</code></td>
+</tr>
+<tr>
+<td>symbol</td>
+<td>Required. The security symbol, stocks in Nasdaq CMS convention, options in OCC</td>
+</tr>
+<tr>
+<td>quantity</td>
+<td>Required. The positive decimal, number of shares or contracts</td>
+</tr>
+<tr>
+<td>price</td>
+<td>Required positive decimal if the <code>order_type</code> is <code>limit</code> or <code>stopLimit</code></td>
+</tr>
+<tr>
+<td>stop_price</td>
+<td>Required positive decimal if the <code>order_type</code> is <code>stop</code> or <code>stopLimit</code></td>
+</tr>
+<tr>
+<td>time_in_force</td>
+<td>Optional, <code>day</code> by default. Specifies how long the order remains in effect. Possible values are <code>day</code>, <code>goodTillCancel</code>, <code>goodTillCrossing</code></td>
+</tr>
+<tr>
+<td>order_type</td>
+<td>Optional, <code>market</code> by default. Possible values are <code>market</code>, <code>limit</code>, <code>stop</code>, <code>stopLimit</code>, <code>marketOnClose</code>, <code>limitOnClose</code></td>
+</tr>
+<tr>
+<td>side</td>
+<td>Optional, <code>buy</code> by default. Available values are <code>buy</code>, <code>sell</code>, <code>sellShort</code>, <code>buyToCover</code>. <code>buy</code> opens long position, <code>sell</code> closes the position, <code>sellShort</code> opens short position, <code>buyToCover</code> closes the short position. You can use only <code>buy</code> and <code>sell</code> so that the system will detemine the proper side according to the current position, but you are still required to place two orders to revert the position from long to short and the other way around.</td>
+</tr>
+<tr>
+<td>comment</td>
+<td>Optional, any string</td>
+</tr>
+<tr>
+<td>exchange</td>
+<td>Optional, <code>auto</code> by default. The routing instructions for order execution. The actual values are dynamic and depend on the account settings. Some of the possible values are <code>nasdaq</code> or <code>nyse</code></td>
+</tr>
+</tbody></table>
+<h3 id='response'>Response</h3>
+<p>The method returns the following json structure:</p>
+
+<table><thead>
+<tr>
+<th>parameter</th>
+<th>description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>is_valid</td>
+<td><code>true</code> or <code>false</code></td>
+</tr>
+<tr>
+<td>validation_message</td>
+<td>Optional reject reason</td>
+</tr>
+</tbody></table>
+<h2 id='place-an-order'>Place an order</h2><h2 id='get-order-details'>Get order details</h2><pre class="highlight shell tab-shell"><code>curl -X GET
+  --header <span class="s1">'Accept: application/json'</span>
+  --header <span class="s1">'Authorization: Bearer token'</span>
+  <span class="s1">'https://api.just2trade.com/orders/20171003209384646'</span>
+</code></pre>
+<blockquote>
+<p>Response example</p>
+</blockquote>
+<pre class="highlight json tab-json"><code><span class="p">{</span><span class="w">
+  </span><span class="s2">"client_id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"20171003209384646"</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"exchange"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Auto"</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"quantity"</span><span class="p">:</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"executed_quantity"</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"order_status"</span><span class="p">:</span><span class="w"> </span><span class="s2">"new"</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"price"</span><span class="p">:</span><span class="w"> </span><span class="mi">20</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"stop_price"</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"time_in_force"</span><span class="p">:</span><span class="w"> </span><span class="s2">"day"</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"order_type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"limit"</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"order_side"</span><span class="p">:</span><span class="w"> </span><span class="s2">"buy"</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"symbol"</span><span class="p">:</span><span class="w"> </span><span class="s2">"BAC"</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre>
+<p>Get the order details by the specified order id</p>
+<h3 id='request'>Request</h3>
+<table><thead>
+<tr>
+<th>parameter</th>
+<th>description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>id</td>
+<td>Required. The order id</td>
+</tr>
+</tbody></table>
+<h1 id='market-data'>Market data</h1>
+<aside class="notice">The stock symbols use Nasdaq CMS convention. Option symbols are encoded as OCC. The date is the unix timestamp.</aside>
+<h2 id='get-current-quote'>Get current quote</h2><pre class="highlight shell tab-shell"><code>curl
     -X GET
     --header <span class="s1">'Accept: application/json'</span>
     --header <span class="s1">'Authorization: Bearer token'</span>
     <span class="s1">'https://api.just2trade.com/marketdata/quote?symbol=AAPL'</span>
 </code></pre>
 <blockquote>
-<p>The above command returns JSON structured like this:</p>
+<p>Returns the following structure:</p>
 </blockquote>
 <pre class="highlight json tab-json"><code><span class="p">{</span><span class="w">
   </span><span class="s2">"symbol"</span><span class="p">:</span><span class="w"> </span><span class="s2">"AAPL"</span><span class="p">,</span><span class="w">
-  </span><span class="s2">"ask"</span><span class="p">:</span><span class="w"> </span><span class="mf">154.2</span><span class="p">,</span><span class="w">
-  </span><span class="s2">"ask_size"</span><span class="p">:</span><span class="w"> </span><span class="mi">3</span><span class="p">,</span><span class="w">
-  </span><span class="s2">"bid"</span><span class="p">:</span><span class="w"> </span><span class="mf">154.05</span><span class="p">,</span><span class="w">
-  </span><span class="s2">"bid_size"</span><span class="p">:</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w">
-  </span><span class="s2">"last"</span><span class="p">:</span><span class="w"> </span><span class="mf">154.1</span><span class="p">,</span><span class="w">
-  </span><span class="s2">"last_size"</span><span class="p">:</span><span class="w"> </span><span class="mi">10</span><span class="p">,</span><span class="w">
-  </span><span class="s2">"volume"</span><span class="p">:</span><span class="w"> </span><span class="mi">14894</span><span class="p">,</span><span class="w">
-  </span><span class="s2">"date"</span><span class="p">:</span><span class="w"> </span><span class="mi">1506715200</span><span class="p">,</span><span class="w">
-  </span><span class="s2">"high"</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w">
-  </span><span class="s2">"low"</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w">
-  </span><span class="s2">"open"</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w">
-  </span><span class="s2">"close"</span><span class="p">:</span><span class="w"> </span><span class="mf">154.12</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"ask"</span><span class="p">:</span><span class="w"> </span><span class="mf">154.61</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"ask_size"</span><span class="p">:</span><span class="w"> </span><span class="mi">5</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"bid"</span><span class="p">:</span><span class="w"> </span><span class="mf">154.6</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"bid_size"</span><span class="p">:</span><span class="w"> </span><span class="mi">14</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"last"</span><span class="p">:</span><span class="w"> </span><span class="mf">154.61</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"last_size"</span><span class="p">:</span><span class="w"> </span><span class="mi">100</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"volume"</span><span class="p">:</span><span class="w"> </span><span class="mi">9461271</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"date"</span><span class="p">:</span><span class="w"> </span><span class="mi">1507049383</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"high"</span><span class="p">:</span><span class="w"> </span><span class="mf">155.09</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"low"</span><span class="p">:</span><span class="w"> </span><span class="mf">153.91</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"open"</span><span class="p">:</span><span class="w"> </span><span class="mf">154.01</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"close"</span><span class="p">:</span><span class="w"> </span><span class="mf">153.81</span><span class="p">,</span><span class="w">
   </span><span class="s2">"week52_high"</span><span class="p">:</span><span class="w"> </span><span class="mf">164.94</span><span class="p">,</span><span class="w">
   </span><span class="s2">"week52_low"</span><span class="p">:</span><span class="w"> </span><span class="mf">104.08</span><span class="p">,</span><span class="w">
-  </span><span class="s2">"change"</span><span class="p">:</span><span class="w"> </span><span class="mf">0.55</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"change"</span><span class="p">:</span><span class="w"> </span><span class="mf">0.52</span><span class="p">,</span><span class="w">
   </span><span class="s2">"change_pc"</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w">
   </span><span class="s2">"open_interest"</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="w">
 </span><span class="p">}</span><span class="w">
 </span></code></pre>
-<p>The query retrieves current realtime quote for the specified symbol.
-<aside class="notice">The stock symbols use Nasdaq CMS convention. Option symbols are encoded as OCC. The date is the unix timestamp.</aside></p>
+<p>The query retrieves current realtime quote for the specified symbol.</p>
+<h3 id='request'>Request</h3>
+<table><thead>
+<tr>
+<th>parameter</th>
+<th>description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>symbol</td>
+<td>Required. The security symbol, stocks in Nasdaq CMS convention, options in OCC</td>
+</tr>
+</tbody></table>
+<h3 id='response'>Response</h3>
+<p>The data depends on current time of day.</p>
+<h2 id='get-quotes-history'>Get quotes history</h2><pre class="highlight shell tab-shell"><code>curl
+    -X GET
+    --header <span class="s1">'Accept: application/json'</span>
+    --header <span class="s1">'Authorization: Bearer token'</span>
+    <span class="s1">'https://api.just2trade.com/marketdata/history?symbol=AAPL&amp;period=day&amp;from=1483228800&amp;to=1483488000
+</span></code></pre>
+<blockquote>
+<p>Returns an array of candles:</p>
+</blockquote>
+<pre class="highlight json tab-json"><code><span class="p">[</span><span class="w">
+  </span><span class="p">{</span><span class="w">
+    </span><span class="s2">"timestamp"</span><span class="p">:</span><span class="w"> </span><span class="mi">1483074000</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"period"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Day"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"open"</span><span class="p">:</span><span class="w"> </span><span class="mf">116.65</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"high"</span><span class="p">:</span><span class="w"> </span><span class="mf">117.2</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"low"</span><span class="p">:</span><span class="w"> </span><span class="mf">115.43</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"close"</span><span class="p">:</span><span class="w"> </span><span class="mf">115.82</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"volume"</span><span class="p">:</span><span class="w"> </span><span class="mi">24541183</span><span class="w">
+  </span><span class="p">},</span><span class="w">
+  </span><span class="p">{</span><span class="w">
+    </span><span class="s2">"timestamp"</span><span class="p">:</span><span class="w"> </span><span class="mi">1483419600</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"period"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Day"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"open"</span><span class="p">:</span><span class="w"> </span><span class="mf">115.8</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"high"</span><span class="p">:</span><span class="w"> </span><span class="mf">116.33</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"low"</span><span class="p">:</span><span class="w"> </span><span class="mf">114.76</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"close"</span><span class="p">:</span><span class="w"> </span><span class="mf">116.15</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"volume"</span><span class="p">:</span><span class="w"> </span><span class="mi">24719541</span><span class="w">
+  </span><span class="p">}</span><span class="w">
+</span><span class="p">]</span><span class="w">
+</span></code></pre>
+<p>The query returns candle structures aggregated by specified period</p>
+<h3 id='request-2'>Request</h3>
+<table><thead>
+<tr>
+<th>parameter</th>
+<th>description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>symbol</td>
+<td>Required. The security symbol, stocks in Nasdaq CMS convention. Options are not supported</td>
+</tr>
+<tr>
+<td>period</td>
+<td>Required. The supported periods are: <code>minute</code>, <code>hour</code>, <code>day</code>, <code>week</code>, <code>month</code>, <code>quarter</code>, <code>year</code></td>
+</tr>
+<tr>
+<td>from</td>
+<td>Required. Start of the period, unix timestamp</td>
+</tr>
+<tr>
+<td>to</td>
+<td>Required. End of the period, unix timestamp</td>
+</tr>
+</tbody></table>
+<h1 id='errors'>Errors</h1>
+<p>We use standard HTTP codes to indicate the result of a request. Generally speaking, codes in <code>2xx</code> range indicate successful call, codes <code>4xx</code> indicate that the request failed with the information provided (authentication not accepted, parameters formatted incorrectly, a trade is not accepted) and codes <code>5xx</code> indicate internal server errors with no further explanation. The standard codes are clearly not enough, that is why the API can also respond with a json object with the following optional fields:</p>
+
+<table><thead>
+<tr>
+<th>parameter</th>
+<th>description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>code</td>
+<td><code>not_found</code>, <code>validation_error</code></td>
+</tr>
+<tr>
+<td>message</td>
+<td>the error description</td>
+</tr>
+</tbody></table>
+<h3 id='http-status-codes'>HTTP Status Codes</h3>
+<table><thead>
+<tr>
+<th>code</th>
+<th>description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>200 OK</td>
+<td>all good</td>
+</tr>
+<tr>
+<td>400 BAD REQUEST</td>
+<td>the request is not accepted most likely due to formatting issues</td>
+</tr>
+<tr>
+<td>401</td>
+<td>authentication denied, access token is incorrect or revoked</td>
+</tr>
+<tr>
+<td>404 NOT FOUND</td>
+<td>the requested resource is not found</td>
+</tr>
+<tr>
+<td>500 SERVER ERROR</td>
+<td>internal server error, something on our end</td>
+</tr>
+</tbody></table>
 
       </div>
       <div class="dark-box">
           <div class="lang-selector">
-                <a href="#" data-language-name="shell">shell</a>
+                <a href="#" data-language-name="curl">curl</a>
+                <a href="#" data-language-name="javascript">javascript</a>
           </div>
       </div>
     </div>
