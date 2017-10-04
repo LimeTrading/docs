@@ -21,6 +21,10 @@ search: true
 
 We believe that modern financial mechanics is a problem of IT and code, not finance. We are seeking for the elegance of integrations by elimitating the unnecessary complexity of financial infrastructure. All our API calls are based on REST concepts and can be made with any language that supports standard HTTP. We made the trading as easy possible, just plain json and POST.
 
+The OpenAPI specification is available [here](https://api.just2trade.com/docs/v1/swagger.json)
+
+The client utility is available [here] (https://api.just2trade.com/docs) 
+
 # Symbology
 
 ## CMS for stocks

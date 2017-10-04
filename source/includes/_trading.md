@@ -48,9 +48,9 @@ curl -X POST
 }
 ```
 
-The method verifies an order and responds with the validation message if the order can not be placed at the moment.
+The method verifies an order and responds with the validation message if the order can not be placed at the moment. The order is not sent to market.
 
-### Parameters
+### Request
 parameter | description
 ---- | ----
 account_number | Required. The account number in the format of `123456578@vision`
@@ -75,7 +75,59 @@ validation_message | Optional reject reason
 
 
 ## Place an order
+```shell
+curl -X POST
+  --header 'Content-Type: application/json'
+  --header 'Accept: application/json'
+  --header 'Authorization: Bearer token'
+  -d '{ \ 
+   "account_number": "12345678@vision", \ 
+   "symbol": "BAC", \ 
+   "quantity": 1, \ 
+   "price": 20, \ 
+   "stop_price": 0, \ 
+   "time_in_force": "day", \ 
+   "order_type": "limit", \ 
+   "side": "buy", \ 
+   "comment": "any comment", \ 
+   "exchange": "Auto" \ 
+ }' 'https://api.just2trade.com/orders/place'
+```
 
+> Request example
+
+```json
+{
+  "account_number": "12345678@vision",
+  "symbol": "BAC",
+  "quantity": 1,
+  "price": 20.0,
+  "stop_price": 0,
+  "time_in_force": "day",
+  "order_type": "limit",
+  "side": "buy",
+  "comment": "any comment",
+  "exchange": "Auto"
+}
+```
+
+> Response example
+
+```json
+{
+  "success": true,
+  "data": "201710041710516537"
+}
+```
+
+The order is validated with exactly same logic as the [validate] (#validate-an-order). The order is sent to market on successful validation pass, in which case the method returns the following:
+
+### Response
+
+name | value
+---- | ----
+success | true
+data | the id assigned to the order
 
 
 ## Get order details
@@ -107,6 +159,46 @@ curl -X GET
 Get the order details by the specified order id
 
 ### Request
-parameter | description
+name | description
 ---- | ----
 id | Required. The order id
+
+### Response
+
+name | description
+---- | ----
+client_id | the order id
+exchange | the routing instructions
+quantity | number of shares or contracts requested by the order
+executed_quantity | number of shares or contracts executed by this time
+order_status | the order status. Possible values are `new`, `pendingNew`, `partiallyFilled`, `filled`, `pendingCancel`, `cancel`, `pendingReplace`, `replaced`, `rejected`, `doneForDay`
+price | limit price if applicable
+stop_price | stop price is applicable
+time_in_force | order duration instructions
+order_type | type of the order
+order_side | side of the order
+symbol | security symbol
+
+
+## Cancel an order
+```shell
+curl -X POST
+  --header 'Content-Type: application/json'
+  --header 'Accept: application/json'
+  --header 'Authorization: Bearer token'
+  -d '{ \ 
+   "message": "string" \ 
+ }' 'https://api.just2trade.com/orders/20171003209384646/cancel'
+```
+
+Cancel the specified order
+
+### Request
+
+the order is identified by its id on the url. The request can also contain optional info
+
+name | description
+---- | ----
+message | Optional, any string
+
+
