@@ -474,9 +474,12 @@
 <p>Response example</p>
 </blockquote>
 <pre class="highlight json tab-json"><code><span class="p">{</span><span class="w">
-    </span><span class="s2">"access_token"</span><span class="p">:</span><span class="w"> </span><span class="s2">""</span><span class="p">,</span><span class="w">
-    </span><span class="s2">"token_type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"bearer"</span><span class="p">,</span><span class="w">
-    </span><span class="s2">"expires_in"</span><span class="p">:</span><span class="w"> </span><span class="mi">3600</span><span class="w">
+  </span><span class="s2">"resource"</span><span class="p">:</span><span class="w"> </span><span class="s2">"api"</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"scope"</span><span class="p">:</span><span class="w"> </span><span class="s2">"openid email profile"</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"token_type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Bearer"</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"access_token"</span><span class="p">:</span><span class="w"> </span><span class="s2">"MjAwOTg1OWUtZTUwMy00YzY4LWEyZWQtODU0N2NkZTJiNDdlfDIwMTcxMDA3MTkyNDQzfHRlc3R8U2VyZ2V5fE1pbmtvdg=="</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"expires_in"</span><span class="p">:</span><span class="w"> </span><span class="mi">3600</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"id_token"</span><span class="p">:</span><span class="w"> </span><span class="s2">"eyJhbGciOiJub25lIiwidHlwIjoiSldUIn0.eyJzdWIiOiI4ZjFlN2ViYS1kYzY4LTQ0NWEtYmQ3ZC0yYjY3YzlhZjgzYTUiLCJ0b2tlbl91c2FnZSI6ImlkX3Rva2VuIiwianRpIjoiMGNkNTZmMDYtMmVkNy00OGFkLThlOTEtNmRkZDQzM2IzOTVhIiwiY2ZkX2x2bCI6InByaXZhdGUiLCJhdWQiOiJ0ZXN0IiwiYXpwIjoidGVzdCIsIm5iZiI6MTUwNzMxNzg4MywiZXhwIjoxNTA3MzE5MDgzLCJpYXQiOjE1MDczMTc4ODMsImlzcyI6Imh0dHBzOi8vYXV0aC5qdXN0MnRyYWRlLmNvbS8ifQ."</span><span class="w">
 </span><span class="p">}</span><span class="w">
 </span></code></pre><h3 id='request-2'>Request</h3>
 <table><thead>
@@ -510,8 +513,12 @@
 <td>the access token</td>
 </tr>
 <tr>
+<td>scope</td>
+<td>the scopes this token grants access to</td>
+</tr>
+<tr>
 <td>token_type</td>
-<td><code>bearer</code> means that the access token should be put to the Authorization header of every web request</td>
+<td><code>Bearer</code> means that the access token should be put to the Authorization header of every web request</td>
 </tr>
 <tr>
 <td>expires_in</td>

@@ -43,9 +43,12 @@ curl
 
 ```json
 {
-    "access_token": "",
-    "token_type": "bearer",
-    "expires_in": 3600
+  "resource": "api",
+  "scope": "openid email profile",
+  "token_type": "Bearer",
+  "access_token": "MjAwOTg1OWUtZTUwMy00YzY4LWEyZWQtODU0N2NkZTJiNDdlfDIwMTcxMDA3MTkyNDQzfHRlc3R8U2VyZ2V5fE1pbmtvdg==",
+  "expires_in": 3600,
+  "id_token": "eyJhbGciOiJub25lIiwidHlwIjoiSldUIn0.eyJzdWIiOiI4ZjFlN2ViYS1kYzY4LTQ0NWEtYmQ3ZC0yYjY3YzlhZjgzYTUiLCJ0b2tlbl91c2FnZSI6ImlkX3Rva2VuIiwianRpIjoiMGNkNTZmMDYtMmVkNy00OGFkLThlOTEtNmRkZDQzM2IzOTVhIiwiY2ZkX2x2bCI6InByaXZhdGUiLCJhdWQiOiJ0ZXN0IiwiYXpwIjoidGVzdCIsIm5iZiI6MTUwNzMxNzg4MywiZXhwIjoxNTA3MzE5MDgzLCJpYXQiOjE1MDczMTc4ODMsImlzcyI6Imh0dHBzOi8vYXV0aC5qdXN0MnRyYWRlLmNvbS8ifQ."
 }
 ```
 
@@ -60,5 +63,6 @@ code | Required. The authorization code recevied at the previous step. Please no
 name | value
 ---- | ----
 access_token | the access token
-token_type | `bearer` means that the access token should be put to the Authorization header of every web request
+scope | the scopes this token grants access to
+token_type | `Bearer` means that the access token should be put to the Authorization header of every web request
 expires_in | the expiration lifetime in seconds
