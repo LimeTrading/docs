@@ -1,0 +1,64 @@
+# Authentication
+
+All requests are authenticated with tokens issued by common OAuth 2.0 compatible flow. In order to use the API, the third party service should register with us first to get the `client_id` and the `client_secret`. The user logs in with Just2Trade login and password issuing a token that grants access to his account to the third party service. Our central authorization service is located at https://auth.just2trade.com
+
+## Request authorization
+The user browser should be directed to the following authentication url. The user will see the Just2Trade login form to input the credentials.
+
+```shell
+curl
+    -X GET
+    'https://auth.just2trade.com/connect/authorize?response_type=code&client_id={{your_client_id}}&client_secret={{your_client_secret}}&redirect_uri={{your_redirect_uri}}'
+```
+
+> After successful authentication the user is redirected to redirect_uri with HTTP code 302 and the authorization code:
+
+```shell
+    302 Found
+    Location: {{your_redirect_uri}}?code={{code}}
+```
+
+### Request
+parameter | description
+---- | ----
+response_type | Required. This is the OAuth authorization flow to use. We currently support only `code`.
+client_id | Required. The client id issued to the service
+client_secret | Required. The client secret issued to the service
+redirect_uri | Required. The url to redirect the user after successful authentication. For security reasons, we do not allow just any url, we require this url to be registered first
+
+
+## Access token
+The next step is to exchange the authorization code to an access token which will be used to authenticate all API requests.
+
+```shell
+curl
+    -X POST
+    --header 'Accept: application/json'
+    --header 'Content-Type: application/x-www-form-urlencoded'
+    -d 'grant_type=authorization_code&code={{code}}&client_id={{client_id}}'
+    'https://auth.just2trade.com/connect/token'
+```
+
+> Response example
+
+```json
+{
+    "access_token": "",
+    "token_type": "bearer",
+    "expires_in": 3600
+}
+```
+
+### Request
+parameter | description
+---- | ----
+grant_type | Required. This is the OAuth authorization flow to use. We currently support only `authorization_code`.
+client_id | Required. The client id issued to the service
+code | Required. The authorization code recevied at the previous step. Please note the authorization code lifetime is short so please be sure to exchange the code to a token immediately.
+
+### Response
+name | value
+---- | ----
+access_token | the access token
+token_type | `bearer` means that the access token should be put to the Authorization header of every web request
+expires_in | the expiration lifetime in seconds
