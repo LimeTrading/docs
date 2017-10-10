@@ -202,7 +202,7 @@
       <script src="javascripts/all.js"></script>
   </head>
 
-  <body class="index" data-languages="[&quot;curl&quot;,&quot;javascript&quot;]">
+  <body class="index" data-languages="[&quot;curl&quot;]">
     <a href="#" id="nav-button">
       <span>
         NAV
@@ -213,7 +213,6 @@
       <img src="images/logo.png" class="logo" alt="Logo" />
         <div class="lang-selector">
               <a href="#" data-language-name="curl">curl</a>
-              <a href="#" data-language-name="javascript">javascript</a>
         </div>
         <div class="search">
           <input type="text" class="search" id="input-search" placeholder="Search">
@@ -239,6 +238,20 @@
                   </li>
                   <li>
                     <a href="#access-token" class="toc-h2 toc-link" data-title="Authentication">Access token</a>
+                  </li>
+                  <li>
+                    <a href="#user-profile" class="toc-h2 toc-link" data-title="Authentication">User profile</a>
+                  </li>
+              </ul>
+          </li>
+          <li>
+            <a href="#accounts" class="toc-h1 toc-link" data-title="Accounts">Accounts</a>
+              <ul class="toc-list-h2">
+                  <li>
+                    <a href="#get-accounts-balances" class="toc-h2 toc-link" data-title="Accounts">Get accounts balances</a>
+                  </li>
+                  <li>
+                    <a href="#get-account-positions" class="toc-h2 toc-link" data-title="Accounts">Get account positions</a>
                   </li>
               </ul>
           </li>
@@ -288,11 +301,15 @@
       <div class="dark-box"></div>
       <div class="content">
         <h1 id='introduction'>Introduction</h1>
+<blockquote>
+<p>The OpenAPI specification
+<a href="https://api.just2trade.com/docs/v1/swagger.json">https://api.just2trade.com/docs/v1/swagger.json</a></p>
+
+<p>The client test utility
+<a href="https://api.just2trade.com/docs">https://api.just2trade.com/docs</a></p>
+</blockquote>
+
 <p>We believe that modern financial mechanics is a problem of IT and code, not finance. We are seeking for the elegance of integrations by elimitating the unnecessary complexity of financial infrastructure. All our API calls are based on REST concepts and can be made with any language that supports standard HTTP. We made the trading as easy possible, just plain json and POST.</p>
-
-<p>The OpenAPI specification is available <a href="https://api.just2trade.com/docs/v1/swagger.json">here</a></p>
-
-<p>The client utility is available <a href="https://api.just2trade.com/docs">here</a> </p>
 <h2 id='cms-symbols'>CMS symbols</h2>
 <p>The CMS convention is used to code stocks and ETFs. There is a space between the root and the suffix.</p>
 
@@ -425,7 +442,7 @@
 <li>Strike price, as the price x 1000, front padded with 0s to 8 digits</li>
 </ul>
 <h1 id='authentication'>Authentication</h1>
-<p>All requests are authenticated with tokens issued by common OAuth 2.0 compatible flow. In order to use the API, the third party service should register with us first to get the <code>client_id</code> and the <code>client_secret</code>. The user logs in with Just2Trade login and password issuing a token that grants access to his account to the third party service. Our central authorization service is located at https://auth.just2trade.com</p>
+<p>All requests are authenticated with tokens issued by common OAuth 2.0 compatible flow. In order to use the API, the third party service should register with us first to get the <code>client_id</code>, <code>client_secret</code> and set up the <code>redirect_uri</code>. The user logs in with Just2Trade login and password issuing a token that grants access to his account to the third party service. Our central authorization service is located at https://auth.just2trade.com</p>
 <h2 id='request-authorization'>Request authorization</h2>
 <p>The user browser should be directed to the following authentication url. The user will see the Just2Trade login form to input the credentials.</p>
 <pre class="highlight shell tab-shell"><code>curl
@@ -462,7 +479,7 @@
 </tr>
 </tbody></table>
 <h2 id='access-token'>Access token</h2>
-<p>The next step is to exchange the authorization code to an access token which will be used to authenticate all API requests.</p>
+<p>The next step is to exchange the authorization code to an access token which will be used to authenticate all API requests. By default the access token is issued for 24 hours and is renewed with every usage.</p>
 <pre class="highlight shell tab-shell"><code>curl
     -X POST
     --header <span class="s1">'Accept: application/json'</span>
@@ -474,12 +491,10 @@
 <p>Response example</p>
 </blockquote>
 <pre class="highlight json tab-json"><code><span class="p">{</span><span class="w">
-  </span><span class="s2">"resource"</span><span class="p">:</span><span class="w"> </span><span class="s2">"api"</span><span class="p">,</span><span class="w">
-  </span><span class="s2">"scope"</span><span class="p">:</span><span class="w"> </span><span class="s2">"openid email profile"</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"scope"</span><span class="p">:</span><span class="w"> </span><span class="s2">"email profile"</span><span class="p">,</span><span class="w">
   </span><span class="s2">"token_type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Bearer"</span><span class="p">,</span><span class="w">
   </span><span class="s2">"access_token"</span><span class="p">:</span><span class="w"> </span><span class="s2">"MjAwOTg1OWUtZTUwMy00YzY4LWEyZWQtODU0N2NkZTJiNDdlfDIwMTcxMDA3MTkyNDQzfHRlc3R8U2VyZ2V5fE1pbmtvdg=="</span><span class="p">,</span><span class="w">
-  </span><span class="s2">"expires_in"</span><span class="p">:</span><span class="w"> </span><span class="mi">3600</span><span class="p">,</span><span class="w">
-  </span><span class="s2">"id_token"</span><span class="p">:</span><span class="w"> </span><span class="s2">"eyJhbGciOiJub25lIiwidHlwIjoiSldUIn0.eyJzdWIiOiI4ZjFlN2ViYS1kYzY4LTQ0NWEtYmQ3ZC0yYjY3YzlhZjgzYTUiLCJ0b2tlbl91c2FnZSI6ImlkX3Rva2VuIiwianRpIjoiMGNkNTZmMDYtMmVkNy00OGFkLThlOTEtNmRkZDQzM2IzOTVhIiwiY2ZkX2x2bCI6InByaXZhdGUiLCJhdWQiOiJ0ZXN0IiwiYXpwIjoidGVzdCIsIm5iZiI6MTUwNzMxNzg4MywiZXhwIjoxNTA3MzE5MDgzLCJpYXQiOjE1MDczMTc4ODMsImlzcyI6Imh0dHBzOi8vYXV0aC5qdXN0MnRyYWRlLmNvbS8ifQ."</span><span class="w">
+  </span><span class="s2">"expires_in"</span><span class="p">:</span><span class="w"> </span><span class="mi">86400</span><span class="w">
 </span><span class="p">}</span><span class="w">
 </span></code></pre><h3 id='request-2'>Request</h3>
 <table><thead>
@@ -523,6 +538,205 @@
 <tr>
 <td>expires_in</td>
 <td>the expiration lifetime in seconds</td>
+</tr>
+</tbody></table>
+<h2 id='user-profile'>User profile</h2>
+<p>This retrieves the basic user information including the application status and the list of existing account numbers.</p>
+<pre class="highlight shell tab-shell"><code>curl
+    -X GET
+    <span class="s1">'https://api.just2trade.com/auth'</span>
+</code></pre>
+<blockquote>
+<p>Response example</p>
+</blockquote>
+<pre class="highlight json tab-json"><code><span class="p">{</span><span class="w">
+    </span><span class="s2">"id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"8f1e7eba-0000-0000-0000-2b67c9af83a5"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"login"</span><span class="p">:</span><span class="w"> </span><span class="s2">"login"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"email"</span><span class="p">:</span><span class="w"> </span><span class="s2">"login@email.com"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"domestic"</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"accounts"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
+        </span><span class="p">{</span><span class="w">
+            </span><span class="s2">"account_number"</span><span class="p">:</span><span class="w"> </span><span class="s2">"12345678@vision"</span><span class="p">,</span><span class="w">
+            </span><span class="s2">"trade_platform"</span><span class="p">:</span><span class="w"> </span><span class="s2">"ETNA"</span><span class="w">
+        </span><span class="p">},</span><span class="w">
+        </span><span class="p">{</span><span class="w">
+            </span><span class="s2">"account_number"</span><span class="p">:</span><span class="w"> </span><span class="s2">"11111111@cor"</span><span class="p">,</span><span class="w">
+            </span><span class="s2">"trade_platform"</span><span class="p">:</span><span class="w"> </span><span class="s2">"ETNA"</span><span class="w">
+        </span><span class="p">}</span><span class="w">
+    </span><span class="p">],</span><span class="w">
+    </span><span class="s2">"application"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+        </span><span class="s2">"status"</span><span class="p">:</span><span class="w"> </span><span class="s2">"process"</span><span class="w">
+    </span><span class="p">}</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre><h1 id='accounts'>Accounts</h1><h2 id='get-accounts-balances'>Get accounts balances</h2><pre class="highlight shell tab-shell"><code>curl
+    -X GET
+    <span class="s1">'https://api.just2trade.com/accounts'</span>
+</code></pre>
+<blockquote>
+<p>Response example</p>
+</blockquote>
+<pre class="highlight json tab-json"><code><span class="p">[</span><span class="w">
+    </span><span class="p">{</span><span class="w">
+        </span><span class="s2">"account_number"</span><span class="p">:</span><span class="w"> </span><span class="s2">"12345678@vision"</span><span class="p">,</span><span class="w">
+        </span><span class="s2">"trade_platform"</span><span class="p">:</span><span class="w"> </span><span class="s2">"ETNA"</span><span class="p">,</span><span class="w">
+        </span><span class="s2">"margin_type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"marginx2"</span><span class="p">,</span><span class="w">
+        </span><span class="s2">"restriction"</span><span class="p">:</span><span class="w"> </span><span class="s2">"none"</span><span class="p">,</span><span class="w">
+        </span><span class="s2">"daytrades_count"</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w">
+        </span><span class="s2">"account_value_total"</span><span class="p">:</span><span class="w"> </span><span class="mf">9880.6806</span><span class="p">,</span><span class="w">
+        </span><span class="s2">"cash"</span><span class="p">:</span><span class="w"> </span><span class="mf">5283.44</span><span class="p">,</span><span class="w">
+        </span><span class="s2">"day_trading_buying_power"</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w">
+        </span><span class="s2">"margin_buying_power"</span><span class="p">:</span><span class="w"> </span><span class="mi">15243</span><span class="p">,</span><span class="w">
+        </span><span class="s2">"non_margin_buying_power"</span><span class="p">:</span><span class="w"> </span><span class="mf">7621.5</span><span class="p">,</span><span class="w">
+        </span><span class="s2">"position_market_value"</span><span class="p">:</span><span class="w"> </span><span class="mf">4597.2406</span><span class="p">,</span><span class="w">
+        </span><span class="s2">"unsettled_cash"</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="w">
+    </span><span class="p">},</span><span class="w">
+    </span><span class="p">{</span><span class="w">
+        </span><span class="s2">"account_number"</span><span class="p">:</span><span class="w"> </span><span class="s2">"11111111@cor"</span><span class="p">,</span><span class="w">
+        </span><span class="s2">"trade_platform"</span><span class="p">:</span><span class="w"> </span><span class="s2">"ETNA"</span><span class="p">,</span><span class="w">
+        </span><span class="s2">"margin_type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"daytrader"</span><span class="p">,</span><span class="w">
+        </span><span class="s2">"restriction"</span><span class="p">:</span><span class="w"> </span><span class="s2">"restricted"</span><span class="p">,</span><span class="w">
+        </span><span class="s2">"restriction_reason"</span><span class="p">:</span><span class="w"> </span><span class="s2">"please fund the account"</span><span class="p">,</span><span class="w">
+        </span><span class="s2">"daytrades_count"</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w">
+        </span><span class="s2">"account_value_total"</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w">
+        </span><span class="s2">"cash"</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w">
+        </span><span class="s2">"day_trading_buying_power"</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w">
+        </span><span class="s2">"margin_buying_power"</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w">
+        </span><span class="s2">"non_margin_buying_power"</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w">
+        </span><span class="s2">"position_market_value"</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w">
+        </span><span class="s2">"unsettled_cash"</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="w">
+    </span><span class="p">}</span><span class="w">
+</span><span class="p">]</span><span class="w">
+</span></code></pre>
+<p>Get balance information for all user accounts as an array of the following json structures:</p>
+
+<table><thead>
+<tr>
+<th>name</th>
+<th>description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>account_number</td>
+<td>the account number</td>
+</tr>
+<tr>
+<td>trade_platform</td>
+<td>the trading platform this account is traded on</td>
+</tr>
+<tr>
+<td>margin_type</td>
+<td>the margin type, possible values are <code>cash</code>, <code>marginx1</code>, <code>marginx2</code>, <code>daytrader</code></td>
+</tr>
+<tr>
+<td>restriction</td>
+<td>restriction level effective on the account, possible values are <code>none</code> - no restrictions, <code>restricted</code> - opening transactions are not allowed but closing orders are accepted, <code>disabled</code> - no activity is allowed in the account, <code>closed</code> - the account is closed</td>
+</tr>
+<tr>
+<td>restriction_reason</td>
+<td>optional description explaining why the account is restricted</td>
+</tr>
+<tr>
+<td>daytrades_count</td>
+<td>day trades counter</td>
+</tr>
+<tr>
+<td>account_value_total</td>
+<td>total account liquidation value</td>
+</tr>
+<tr>
+<td>cash</td>
+<td>account debit balance when negative, credit balance when positive</td>
+</tr>
+<tr>
+<td>day_trading_buying_power</td>
+<td>day trading buying power for marginable securities</td>
+</tr>
+<tr>
+<td>margin_buying_power</td>
+<td>the buying power for marginable securities</td>
+</tr>
+<tr>
+<td>non_margin_buying_power</td>
+<td>the buying power for non-marginable securities</td>
+</tr>
+<tr>
+<td>position_market_value</td>
+<td>sum of all positions current market values. The value is negative for short positions</td>
+</tr>
+<tr>
+<td>unsettled_cash</td>
+<td>unsettled cash for cash accounts</td>
+</tr>
+</tbody></table>
+<h2 id='get-account-positions'>Get account positions</h2><pre class="highlight shell tab-shell"><code>curl
+    -X GET
+    <span class="s1">'https://api.just2trade.com/accounts/12345678@vision/positions'</span>
+</code></pre><pre class="highlight json tab-json"><code><span class="p">[</span><span class="w">
+    </span><span class="p">{</span><span class="w">
+        </span><span class="s2">"symbol"</span><span class="p">:</span><span class="w"> </span><span class="s2">"KEYS"</span><span class="p">,</span><span class="w">
+        </span><span class="s2">"quantity"</span><span class="p">:</span><span class="w"> </span><span class="mi">90</span><span class="p">,</span><span class="w">
+        </span><span class="s2">"average_open_price"</span><span class="p">:</span><span class="w"> </span><span class="mf">26.061</span><span class="p">,</span><span class="w">
+        </span><span class="s2">"current_price"</span><span class="p">:</span><span class="w"> </span><span class="mf">42.17</span><span class="p">,</span><span class="w">
+        </span><span class="s2">"lot_size"</span><span class="p">:</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w">
+        </span><span class="s2">"security_type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"common_stock"</span><span class="w">
+    </span><span class="p">},</span><span class="w">
+    </span><span class="p">{</span><span class="w">
+        </span><span class="s2">"symbol"</span><span class="p">:</span><span class="w"> </span><span class="s2">"GRNH"</span><span class="p">,</span><span class="w">
+        </span><span class="s2">"quantity"</span><span class="p">:</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w">
+        </span><span class="s2">"average_open_price"</span><span class="p">:</span><span class="w"> </span><span class="mf">0.0975</span><span class="p">,</span><span class="w">
+        </span><span class="s2">"current_price"</span><span class="p">:</span><span class="w"> </span><span class="mf">0.040600000000000004</span><span class="p">,</span><span class="w">
+        </span><span class="s2">"lot_size"</span><span class="p">:</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w">
+        </span><span class="s2">"security_type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"common_stock"</span><span class="w">
+    </span><span class="p">},</span><span class="w">
+    </span><span class="p">{</span><span class="w">
+        </span><span class="s2">"symbol"</span><span class="p">:</span><span class="w"> </span><span class="s2">"TWTR"</span><span class="p">,</span><span class="w">
+        </span><span class="s2">"quantity"</span><span class="p">:</span><span class="w"> </span><span class="mi">13</span><span class="p">,</span><span class="w">
+        </span><span class="s2">"average_open_price"</span><span class="p">:</span><span class="w"> </span><span class="mf">17.74043</span><span class="p">,</span><span class="w">
+        </span><span class="s2">"current_price"</span><span class="p">:</span><span class="w"> </span><span class="mf">17.38</span><span class="p">,</span><span class="w">
+        </span><span class="s2">"lot_size"</span><span class="p">:</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w">
+        </span><span class="s2">"security_type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"common_stock"</span><span class="w">
+    </span><span class="p">},</span><span class="w">
+    </span><span class="p">{</span><span class="w">
+        </span><span class="s2">"symbol"</span><span class="p">:</span><span class="w"> </span><span class="s2">"RAD"</span><span class="p">,</span><span class="w">
+        </span><span class="s2">"quantity"</span><span class="p">:</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w">
+        </span><span class="s2">"average_open_price"</span><span class="p">:</span><span class="w"> </span><span class="mf">2.37</span><span class="p">,</span><span class="w">
+        </span><span class="s2">"current_price"</span><span class="p">:</span><span class="w"> </span><span class="mf">1.87</span><span class="p">,</span><span class="w">
+        </span><span class="s2">"lot_size"</span><span class="p">:</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w">
+        </span><span class="s2">"security_type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"common_stock"</span><span class="w">
+    </span><span class="p">}</span><span class="w">
+</span><span class="p">]</span><span class="w">
+</span></code></pre>
+<p>Get specified account positions as an array of the following json structures:</p>
+
+<table><thead>
+<tr>
+<th>name</th>
+<th>description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>symbol</td>
+<td>security symbol</td>
+</tr>
+<tr>
+<td>quantity</td>
+<td>number of shares or option contracts</td>
+</tr>
+<tr>
+<td>average_open_price</td>
+<td>average historical cost basis</td>
+</tr>
+<tr>
+<td>current_price</td>
+<td>current price</td>
+</tr>
+<tr>
+<td>lot_size</td>
+<td>this has the value of 1 for all stocks and usually 100 for all options</td>
+</tr>
+<tr>
+<td>security_type</td>
+<td>the type of security, the most common values are <code>common_stock</code>, <code>preferred_stock</code>, <code>option</code></td>
 </tr>
 </tbody></table>
 <h1 id='trading'>Trading</h1><h2 id='validate-an-order'>Validate an order</h2><pre class="highlight shell tab-shell"><code>curl -X POST
@@ -588,23 +802,23 @@
 </tr>
 <tr>
 <td>price</td>
-<td>Required positive decimal if the <code>order_type</code> is <code>limit</code> or <code>stopLimit</code></td>
+<td>Required positive decimal if the <code>order_type</code> is <code>limit</code> or <code>stop_limit</code></td>
 </tr>
 <tr>
 <td>stop_price</td>
-<td>Required positive decimal if the <code>order_type</code> is <code>stop</code> or <code>stopLimit</code></td>
+<td>Required positive decimal if the <code>order_type</code> is <code>stop</code> or <code>stop_limit</code></td>
 </tr>
 <tr>
 <td>time_in_force</td>
-<td>Optional, <code>day</code> by default. Specifies how long the order remains in effect. Possible values are <code>day</code>, <code>goodTillCancel</code>, <code>goodTillCrossing</code></td>
+<td>Optional, <code>day</code> by default. Specifies how long the order remains in effect. Possible values are <code>day</code>, <code>good_till_cancel</code>, <code>good_till_crossing</code></td>
 </tr>
 <tr>
 <td>order_type</td>
-<td>Optional, <code>market</code> by default. Possible values are <code>market</code>, <code>limit</code>, <code>stop</code>, <code>stopLimit</code>, <code>marketOnClose</code>, <code>limitOnClose</code></td>
+<td>Optional, <code>market</code> by default. Possible values are <code>market</code>, <code>limit</code>, <code>stop</code>, <code>stop_limit</code>, <code>market_on_close</code>, <code>limit_on_close</code></td>
 </tr>
 <tr>
 <td>side</td>
-<td>Optional, <code>buy</code> by default. Available values are <code>buy</code>, <code>sell</code>, <code>sellShort</code>, <code>buyToCover</code>. <code>buy</code> opens long position, <code>sell</code> closes the position, <code>sellShort</code> opens short position, <code>buyToCover</code> closes the short position. You can use only <code>buy</code> and <code>sell</code> so that the system will detemine the proper side according to the current position, but you are still required to place two orders to revert the position from long to short and the other way around.</td>
+<td>Optional, <code>buy</code> by default. Available values are <code>buy</code>, <code>sell</code>, <code>sell_short</code>, <code>buy_to_cover</code>. <code>buy</code> opens long position, <code>sell</code> closes the position, <code>sell_short</code> opens short position, <code>buy_to_cover</code> closes the short position. You can use only <code>buy</code> and <code>sell</code> so that the system will detemine the proper side according to the current position, but you are still required to place two orders to revert the position from long to short and the other way around.</td>
 </tr>
 <tr>
 <td>comment</td>
@@ -694,7 +908,7 @@
 <h2 id='get-order-details'>Get order details</h2><pre class="highlight shell tab-shell"><code>curl -X GET
   --header <span class="s1">'Accept: application/json'</span>
   --header <span class="s1">'Authorization: Bearer token'</span>
-  <span class="s1">'https://api.just2trade.com/orders/20171003209384646'</span>
+  <span class="s1">'https://api.just2trade.com/orders/{{id}}'</span>
 </code></pre>
 <blockquote>
 <p>Response example</p>
@@ -751,7 +965,7 @@
 </tr>
 <tr>
 <td>order_status</td>
-<td>the order status. Possible values are <code>new</code>, <code>pendingNew</code>, <code>partiallyFilled</code>, <code>filled</code>, <code>pendingCancel</code>, <code>cancel</code>, <code>pendingReplace</code>, <code>replaced</code>, <code>rejected</code>, <code>doneForDay</code></td>
+<td>the order status. Possible values are <code>new</code>, <code>pending_new</code>, <code>partially_filled</code>, <code>filled</code>, <code>pending_cancel</code>, <code>cancel</code>, <code>pending_replace</code>, <code>replaced</code>, <code>rejected</code>, <code>done_for_day</code></td>
 </tr>
 <tr>
 <td>price</td>
@@ -843,7 +1057,7 @@
 </thead><tbody>
 <tr>
 <td>symbol</td>
-<td>Required. The security symbol, stocks in Nasdaq CMS convention, options in OCC</td>
+<td>Required. The security symbol</td>
 </tr>
 </tbody></table>
 <h3 id='response'>Response</h3>
@@ -954,7 +1168,6 @@
       <div class="dark-box">
           <div class="lang-selector">
                 <a href="#" data-language-name="curl">curl</a>
-                <a href="#" data-language-name="javascript">javascript</a>
           </div>
       </div>
     </div>
