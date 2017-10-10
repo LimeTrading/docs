@@ -1,6 +1,6 @@
 # Authentication
 
-All requests are authenticated with tokens issued by common OAuth 2.0 compatible flow. In order to use the API, the third party service should register with us first to get the `client_id` and the `client_secret`. The user logs in with Just2Trade login and password issuing a token that grants access to his account to the third party service. Our central authorization service is located at https://auth.just2trade.com
+All requests are authenticated with tokens issued by common OAuth 2.0 compatible flow. In order to use the API, the third party service should register with us first to get the `client_id`, `client_secret` and set up the `redirect_uri`. The user logs in with Just2Trade login and password issuing a token that grants access to his account to the third party service. Our central authorization service is located at https://auth.just2trade.com
 
 ## Request authorization
 The user browser should be directed to the following authentication url. The user will see the Just2Trade login form to input the credentials.
@@ -28,7 +28,7 @@ redirect_uri | Required. The url to redirect the user after successful authentic
 
 
 ## Access token
-The next step is to exchange the authorization code to an access token which will be used to authenticate all API requests.
+The next step is to exchange the authorization code to an access token which will be used to authenticate all API requests. By default the access token is issued for 24 hours and is renewed with every usage.
 
 ```shell
 curl
@@ -43,12 +43,10 @@ curl
 
 ```json
 {
-  "resource": "api",
-  "scope": "openid email profile",
+  "scope": "email profile",
   "token_type": "Bearer",
   "access_token": "MjAwOTg1OWUtZTUwMy00YzY4LWEyZWQtODU0N2NkZTJiNDdlfDIwMTcxMDA3MTkyNDQzfHRlc3R8U2VyZ2V5fE1pbmtvdg==",
-  "expires_in": 3600,
-  "id_token": "eyJhbGciOiJub25lIiwidHlwIjoiSldUIn0.eyJzdWIiOiI4ZjFlN2ViYS1kYzY4LTQ0NWEtYmQ3ZC0yYjY3YzlhZjgzYTUiLCJ0b2tlbl91c2FnZSI6ImlkX3Rva2VuIiwianRpIjoiMGNkNTZmMDYtMmVkNy00OGFkLThlOTEtNmRkZDQzM2IzOTVhIiwiY2ZkX2x2bCI6InByaXZhdGUiLCJhdWQiOiJ0ZXN0IiwiYXpwIjoidGVzdCIsIm5iZiI6MTUwNzMxNzg4MywiZXhwIjoxNTA3MzE5MDgzLCJpYXQiOjE1MDczMTc4ODMsImlzcyI6Imh0dHBzOi8vYXV0aC5qdXN0MnRyYWRlLmNvbS8ifQ."
+  "expires_in": 86400
 }
 ```
 
@@ -66,3 +64,37 @@ access_token | the access token
 scope | the scopes this token grants access to
 token_type | `Bearer` means that the access token should be put to the Authorization header of every web request
 expires_in | the expiration lifetime in seconds
+
+
+## User profile
+This retrieves the basic user information including the application status and the list of existing account numbers.
+
+```shell
+curl
+    -X GET
+    'https://api.just2trade.com/auth'
+```
+
+> Response example
+
+```json
+{
+    "id": "8f1e7eba-0000-0000-0000-2b67c9af83a5",
+    "login": "login",
+    "email": "login@email.com",
+    "domestic": true,
+    "accounts": [
+        {
+            "account_number": "12345678@vision",
+            "trade_platform": "ETNA"
+        },
+        {
+            "account_number": "11111111@cor",
+            "trade_platform": "ETNA"
+        }
+    ],
+    "application": {
+        "status": "process"
+    }
+}
+```

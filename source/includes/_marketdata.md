@@ -40,7 +40,7 @@ The query retrieves current realtime quote for the specified symbol.
 ### Request
 parameter | description
 ---- | ----
-symbol | Required. The security symbol, stocks in Nasdaq CMS convention, options in OCC
+symbol | Required. The security symbol
 
 ### Response
 The data depends on current time of day.

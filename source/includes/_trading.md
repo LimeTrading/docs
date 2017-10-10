@@ -56,11 +56,11 @@ parameter | description
 account_number | Required. The account number in the format of `123456578@vision`
 symbol | Required. The security symbol, stocks in Nasdaq CMS convention, options in OCC
 quantity | Required. The positive decimal, number of shares or contracts
-price | Required positive decimal if the `order_type` is `limit` or `stopLimit`
-stop_price | Required positive decimal if the `order_type` is `stop` or `stopLimit`
-time_in_force | Optional, `day` by default. Specifies how long the order remains in effect. Possible values are `day`, `goodTillCancel`, `goodTillCrossing`
-order_type | Optional, `market` by default. Possible values are `market`, `limit`, `stop`, `stopLimit`, `marketOnClose`, `limitOnClose`
-side | Optional, `buy` by default. Available values are `buy`, `sell`, `sellShort`, `buyToCover`. `buy` opens long position, `sell` closes the position, `sellShort` opens short position, `buyToCover` closes the short position. You can use only `buy` and `sell` so that the system will detemine the proper side according to the current position, but you are still required to place two orders to revert the position from long to short and the other way around.
+price | Required positive decimal if the `order_type` is `limit` or `stop_limit`
+stop_price | Required positive decimal if the `order_type` is `stop` or `stop_limit`
+time_in_force | Optional, `day` by default. Specifies how long the order remains in effect. Possible values are `day`, `good_till_cancel`, `good_till_crossing`
+order_type | Optional, `market` by default. Possible values are `market`, `limit`, `stop`, `stop_limit`, `market_on_close`, `limit_on_close`
+side | Optional, `buy` by default. Available values are `buy`, `sell`, `sell_short`, `buy_to_cover`. `buy` opens long position, `sell` closes the position, `sell_short` opens short position, `buy_to_cover` closes the short position. You can use only `buy` and `sell` so that the system will detemine the proper side according to the current position, but you are still required to place two orders to revert the position from long to short and the other way around.
 comment | Optional, any string
 exchange | Optional, `auto` by default. The routing instructions for order execution. The actual values are dynamic and depend on the account settings. Some of the possible values are `nasdaq` or `nyse`
 
@@ -135,7 +135,7 @@ data | the id assigned to the order
 curl -X GET
   --header 'Accept: application/json'
   --header 'Authorization: Bearer token'
-  'https://api.just2trade.com/orders/20171003209384646'
+  'https://api.just2trade.com/orders/{{id}}'
 ```
 
 > Response example
@@ -171,7 +171,7 @@ client_id | the order id
 exchange | the routing instructions
 quantity | number of shares or contracts requested by the order
 executed_quantity | number of shares or contracts executed by this time
-order_status | the order status. Possible values are `new`, `pendingNew`, `partiallyFilled`, `filled`, `pendingCancel`, `cancel`, `pendingReplace`, `replaced`, `rejected`, `doneForDay`
+order_status | the order status. Possible values are `new`, `pending_new`, `partially_filled`, `filled`, `pending_cancel`, `cancel`, `pending_replace`, `replaced`, `rejected`, `done_for_day`
 price | limit price if applicable
 stop_price | stop price is applicable
 time_in_force | order duration instructions
@@ -200,5 +200,6 @@ the order is identified by its id on the url. The request can also contain optio
 name | description
 ---- | ----
 message | Optional, any string
+
 
 
