@@ -482,7 +482,7 @@
 </tr>
 </tbody></table>
 <h2 id='access-token'>Access token</h2>
-<p>The next step is to exchange the authorization code to an access token which will be used to authenticate all API requests. By default the access token is issued for 24 hours and is renewed with every usage.</p>
+<p>The next step is to exchange the authorization code to an access token which will be used to authenticate all API requests. By default the access token is issued for 24 hours and is prolonged with every usage.</p>
 <pre class="highlight shell tab-shell"><code>curl
     -X POST
     --header <span class="s1">'Accept: application/json'</span>
@@ -543,11 +543,9 @@
 <td>the expiration lifetime in seconds</td>
 </tr>
 </tbody></table>
-<h2 id='user-profile'>User profile</h2>
-<p>This retrieves the basic user information including the application status and the list of existing account numbers.</p>
-<pre class="highlight shell tab-shell"><code>curl
+<h2 id='user-profile'>User profile</h2><pre class="highlight shell tab-shell"><code>curl
     -X GET
-    <span class="s1">'https://api.just2trade.com/auth'</span>
+    <span class="s1">'https://api.just2trade.com/userinfo'</span>
 </code></pre>
 <blockquote>
 <p>Response example</p>
@@ -555,6 +553,8 @@
 <pre class="highlight json tab-json"><code><span class="p">{</span><span class="w">
     </span><span class="s2">"id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"8f1e7eba-0000-0000-0000-2b67c9af83a5"</span><span class="p">,</span><span class="w">
     </span><span class="s2">"login"</span><span class="p">:</span><span class="w"> </span><span class="s2">"login"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"first_name"</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="s2">"John"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"last_name"</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="s2">"Smith"</span><span class="p">,</span><span class="w">
     </span><span class="s2">"email"</span><span class="p">:</span><span class="w"> </span><span class="s2">"login@email.com"</span><span class="p">,</span><span class="w">
     </span><span class="s2">"domestic"</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="p">,</span><span class="w">
     </span><span class="s2">"accounts"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
@@ -571,7 +571,9 @@
         </span><span class="s2">"status"</span><span class="p">:</span><span class="w"> </span><span class="s2">"process"</span><span class="w">
     </span><span class="p">}</span><span class="w">
 </span><span class="p">}</span><span class="w">
-</span></code></pre><h1 id='accounts'>Accounts</h1><h2 id='get-accounts-balances'>Get accounts balances</h2><pre class="highlight shell tab-shell"><code>curl
+</span></code></pre>
+<p>This retrieves the basic user information including the application status and the list of existing account numbers.</p>
+<h1 id='accounts'>Accounts</h1><h2 id='get-accounts-balances'>Get accounts balances</h2><pre class="highlight shell tab-shell"><code>curl
     -X GET
     <span class="s1">'https://api.just2trade.com/accounts'</span>
 </code></pre>
@@ -680,7 +682,6 @@
         </span><span class="s2">"quantity"</span><span class="p">:</span><span class="w"> </span><span class="mi">90</span><span class="p">,</span><span class="w">
         </span><span class="s2">"average_open_price"</span><span class="p">:</span><span class="w"> </span><span class="mf">26.061</span><span class="p">,</span><span class="w">
         </span><span class="s2">"current_price"</span><span class="p">:</span><span class="w"> </span><span class="mf">42.17</span><span class="p">,</span><span class="w">
-        </span><span class="s2">"lot_size"</span><span class="p">:</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w">
         </span><span class="s2">"security_type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"common_stock"</span><span class="w">
     </span><span class="p">},</span><span class="w">
     </span><span class="p">{</span><span class="w">
@@ -688,7 +689,6 @@
         </span><span class="s2">"quantity"</span><span class="p">:</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w">
         </span><span class="s2">"average_open_price"</span><span class="p">:</span><span class="w"> </span><span class="mf">0.0975</span><span class="p">,</span><span class="w">
         </span><span class="s2">"current_price"</span><span class="p">:</span><span class="w"> </span><span class="mf">0.040600000000000004</span><span class="p">,</span><span class="w">
-        </span><span class="s2">"lot_size"</span><span class="p">:</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w">
         </span><span class="s2">"security_type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"common_stock"</span><span class="w">
     </span><span class="p">},</span><span class="w">
     </span><span class="p">{</span><span class="w">
@@ -696,7 +696,6 @@
         </span><span class="s2">"quantity"</span><span class="p">:</span><span class="w"> </span><span class="mi">13</span><span class="p">,</span><span class="w">
         </span><span class="s2">"average_open_price"</span><span class="p">:</span><span class="w"> </span><span class="mf">17.74043</span><span class="p">,</span><span class="w">
         </span><span class="s2">"current_price"</span><span class="p">:</span><span class="w"> </span><span class="mf">17.38</span><span class="p">,</span><span class="w">
-        </span><span class="s2">"lot_size"</span><span class="p">:</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w">
         </span><span class="s2">"security_type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"common_stock"</span><span class="w">
     </span><span class="p">},</span><span class="w">
     </span><span class="p">{</span><span class="w">
@@ -704,7 +703,6 @@
         </span><span class="s2">"quantity"</span><span class="p">:</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w">
         </span><span class="s2">"average_open_price"</span><span class="p">:</span><span class="w"> </span><span class="mf">2.37</span><span class="p">,</span><span class="w">
         </span><span class="s2">"current_price"</span><span class="p">:</span><span class="w"> </span><span class="mf">1.87</span><span class="p">,</span><span class="w">
-        </span><span class="s2">"lot_size"</span><span class="p">:</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w">
         </span><span class="s2">"security_type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"common_stock"</span><span class="w">
     </span><span class="p">}</span><span class="w">
 </span><span class="p">]</span><span class="w">
@@ -732,10 +730,6 @@
 <tr>
 <td>current_price</td>
 <td>current price</td>
-</tr>
-<tr>
-<td>lot_size</td>
-<td>this has the value of 1 for all stocks and usually 100 for all options</td>
 </tr>
 <tr>
 <td>security_type</td>

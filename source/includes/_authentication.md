@@ -28,7 +28,7 @@ redirect_uri | Required. The url to redirect the user after successful authentic
 
 
 ## Access token
-The next step is to exchange the authorization code to an access token which will be used to authenticate all API requests. By default the access token is issued for 24 hours and is renewed with every usage.
+The next step is to exchange the authorization code to an access token which will be used to authenticate all API requests. By default the access token is issued for 24 hours and is prolonged with every usage.
 
 ```shell
 curl
@@ -67,12 +67,11 @@ expires_in | the expiration lifetime in seconds
 
 
 ## User profile
-This retrieves the basic user information including the application status and the list of existing account numbers.
 
 ```shell
 curl
     -X GET
-    'https://api.just2trade.com/auth'
+    'https://api.just2trade.com/userinfo'
 ```
 
 > Response example
@@ -81,6 +80,8 @@ curl
 {
     "id": "8f1e7eba-0000-0000-0000-2b67c9af83a5",
     "login": "login",
+    "first_name" : "John",
+    "last_name" : "Smith",
     "email": "login@email.com",
     "domestic": true,
     "accounts": [
@@ -98,3 +99,5 @@ curl
     }
 }
 ```
+
+This retrieves the basic user information including the application status and the list of existing account numbers.

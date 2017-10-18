@@ -77,7 +77,6 @@ curl
         "quantity": 90,
         "average_open_price": 26.061,
         "current_price": 42.17,
-        "lot_size": 1,
         "security_type": "common_stock"
     },
     {
@@ -85,7 +84,6 @@ curl
         "quantity": 1,
         "average_open_price": 0.0975,
         "current_price": 0.040600000000000004,
-        "lot_size": 1,
         "security_type": "common_stock"
     },
     {
@@ -93,7 +91,6 @@ curl
         "quantity": 13,
         "average_open_price": 17.74043,
         "current_price": 17.38,
-        "lot_size": 1,
         "security_type": "common_stock"
     },
     {
@@ -101,7 +98,6 @@ curl
         "quantity": 1,
         "average_open_price": 2.37,
         "current_price": 1.87,
-        "lot_size": 1,
         "security_type": "common_stock"
     }
 ]
@@ -115,7 +111,6 @@ symbol | security symbol
 quantity | number of shares or option contracts
 average_open_price | average historical cost basis
 current_price | current price
-lot_size | this has the value of 1 for all stocks and usually 100 for all options
 security_type | the type of security, the most common values are `common_stock`, `preferred_stock`, `option`
 
 ## Get account trades
