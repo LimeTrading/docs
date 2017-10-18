@@ -253,6 +253,9 @@
                   <li>
                     <a href="#get-account-positions" class="toc-h2 toc-link" data-title="Accounts">Get account positions</a>
                   </li>
+                  <li>
+                    <a href="#get-account-trades" class="toc-h2 toc-link" data-title="Accounts">Get account trades</a>
+                  </li>
               </ul>
           </li>
           <li>
@@ -737,6 +740,95 @@
 <tr>
 <td>security_type</td>
 <td>the type of security, the most common values are <code>common_stock</code>, <code>preferred_stock</code>, <code>option</code></td>
+</tr>
+</tbody></table>
+<h2 id='get-account-trades'>Get account trades</h2><pre class="highlight shell tab-shell"><code>curl
+    -X GET
+    <span class="s1">'https://api.just2trade.com/accounts/{account_number}/trades/{mode}?filter.limit={limit}&amp;filter.skip={skip}'</span>
+</code></pre>
+<blockquote>
+<p>Response example</p>
+</blockquote>
+<pre class="highlight json tab-json"><code><span class="p">{</span><span class="w">
+    </span><span class="s2">"trades"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
+        </span><span class="p">{</span><span class="w">
+            </span><span class="s2">"symbol"</span><span class="p">:</span><span class="w"> </span><span class="s2">"AAPL"</span><span class="p">,</span><span class="w">
+            </span><span class="s2">"timestamp"</span><span class="p">:</span><span class="w"> </span><span class="mi">1507735400</span><span class="p">,</span><span class="w">
+            </span><span class="s2">"quantity"</span><span class="p">:</span><span class="w"> </span><span class="mi">40</span><span class="p">,</span><span class="w">
+            </span><span class="s2">"price"</span><span class="p">:</span><span class="w"> </span><span class="mf">156.6699</span><span class="p">,</span><span class="w">
+            </span><span class="s2">"amount"</span><span class="p">:</span><span class="w"> </span><span class="mf">6266.8</span><span class="w">
+        </span><span class="p">},</span><span class="w">
+        </span><span class="p">{</span><span class="w">
+            </span><span class="s2">"symbol"</span><span class="p">:</span><span class="w"> </span><span class="s2">"BAC"</span><span class="p">,</span><span class="w">
+            </span><span class="s2">"timestamp"</span><span class="p">:</span><span class="w"> </span><span class="mi">1506680904</span><span class="p">,</span><span class="w">
+            </span><span class="s2">"quantity"</span><span class="p">:</span><span class="w"> </span><span class="mi">-1</span><span class="p">,</span><span class="w">
+            </span><span class="s2">"price"</span><span class="p">:</span><span class="w"> </span><span class="mf">25.43</span><span class="p">,</span><span class="w">
+            </span><span class="s2">"amount"</span><span class="p">:</span><span class="w"> </span><span class="mf">-25.43</span><span class="w">
+        </span><span class="p">},</span><span class="w">
+        </span><span class="p">{</span><span class="w">
+            </span><span class="s2">"symbol"</span><span class="p">:</span><span class="w"> </span><span class="s2">"BAC"</span><span class="p">,</span><span class="w">
+            </span><span class="s2">"timestamp"</span><span class="p">:</span><span class="w"> </span><span class="mi">1506680852</span><span class="p">,</span><span class="w">
+            </span><span class="s2">"quantity"</span><span class="p">:</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w">
+            </span><span class="s2">"price"</span><span class="p">:</span><span class="w"> </span><span class="mf">25.49</span><span class="p">,</span><span class="w">
+            </span><span class="s2">"amount"</span><span class="p">:</span><span class="w"> </span><span class="mf">25.49</span><span class="w">
+        </span><span class="p">}</span><span class="w">
+    </span><span class="p">],</span><span class="w">
+    </span><span class="s2">"count"</span><span class="p">:</span><span class="w"> </span><span class="mi">237</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre>
+<p>Get the trades history on the specified account, ordered by descending timestamp. Query parameters are:</p>
+
+<table><thead>
+<tr>
+<th>name</th>
+<th>description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>account</td>
+<td>Required. The account number</td>
+</tr>
+<tr>
+<td>mode</td>
+<td>Optional. Possible options are <code>close</code>, <code>current</code> or empty by default. <code>close</code> denotes the historical mode to return the trades by the end of the previous trading day, <code>current</code> shows the intraday activity, empty combines both</td>
+</tr>
+<tr>
+<td>filter.limit</td>
+<td>Optional, 10 by default. The number of items to return on one page</td>
+</tr>
+<tr>
+<td>filter.skip</td>
+<td>Optional, 0 by default. The number of items to skip</td>
+</tr>
+</tbody></table>
+<h3 id='response'>Response</h3>
+<p>Returns an array of trades and a counter of total trades matching the criteria. Every trade has the following structure:</p>
+
+<table><thead>
+<tr>
+<th>name</th>
+<th>description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>symbol</td>
+<td>security symbol</td>
+</tr>
+<tr>
+<td>timestamp</td>
+<td>unix time stamp of the trade</td>
+</tr>
+<tr>
+<td>quantity</td>
+<td>number of shares or option contracts, negative for sells, positive for buys</td>
+</tr>
+<tr>
+<td>price</td>
+<td>the trade price</td>
+</tr>
+<tr>
+<td>amount</td>
+<td>the trade amount, which is the quantity multiplied by the lot size and price</td>
 </tr>
 </tbody></table>
 <h1 id='trading'>Trading</h1><h2 id='validate-an-order'>Validate an order</h2><pre class="highlight shell tab-shell"><code>curl -X POST

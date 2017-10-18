@@ -117,3 +117,63 @@ average_open_price | average historical cost basis
 current_price | current price
 lot_size | this has the value of 1 for all stocks and usually 100 for all options
 security_type | the type of security, the most common values are `common_stock`, `preferred_stock`, `option`
+
+## Get account trades
+
+```shell
+curl
+    -X GET
+    'https://api.just2trade.com/accounts/{account_number}/trades/{mode}?filter.limit={limit}&filter.skip={skip}'
+```
+
+> Response example
+
+```json
+{
+    "trades": [
+        {
+            "symbol": "AAPL",
+            "timestamp": 1507735400,
+            "quantity": 40,
+            "price": 156.6699,
+            "amount": 6266.8
+        },
+        {
+            "symbol": "BAC",
+            "timestamp": 1506680904,
+            "quantity": -1,
+            "price": 25.43,
+            "amount": -25.43
+        },
+        {
+            "symbol": "BAC",
+            "timestamp": 1506680852,
+            "quantity": 1,
+            "price": 25.49,
+            "amount": 25.49
+        }
+    ],
+    "count": 237
+}
+```
+
+Get the trades history on the specified account, ordered by descending timestamp. Query parameters are:
+
+name | description
+---- | ----
+account | Required. The account number
+mode | Optional. Possible options are `close`, `current` or empty by default. `close` denotes the historical mode to return the trades by the end of the previous trading day, `current` shows the intraday activity, empty combines both
+filter.limit | Optional, 10 by default. The number of items to return on one page
+filter.skip | Optional, 0 by default. The number of items to skip
+
+### Response
+
+Returns an array of trades and a counter of total trades matching the criteria. Every trade has the following structure:
+
+name | description
+---- | ----
+symbol | security symbol
+timestamp | unix time stamp of the trade
+quantity | number of shares or option contracts, negative for sells, positive for buys
+price | the trade price
+amount | the trade amount, which is the quantity multiplied by the lot size and price
