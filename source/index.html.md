@@ -27,5 +27,5 @@ search: true
 > The client test utility
 > [https://api.just2trade.com/docs](https://api.just2trade.com/docs)
 
-We believe that modern financial mechanics is a problem of IT and code, not finance. We are seeking for the elegance of integrations by elimitating the unnecessary complexity of financial infrastructure. All our API calls are based on REST concepts and can be made with any language that supports standard HTTP. We made the trading as easy possible, just plain json and POST.
+We believe that modern financial mechanics is a problem of IT and code, not finance. We seek for elegance of integrations by eliminating the unnecessary complexity of financial infrastructure. Our API calls are based on REST concepts and can be made with any language that supports standard HTTP. Trading is made as easy as possible, just plain JSON and POST.
 
