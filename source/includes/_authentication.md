@@ -8,7 +8,7 @@ The user browser should be directed to the following authentication url. The use
 ```shell
 curl
     -X GET
-    'https://auth.just2trade.com/connect/authorize?response_type=code&client_id={{your_client_id}}&client_secret={{your_client_secret}}&redirect_uri={{your_redirect_uri}}'
+    'https://auth.just2trade.com/connect/authorize?response_type=code&client_id={{your_client_id}}&redirect_uri={{your_redirect_uri}}'
 ```
 
 > After successful authentication the user is redirected to redirect_uri with HTTP code 302 and the authorization code:
@@ -23,7 +23,6 @@ parameter | description
 ---- | ----
 response_type | Required. This is the OAuth authorization flow to use. We currently support only `code`.
 client_id | Required. The client id issued to the service
-client_secret | Required. The client secret issued to the service
 redirect_uri | Required. The url to redirect the user after successful authentication. For security reasons, we do not allow just any url, we require this url to be registered first
 
 
@@ -35,7 +34,7 @@ curl
     -X POST
     --header 'Accept: application/json'
     --header 'Content-Type: application/x-www-form-urlencoded'
-    -d 'grant_type=authorization_code&code={{code}}&client_id={{client_id}}'
+    -d 'grant_type=authorization_code&code={{code}}&client_id={{client_id}}&client_secret={{your_client_secret}}'
     'https://auth.just2trade.com/connect/token'
 ```
 
@@ -55,6 +54,7 @@ parameter | description
 ---- | ----
 grant_type | Required. This is the OAuth authorization flow to use. We currently support only `authorization_code`.
 client_id | Required. The client id issued to the service
+client_secret | Required. The client secret issued to the service
 code | Required. The authorization code recevied at the previous step. Please note the authorization code lifetime is short so please be sure to exchange the code to a token immediately.
 
 ### Response
