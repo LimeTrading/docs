@@ -131,21 +131,24 @@ curl
             "timestamp": 1507735400,
             "quantity": 40,
             "price": 156.6699,
-            "amount": 6266.8
+            "amount": 6266.8,
+            "side": "buy"
         },
         {
             "symbol": "BAC",
             "timestamp": 1506680904,
             "quantity": -1,
             "price": 25.43,
-            "amount": -25.43
+            "amount": -25.43,
+            "side": "sell_short"
         },
         {
             "symbol": "BAC",
             "timestamp": 1506680852,
             "quantity": 1,
             "price": 25.49,
-            "amount": 25.49
+            "amount": 25.49,
+            "side": "buy_to_cover"
         }
     ],
     "count": 237
@@ -171,4 +174,5 @@ symbol | security symbol
 timestamp | unix time stamp of the trade
 quantity | number of shares or option contracts, negative for sells, positive for buys
 price | the trade price
-amount | the trade amount, which is the quantity multiplied by the lot size and price
+amount | the trade amount, which is the quantity multiplied by the lot size and price,
+side | `buy`, `sell`, `sell_short` or `buy_to_cover`
