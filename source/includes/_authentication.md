@@ -94,10 +94,13 @@ curl
             "trade_platform": "ETNA"
         }
     ],
-    "application": {
-        "status": "process"
-    }
+    "applications": [
+        {
+            "account_number": "",
+            "status": "process"
+        }
+    ]
 }
 ```
 
-This retrieves the basic user information including the application status and the list of existing account numbers.
+This retrieves the basic user information including new accounts application status and the list of existing account numbers.

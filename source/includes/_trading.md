@@ -62,7 +62,7 @@ time_in_force | Optional, `day` by default. Specifies how long the order remains
 order_type | Optional, `market` by default. Possible values are `market`, `limit`, `stop`, `stop_limit`, `market_on_close`, `limit_on_close`
 side | Optional, `buy` by default. Available values are `buy`, `sell`, `sell_short`, `buy_to_cover`. `buy` opens long position, `sell` closes the position, `sell_short` opens short position, `buy_to_cover` closes the short position. You can use only `buy` and `sell` so that the system will detemine the proper side according to the current position, but you are still required to place two orders to revert the position from long to short and the other way around.
 comment | Optional, any string
-exchange | Optional, `auto` by default. The routing instructions for order execution. The actual values are dynamic and depend on the account settings. Some of the possible values are `nasdaq` or `nyse`
+exchange | Optional, `auto` by default. The routing instructions for order execution. The actual values are dynamic and depend on the account settings. Some of the possible values are `NASDAQ` or `ARCA`
 
 ### Response
 
@@ -120,7 +120,7 @@ curl -X POST
 }
 ```
 
-The order is validated with exactly same logic as the [validate] (#validate-an-order). The order is sent to market on successful validation pass, in which case the method returns the following:
+The order is accepted immediately, the method returns assigned id. The order is still validated with exactly same logic as in [validate] (#validate-an-order) method and is sent to market on successful validation pass.
 
 ### Response
 

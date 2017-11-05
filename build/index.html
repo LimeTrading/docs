@@ -567,12 +567,15 @@
             </span><span class="s2">"trade_platform"</span><span class="p">:</span><span class="w"> </span><span class="s2">"ETNA"</span><span class="w">
         </span><span class="p">}</span><span class="w">
     </span><span class="p">],</span><span class="w">
-    </span><span class="s2">"application"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
-        </span><span class="s2">"status"</span><span class="p">:</span><span class="w"> </span><span class="s2">"process"</span><span class="w">
-    </span><span class="p">}</span><span class="w">
+    </span><span class="s2">"applications"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
+        </span><span class="p">{</span><span class="w">
+            </span><span class="s2">"account_number"</span><span class="p">:</span><span class="w"> </span><span class="s2">""</span><span class="p">,</span><span class="w">
+            </span><span class="s2">"status"</span><span class="p">:</span><span class="w"> </span><span class="s2">"process"</span><span class="w">
+        </span><span class="p">}</span><span class="w">
+    </span><span class="p">]</span><span class="w">
 </span><span class="p">}</span><span class="w">
 </span></code></pre>
-<p>This retrieves the basic user information including the application status and the list of existing account numbers.</p>
+<p>This retrieves the basic user information including new accounts application status and the list of existing account numbers.</p>
 <h1 id='accounts'>Accounts</h1><h2 id='get-accounts-balances'>Get accounts balances</h2><pre class="highlight shell tab-shell"><code>curl
     -X GET
     <span class="s1">'https://api.just2trade.com/accounts'</span>
@@ -919,7 +922,7 @@
 </tr>
 <tr>
 <td>exchange</td>
-<td>Optional, <code>auto</code> by default. The routing instructions for order execution. The actual values are dynamic and depend on the account settings. Some of the possible values are <code>nasdaq</code> or <code>nyse</code></td>
+<td>Optional, <code>auto</code> by default. The routing instructions for order execution. The actual values are dynamic and depend on the account settings. Some of the possible values are <code>NASDAQ</code> or <code>ARCA</code></td>
 </tr>
 </tbody></table>
 <h3 id='response'>Response</h3>
@@ -981,7 +984,7 @@
   </span><span class="s2">"data"</span><span class="p">:</span><span class="w"> </span><span class="s2">"201710041710516537"</span><span class="w">
 </span><span class="p">}</span><span class="w">
 </span></code></pre>
-<p>The order is validated with exactly same logic as the <a href="#validate-an-order">validate</a>. The order is sent to market on successful validation pass, in which case the method returns the following:</p>
+<p>The order is accepted immediately, the method returns assigned id. The order is still validated with exactly same logic as in <a href="#validate-an-order">validate</a> method and is sent to market on successful validation pass.</p>
 <h3 id='response-2'>Response</h3>
 <table><thead>
 <tr>
