@@ -914,7 +914,7 @@
 </tr>
 <tr>
 <td>side</td>
-<td>Optional, <code>buy</code> by default. Available values are <code>buy</code>, <code>sell</code>, <code>sell_short</code>, <code>buy_to_cover</code>. <code>buy</code> opens long position, <code>sell</code> closes the position, <code>sell_short</code> opens short position, <code>buy_to_cover</code> closes the short position. You can use only <code>buy</code> and <code>sell</code> so that the system will detemine the proper side according to the current position, but you are still required to place two orders to revert the position from long to short and the other way around.</td>
+<td>Optional, <code>buy</code> by default. Available values are <code>buy</code> and <code>sell</code>. <code>buy</code> opens long position, <code>sell</code> closes the position. The system will detemine the proper side according to the current position, but you are still required to place two orders to revert the position from long to short and the other way around.</td>
 </tr>
 <tr>
 <td>comment</td>
@@ -984,7 +984,7 @@
   </span><span class="s2">"data"</span><span class="p">:</span><span class="w"> </span><span class="s2">"201710041710516537"</span><span class="w">
 </span><span class="p">}</span><span class="w">
 </span></code></pre>
-<p>The order is accepted immediately, the method returns assigned id. The order is still validated with exactly same logic as in <a href="#validate-an-order">validate</a> method and is sent to market on successful validation pass.</p>
+<p>The order is accepted immediately, the method returns assigned id. The order is still validated with exactly same logic as in <a href="#validate-an-order">validate</a> method and is sent to market on successful validation pass. Otherwise, the order will reject asynchronously and you can query its status by calling the <a href="#get-order-details">details</a> method.</p>
 <h3 id='response-2'>Response</h3>
 <table><thead>
 <tr>
