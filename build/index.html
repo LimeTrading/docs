@@ -221,23 +221,18 @@
       <div id="toc" class="toc-list-h1">
           <li>
             <a href="#introduction" class="toc-h1 toc-link" data-title="Introduction">Introduction</a>
-              <ul class="toc-list-h2">
-                  <li>
-                    <a href="#cms-symbols" class="toc-h2 toc-link" data-title="Introduction">CMS symbols</a>
-                  </li>
-                  <li>
-                    <a href="#occ-symbols" class="toc-h2 toc-link" data-title="Introduction">OCC symbols</a>
-                  </li>
-              </ul>
           </li>
           <li>
             <a href="#authentication" class="toc-h1 toc-link" data-title="Authentication">Authentication</a>
               <ul class="toc-list-h2">
                   <li>
-                    <a href="#request-authorization" class="toc-h2 toc-link" data-title="Authentication">Request authorization</a>
+                    <a href="#password-flow" class="toc-h2 toc-link" data-title="Authentication">Password Flow</a>
                   </li>
                   <li>
-                    <a href="#access-token" class="toc-h2 toc-link" data-title="Authentication">Access token</a>
+                    <a href="#code-flow-authorize" class="toc-h2 toc-link" data-title="Authentication">Code Flow - Authorize</a>
+                  </li>
+                  <li>
+                    <a href="#code-flow-access-token" class="toc-h2 toc-link" data-title="Authentication">Code Flow - Access token</a>
                   </li>
                   <li>
                     <a href="#user-profile" class="toc-h2 toc-link" data-title="Authentication">User profile</a>
@@ -292,6 +287,12 @@
                   <li>
                     <a href="#http-status-codes" class="toc-h2 toc-link" data-title="Errors">HTTP Status Codes</a>
                   </li>
+                  <li>
+                    <a href="#cms-symbols" class="toc-h2 toc-link" data-title="Errors">CMS symbols</a>
+                  </li>
+                  <li>
+                    <a href="#occ-symbols" class="toc-h2 toc-link" data-title="Errors">OCC symbols</a>
+                  </li>
               </ul>
           </li>
       </div>
@@ -313,140 +314,79 @@
 </blockquote>
 
 <p>We believe that modern financial mechanics is a problem of IT and code, not finance. We seek for elegance of integrations by eliminating the unnecessary complexity of financial infrastructure. Our API calls are based on REST concepts and can be made with any language that supports standard HTTP. Trading is made as easy as possible, just plain JSON and POST.</p>
-<h2 id='cms-symbols'>CMS symbols</h2>
-<p>The CMS convention is used to code stocks and ETFs. There is a space between the root and the suffix.</p>
-
+<h1 id='authentication'>Authentication</h1>
+<p>All requests are authenticated with tokens issued by common OAuth 2.0 compatible flow. In order to use the API, the application should be registered with us first to get the <code>client_id</code> and <code>client_secret</code>. Please contact us at support@just2trade.com in order to do that. We support two authorization flows suitable for different scenarios. The <code>password</code> type is short and simple to be used by clients trading directly on their account. The <code>authorization_code</code> type is longer and more complicated but allows third parties to get authorized access to client accounts. For security reasons, the third party applications will need to add one or more callback urls to the whitelist on our side first.</p>
+<h2 id='password-flow'>Password Flow</h2>
+<p>Create an access token by logging in with a valid username and password. The access token is issued for 24 hours by default and prolonged with every method call. In the most common scenario this is the first method to be called at the application start. The POST parameters are:</p>
+<pre class="highlight shell tab-shell"><code>curl
+    -X POST
+    --header <span class="s1">'Accept: application/json'</span>
+    --header <span class="s1">'Content-Type: application/x-www-form-urlencoded'</span>
+    -d <span class="s1">'grant_type=password&amp;client_id={{client_id}}&amp;client_secret={{your_client_secret}}&amp;username={{username}}&amp;password={{password}}'</span>
+    <span class="s1">'https://auth.just2trade.com/connect/token'</span>
+</code></pre>
 <blockquote>
-<p>As an example, the <strong>Bank of America warrant class A</strong> will be coded as <code>BAC WSA</code>, <strong>Berkshire Hathaway class B</strong> is coded as <code>BRK B</code></p>
+<p>Response example</p>
 </blockquote>
-
+<pre class="highlight json tab-json"><code><span class="p">{</span><span class="w">
+  </span><span class="s2">"scope"</span><span class="p">:</span><span class="w"> </span><span class="s2">"email profile"</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"token_type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Bearer"</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"access_token"</span><span class="p">:</span><span class="w"> </span><span class="s2">"MjAwOTg1OWUtZTUwMy00YzY4LWEyZWQtODU0N2NkZTJiNDdlfDIwMTcxMDA3MTkyNDQzfHRlc3R8U2VyZ2V5fE1pbmtvdg=="</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"expires_in"</span><span class="p">:</span><span class="w"> </span><span class="mi">86400</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre>
 <table><thead>
 <tr>
-<th>Security Categorization</th>
-<th>CMS Suffix</th>
+<th>&nbsp;</th>
+<th>&nbsp;</th>
 </tr>
 </thead><tbody>
 <tr>
-<td>Preferred</td>
-<td>PR</td>
+<td>grant_type</td>
+<td>Required. This is the OAuth authorization flow to use. <code>password</code> in this case.</td>
 </tr>
 <tr>
-<td>Preferred Class class A</td>
-<td>PRA</td>
+<td>client_id</td>
+<td>Required. The client id issued to the service</td>
 </tr>
 <tr>
-<td>Class “A”</td>
-<td>A</td>
+<td>client_secret</td>
+<td>Required. The client secret issued to the service</td>
 </tr>
 <tr>
-<td>Preferred when distributed</td>
-<td>PRWD</td>
+<td>username</td>
+<td>Required with <code>password</code> grant type.</td>
 </tr>
 <tr>
-<td>When distributed</td>
-<td>WD</td>
-</tr>
-<tr>
-<td>Warrants</td>
-<td>WS</td>
-</tr>
-<tr>
-<td>Warrants Class “A”</td>
-<td>WSA</td>
-</tr>
-<tr>
-<td>Called</td>
-<td>CL</td>
-</tr>
-<tr>
-<td>Class “A” Called</td>
-<td>ACL</td>
-</tr>
-<tr>
-<td>Preferred called</td>
-<td>PRCL</td>
-</tr>
-<tr>
-<td>Preferred “A” called</td>
-<td>PRACL</td>
-</tr>
-<tr>
-<td>Preferred “A” when issued</td>
-<td>PRAWI</td>
-</tr>
-<tr>
-<td>Emerging Company Marketplace</td>
-<td>EC</td>
-</tr>
-<tr>
-<td>Partial Paid</td>
-<td>PP</td>
-</tr>
-<tr>
-<td>Convertible</td>
-<td>CV</td>
-</tr>
-<tr>
-<td>Convertible called</td>
-<td>CVCL</td>
-</tr>
-<tr>
-<td>Class Convertible</td>
-<td>ACV</td>
-</tr>
-<tr>
-<td>Preferred (class A) Convertible</td>
-<td>PRACV</td>
-</tr>
-<tr>
-<td>Preferred (class A) when Distributed</td>
-<td>PRAWD</td>
-</tr>
-<tr>
-<td>Rights</td>
-<td>RT</td>
-</tr>
-<tr>
-<td>Units</td>
-<td>U</td>
-</tr>
-<tr>
-<td>When issued</td>
-<td>WI</td>
-</tr>
-<tr>
-<td>Rights when issued</td>
-<td>RTWI</td>
-</tr>
-<tr>
-<td>Preferred when issued</td>
-<td>PRWI</td>
-</tr>
-<tr>
-<td>Class &quot;A&quot; when issued</td>
-<td>AWI</td>
-</tr>
-<tr>
-<td>Warrrant when issued</td>
-<td>WSWI</td>
+<td>password</td>
+<td>Required with <code>password</code> grant type.</td>
 </tr>
 </tbody></table>
-<h2 id='occ-symbols'>OCC symbols</h2>
-<blockquote>
-<p>For example, symbol <code>AAPL  171103C00155000</code> is translated to a call on AAPL expiring on November 3rd 2017, with its strike price of $155.00</p>
-</blockquote>
-
-<p>Option symbols are coded according to the OCC standard. The OCC option symbol consists of 4 parts:</p>
-
-<ul>
-<li>Root symbol of the underlying stock or ETF, padded with spaces to 6 characters</li>
-<li>Expiration date, 6 digits in the format yymmdd</li>
-<li>Option type, either P or C, for put or call</li>
-<li>Strike price, as the price x 1000, front padded with 0s to 8 digits</li>
-</ul>
-<h1 id='authentication'>Authentication</h1>
-<p>All requests are authenticated with tokens issued by common OAuth 2.0 compatible flow. In order to use the API, the third party service should register with us first to get the <code>client_id</code>, <code>client_secret</code> and set up the <code>redirect_uri</code>. The user logs in with Just2Trade login and password issuing a token that grants access to his account to the third party service. Our central authorization service is located at https://auth.just2trade.com</p>
-<h2 id='request-authorization'>Request authorization</h2>
+<h3 id='response'>Response</h3>
+<table><thead>
+<tr>
+<th>name</th>
+<th>value</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>access_token</td>
+<td>the access token</td>
+</tr>
+<tr>
+<td>scope</td>
+<td>the scopes this token grants access to</td>
+</tr>
+<tr>
+<td>token_type</td>
+<td><code>Bearer</code> means that the access token should be put to the Authorization header of every web request</td>
+</tr>
+<tr>
+<td>expires_in</td>
+<td>the expiration lifetime in seconds</td>
+</tr>
+</tbody></table>
+<h2 id='code-flow-authorize'>Code Flow - Authorize</h2>
 <p>The user browser should be directed to the following authentication url. The user will see the Just2Trade login form to input the credentials.</p>
 <pre class="highlight shell tab-shell"><code>curl
     -X GET
@@ -466,7 +406,7 @@
 </thead><tbody>
 <tr>
 <td>response_type</td>
-<td>Required. This is the OAuth authorization flow to use. We currently support only <code>code</code>.</td>
+<td>Required. This is the OAuth authorization flow to use. In this case this is <code>code</code>.</td>
 </tr>
 <tr>
 <td>client_id</td>
@@ -477,13 +417,13 @@
 <td>Required. The url to redirect the user after successful authentication. For security reasons, we do not allow just any url, we require this url to be registered first</td>
 </tr>
 </tbody></table>
-<h2 id='access-token'>Access token</h2>
+<h2 id='code-flow-access-token'>Code Flow - Access token</h2>
 <p>The next step is to exchange the authorization code to an access token which will be used to authenticate all API requests. By default the access token is issued for 24 hours and is prolonged with every usage.</p>
 <pre class="highlight shell tab-shell"><code>curl
     -X POST
     --header <span class="s1">'Accept: application/json'</span>
     --header <span class="s1">'Content-Type: application/x-www-form-urlencoded'</span>
-    -d <span class="s1">'grant_type=authorization_code&amp;code={{code}}&amp;client_id={{client_id}}&amp;client_secret={{your_client_secret}}'</span>
+    -d <span class="s1">'grant_type=authorization_code&amp;code={{code}}&amp;client_id={{client_id}}&amp;client_secret={{your_client_secret}}&amp;redirect_uri={{your_redirect_uri}}'</span>
     <span class="s1">'https://auth.just2trade.com/connect/token'</span>
 </code></pre>
 <blockquote>
@@ -504,7 +444,7 @@
 </thead><tbody>
 <tr>
 <td>grant_type</td>
-<td>Required. This is the OAuth authorization flow to use. We currently support only <code>authorization_code</code>.</td>
+<td>Required. This is the OAuth authorization flow to use. <code>authorization_code</code> in this case.</td>
 </tr>
 <tr>
 <td>client_id</td>
@@ -516,10 +456,14 @@
 </tr>
 <tr>
 <td>code</td>
-<td>Required. The authorization code recevied at the previous step. Please note the authorization code lifetime is short so please be sure to exchange the code to a token immediately.</td>
+<td>Required with <code>authorization_code</code> grant type. The authorization code received at the previous step. Please note the authorization code lifetime is short (5 minutes) so please be sure to exchange the code to a token immediately.</td>
+</tr>
+<tr>
+<td>redirect_uri</td>
+<td>Required with <code>authorization_code</code> grant type. The same url as on the previous request authorization step.</td>
 </tr>
 </tbody></table>
-<h3 id='response'>Response</h3>
+<h3 id='response-2'>Response</h3>
 <table><thead>
 <tr>
 <th>name</th>
@@ -575,7 +519,7 @@
     </span><span class="p">]</span><span class="w">
 </span><span class="p">}</span><span class="w">
 </span></code></pre>
-<p>This retrieves the basic user information including new accounts application status and the list of existing account numbers.</p>
+<p>This retrieves the basic profile information including new accounts application status and the list of existing account numbers.</p>
 <h1 id='accounts'>Accounts</h1><h2 id='get-accounts-balances'>Get accounts balances</h2><pre class="highlight shell tab-shell"><code>curl
     -X GET
     <span class="s1">'https://api.just2trade.com/accounts'</span>
@@ -1259,6 +1203,137 @@
 <td>internal server error, something on our end</td>
 </tr>
 </tbody></table>
+<h2 id='cms-symbols'>CMS symbols</h2>
+<p>The CMS convention is used to code stocks and ETFs. There is a space between the root and the suffix.</p>
+
+<blockquote>
+<p>As an example, the <strong>Bank of America warrant class A</strong> will be coded as <code>BAC WSA</code>, <strong>Berkshire Hathaway class B</strong> is coded as <code>BRK B</code></p>
+</blockquote>
+
+<table><thead>
+<tr>
+<th>Security Categorization</th>
+<th>CMS Suffix</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>Preferred</td>
+<td>PR</td>
+</tr>
+<tr>
+<td>Preferred Class class A</td>
+<td>PRA</td>
+</tr>
+<tr>
+<td>Class “A”</td>
+<td>A</td>
+</tr>
+<tr>
+<td>Preferred when distributed</td>
+<td>PRWD</td>
+</tr>
+<tr>
+<td>When distributed</td>
+<td>WD</td>
+</tr>
+<tr>
+<td>Warrants</td>
+<td>WS</td>
+</tr>
+<tr>
+<td>Warrants Class “A”</td>
+<td>WSA</td>
+</tr>
+<tr>
+<td>Called</td>
+<td>CL</td>
+</tr>
+<tr>
+<td>Class “A” Called</td>
+<td>ACL</td>
+</tr>
+<tr>
+<td>Preferred called</td>
+<td>PRCL</td>
+</tr>
+<tr>
+<td>Preferred “A” called</td>
+<td>PRACL</td>
+</tr>
+<tr>
+<td>Preferred “A” when issued</td>
+<td>PRAWI</td>
+</tr>
+<tr>
+<td>Emerging Company Marketplace</td>
+<td>EC</td>
+</tr>
+<tr>
+<td>Partial Paid</td>
+<td>PP</td>
+</tr>
+<tr>
+<td>Convertible</td>
+<td>CV</td>
+</tr>
+<tr>
+<td>Convertible called</td>
+<td>CVCL</td>
+</tr>
+<tr>
+<td>Class Convertible</td>
+<td>ACV</td>
+</tr>
+<tr>
+<td>Preferred (class A) Convertible</td>
+<td>PRACV</td>
+</tr>
+<tr>
+<td>Preferred (class A) when Distributed</td>
+<td>PRAWD</td>
+</tr>
+<tr>
+<td>Rights</td>
+<td>RT</td>
+</tr>
+<tr>
+<td>Units</td>
+<td>U</td>
+</tr>
+<tr>
+<td>When issued</td>
+<td>WI</td>
+</tr>
+<tr>
+<td>Rights when issued</td>
+<td>RTWI</td>
+</tr>
+<tr>
+<td>Preferred when issued</td>
+<td>PRWI</td>
+</tr>
+<tr>
+<td>Class &quot;A&quot; when issued</td>
+<td>AWI</td>
+</tr>
+<tr>
+<td>Warrrant when issued</td>
+<td>WSWI</td>
+</tr>
+</tbody></table>
+<h2 id='occ-symbols'>OCC symbols</h2>
+<blockquote>
+<p>For example, symbol <code>AAPL  171103C00155000</code> is translated to a call on AAPL expiring on November 3rd 2017, with its strike price of $155.00</p>
+</blockquote>
+
+<p>Option symbols are coded according to the OCC standard. The OCC option symbol consists of 4 parts:</p>
+
+<ul>
+<li>Root symbol of the underlying stock or ETF, padded with spaces to 6 characters</li>
+<li>Expiration date, 6 digits in the format yymmdd</li>
+<li>Option type, either P or C, for put or call</li>
+<li>Strike price, as the price x 1000, front padded with 0s to 8 digits</li>
+</ul>
 
       </div>
       <div class="dark-box">

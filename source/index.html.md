@@ -9,12 +9,12 @@ toc_footers:
   - <a href='https://cabinet.just2trade.com'>J2T personal cabinet</a>
 
 includes:
-  - articles
   - authentication
   - accounts
   - trading
   - marketdata
   - errors
+  - articles
 
 search: true
 ---
