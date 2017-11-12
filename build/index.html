@@ -279,6 +279,18 @@
                   <li>
                     <a href="#get-quotes-history" class="toc-h2 toc-link" data-title="Market data">Get quotes history</a>
                   </li>
+                  <li>
+                    <a href="#lookup-securities" class="toc-h2 toc-link" data-title="Market data">Lookup securities</a>
+                  </li>
+                  <li>
+                    <a href="#get-option-series" class="toc-h2 toc-link" data-title="Market data">Get option series</a>
+                  </li>
+                  <li>
+                    <a href="#get-option-expirations" class="toc-h2 toc-link" data-title="Market data">Get option expirations</a>
+                  </li>
+                  <li>
+                    <a href="#get-option-chain" class="toc-h2 toc-link" data-title="Market data">Get option chain</a>
+                  </li>
               </ul>
           </li>
           <li>
@@ -287,11 +299,16 @@
                   <li>
                     <a href="#http-status-codes" class="toc-h2 toc-link" data-title="Errors">HTTP Status Codes</a>
                   </li>
+              </ul>
+          </li>
+          <li>
+            <a href="#appendix" class="toc-h1 toc-link" data-title="Appendix">Appendix</a>
+              <ul class="toc-list-h2">
                   <li>
-                    <a href="#cms-symbols" class="toc-h2 toc-link" data-title="Errors">CMS symbols</a>
+                    <a href="#cms-symbols" class="toc-h2 toc-link" data-title="Appendix">CMS symbols</a>
                   </li>
                   <li>
-                    <a href="#occ-symbols" class="toc-h2 toc-link" data-title="Errors">OCC symbols</a>
+                    <a href="#occ-symbols" class="toc-h2 toc-link" data-title="Appendix">OCC symbols</a>
                   </li>
               </ul>
           </li>
@@ -685,7 +702,7 @@
 </tbody></table>
 <h2 id='get-account-trades'>Get account trades</h2><pre class="highlight shell tab-shell"><code>curl
     -X GET
-    <span class="s1">'https://api.just2trade.com/accounts/{account_number}/trades/{mode}?filter.limit={limit}&amp;filter.skip={skip}'</span>
+    <span class="s1">'https://api.just2trade.com/accounts/{account_number}/trades/{mode}?limit={limit}&amp;skip={skip}'</span>
 </code></pre>
 <blockquote>
 <p>Response example</p>
@@ -737,11 +754,11 @@
 <td>Optional. Possible options are <code>close</code>, <code>current</code> or empty by default. <code>close</code> denotes the historical mode to return the trades by the end of the previous trading day, <code>current</code> shows the intraday activity, empty combines both</td>
 </tr>
 <tr>
-<td>filter.limit</td>
+<td>limit</td>
 <td>Optional, 10 by default. The number of items to return on one page</td>
 </tr>
 <tr>
-<td>filter.skip</td>
+<td>skip</td>
 <td>Optional, 0 by default. The number of items to skip</td>
 </tr>
 </tbody></table>
@@ -1055,9 +1072,7 @@
 <td>Optional, any string</td>
 </tr>
 </tbody></table>
-<h1 id='market-data'>Market data</h1>
-<aside class="notice">The stock symbols use Nasdaq CMS convention. Option symbols are encoded as OCC. The date is the unix timestamp.</aside>
-<h2 id='get-current-quote'>Get current quote</h2><pre class="highlight shell tab-shell"><code>curl
+<h1 id='market-data'>Market data</h1><h2 id='get-current-quote'>Get current quote</h2><pre class="highlight shell tab-shell"><code>curl
     -X GET
     --header <span class="s1">'Accept: application/json'</span>
     --header <span class="s1">'Authorization: Bearer token'</span>
@@ -1157,6 +1172,158 @@
 <td>Required. End of the period, unix timestamp</td>
 </tr>
 </tbody></table>
+<h2 id='lookup-securities'>Lookup securities</h2><pre class="highlight shell tab-shell"><code>curl
+    -X GET
+    --header <span class="s1">'Accept: application/json'</span>
+    --header <span class="s1">'Authorization: Bearer token'</span>
+    <span class="s1">'https://api.just2trade.com/securities?query=ba&amp;limit=4
+</span></code></pre>
+<blockquote>
+<p>Response</p>
+</blockquote>
+<pre class="highlight json tab-json"><code><span class="p">{</span><span class="w">
+    </span><span class="s2">"securities"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
+        </span><span class="p">{</span><span class="w">
+            </span><span class="s2">"symbol"</span><span class="p">:</span><span class="w"> </span><span class="s2">"BA"</span><span class="p">,</span><span class="w">
+            </span><span class="s2">"description"</span><span class="p">:</span><span class="w"> </span><span class="s2">"BOEING COMPANY"</span><span class="w">
+        </span><span class="p">},</span><span class="w">
+        </span><span class="p">{</span><span class="w">
+            </span><span class="s2">"symbol"</span><span class="p">:</span><span class="w"> </span><span class="s2">"BAC"</span><span class="p">,</span><span class="w">
+            </span><span class="s2">"description"</span><span class="p">:</span><span class="w"> </span><span class="s2">"BANK OF AMERICA CORPORATION"</span><span class="w">
+        </span><span class="p">},</span><span class="w">
+        </span><span class="p">{</span><span class="w">
+            </span><span class="s2">"symbol"</span><span class="p">:</span><span class="w"> </span><span class="s2">"BAX"</span><span class="p">,</span><span class="w">
+            </span><span class="s2">"description"</span><span class="p">:</span><span class="w"> </span><span class="s2">"BAXTER INTERNATIONAL Inc"</span><span class="w">
+        </span><span class="p">},</span><span class="w">
+        </span><span class="p">{</span><span class="w">
+            </span><span class="s2">"symbol"</span><span class="p">:</span><span class="w"> </span><span class="s2">"BAP"</span><span class="p">,</span><span class="w">
+            </span><span class="s2">"description"</span><span class="p">:</span><span class="w"> </span><span class="s2">"CREDICORP Ltd"</span><span class="w">
+        </span><span class="p">}</span><span class="w">
+    </span><span class="p">],</span><span class="w">
+    </span><span class="s2">"count"</span><span class="p">:</span><span class="w"> </span><span class="mi">2492</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre>
+<p>Searches the securities reference by the specified criteria. The criteria can be a symbol, part of a symbol or part of a company name. Query parameters are:</p>
+
+<table><thead>
+<tr>
+<th>name</th>
+<th>description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>query</td>
+<td>Required. The search criteria.</td>
+</tr>
+<tr>
+<td>limit</td>
+<td>Optional, 10 by default. The number of items to return on one page</td>
+</tr>
+</tbody></table>
+<h2 id='get-option-series'>Get option series</h2><pre class="highlight shell tab-shell"><code>curl
+    -X GET
+    --header <span class="s1">'Accept: application/json'</span>
+    --header <span class="s1">'Authorization: Bearer token'</span>
+    <span class="s1">'https://api.just2trade.com/securities/VXX/options/series
+</span></code></pre>
+<blockquote>
+<p>Response</p>
+</blockquote>
+<pre class="highlight json tab-json"><code><span class="p">[</span><span class="w">
+    </span><span class="s2">"VXX"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"VXX1"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"VXX2"</span><span class="w">
+</span><span class="p">]</span><span class="w">
+</span></code></pre>
+<p>Returns an array of option series by the specified underlying security&#39;s symbol. Contains at least one element which is the default series.</p>
+<h2 id='get-option-expirations'>Get option expirations</h2><pre class="highlight shell tab-shell"><code>curl
+    -X GET
+    --header <span class="s1">'Accept: application/json'</span>
+    --header <span class="s1">'Authorization: Bearer token'</span>
+    <span class="s1">'https://api.just2trade.com/securities/{{symbol}}/options/expirations?series={{series}}
+</span></code></pre>
+<blockquote>
+<p>Response</p>
+</blockquote>
+<pre class="highlight json tab-json"><code><span class="p">[</span><span class="w">
+    </span><span class="s2">"2017-11-17"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"2017-11-24"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"2017-12-01"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"2017-12-15"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"2018-01-19"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"2018-02-16"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"2018-04-20"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"2018-06-15"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"2018-09-21"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"2019-01-18"</span><span class="w">
+</span><span class="p">]</span><span class="w">
+</span></code></pre>
+<p>Returns an array of all available option expiration dates formatted as yyyy-mm-dd. Parameters are:</p>
+
+<table><thead>
+<tr>
+<th>name</th>
+<th>description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>symbol</td>
+<td>Required. The root symbol.</td>
+</tr>
+<tr>
+<td>series</td>
+<td>Optional. By default the series is the same as the the root symbol</td>
+</tr>
+</tbody></table>
+<h2 id='get-option-chain'>Get option chain</h2><pre class="highlight shell tab-shell"><code>curl
+    -X GET
+    --header <span class="s1">'Accept: application/json'</span>
+    --header <span class="s1">'Authorization: Bearer token'</span>
+    <span class="s1">'https://api.just2trade.com/securities/{{symbol}}/options?expiration={{expiration}}&amp;series={{series}}
+</span></code></pre>
+<blockquote>
+<p>Response exsample</p>
+</blockquote>
+<pre class="highlight json tab-json"><code><span class="p">[</span><span class="w">
+    </span><span class="p">{</span><span class="w">
+        </span><span class="s2">"symbol"</span><span class="p">:</span><span class="w"> </span><span class="s2">"VXX2  171117C00008000"</span><span class="p">,</span><span class="w">
+        </span><span class="s2">"type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"call"</span><span class="p">,</span><span class="w">
+        </span><span class="s2">"strike"</span><span class="p">:</span><span class="w"> </span><span class="mi">8</span><span class="w">
+    </span><span class="p">},</span><span class="w">
+    </span><span class="p">{</span><span class="w">
+        </span><span class="s2">"symbol"</span><span class="p">:</span><span class="w"> </span><span class="s2">"VXX2  171117P00008000"</span><span class="p">,</span><span class="w">
+        </span><span class="s2">"type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"put"</span><span class="p">,</span><span class="w">
+        </span><span class="s2">"strike"</span><span class="p">:</span><span class="w"> </span><span class="mi">8</span><span class="w">
+    </span><span class="p">},</span><span class="w">
+    </span><span class="p">{</span><span class="w">
+        </span><span class="s2">"symbol"</span><span class="p">:</span><span class="w"> </span><span class="s2">"VXX2  171117C00009000"</span><span class="p">,</span><span class="w">
+        </span><span class="s2">"type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"call"</span><span class="p">,</span><span class="w">
+        </span><span class="s2">"strike"</span><span class="p">:</span><span class="w"> </span><span class="mi">9</span><span class="w">
+    </span><span class="p">},</span><span class="w">
+    </span><span class="err">...</span><span class="w">
+</span><span class="p">]</span><span class="w">
+</span></code></pre>
+<p>Returns an array of option contracts by the specified expiration date and series. Parameters are:</p>
+
+<table><thead>
+<tr>
+<th>name</th>
+<th>description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>symbol</td>
+<td>Required. The root symbol.</td>
+</tr>
+<tr>
+<td>expiration</td>
+<td>Required. Contract expiration date, formatted as yyyy-mm-dd</td>
+</tr>
+<tr>
+<td>series</td>
+<td>Optional. By default the series is the same as the the root symbol</td>
+</tr>
+</tbody></table>
 <h1 id='errors'>Errors</h1>
 <p>We use standard HTTP codes to indicate the result of a request. Generally speaking, codes in <code>2xx</code> range indicate successful call, codes <code>4xx</code> indicate that the request failed with the information provided (authentication not accepted, parameters formatted incorrectly, a trade is not accepted) and codes <code>5xx</code> indicate internal server errors with no further explanation. The standard codes are clearly not enough, that is why the API can also respond with a json object with the following optional fields:</p>
 
@@ -1203,7 +1370,7 @@
 <td>internal server error, something on our end</td>
 </tr>
 </tbody></table>
-<h2 id='cms-symbols'>CMS symbols</h2>
+<h1 id='appendix'>Appendix</h1><h2 id='cms-symbols'>CMS symbols</h2>
 <p>The CMS convention is used to code stocks and ETFs. There is a space between the root and the suffix.</p>
 
 <blockquote>

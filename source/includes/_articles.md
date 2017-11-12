@@ -1,4 +1,6 @@
 
+# Appendix
+
 ## CMS symbols
 
 The CMS convention is used to code stocks and ETFs. There is a space between the root and the suffix.

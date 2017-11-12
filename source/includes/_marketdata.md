@@ -1,5 +1,4 @@
 # Market data
-<aside class="notice">The stock symbols use Nasdaq CMS convention. Option symbols are encoded as OCC. The date is the unix timestamp.</aside>
 
 ## Get current quote
 
@@ -89,3 +88,145 @@ symbol | Required. The security symbol, stocks in Nasdaq CMS convention. Options
 period | Required. The supported periods are: `minute`, `hour`, `day`, `week`, `month`, `quarter`, `year`
 from | Required. Start of the period, unix timestamp
 to | Required. End of the period, unix timestamp
+
+
+## Lookup securities
+
+```shell
+curl
+    -X GET
+    --header 'Accept: application/json'
+    --header 'Authorization: Bearer token'
+    'https://api.just2trade.com/securities?query=ba&limit=4
+```
+
+> Response
+
+```json
+{
+    "securities": [
+        {
+            "symbol": "BA",
+            "description": "BOEING COMPANY"
+        },
+        {
+            "symbol": "BAC",
+            "description": "BANK OF AMERICA CORPORATION"
+        },
+        {
+            "symbol": "BAX",
+            "description": "BAXTER INTERNATIONAL Inc"
+        },
+        {
+            "symbol": "BAP",
+            "description": "CREDICORP Ltd"
+        }
+    ],
+    "count": 2492
+}
+```
+
+Searches the securities reference by the specified criteria. The criteria can be a symbol, part of a symbol or part of a company name. Query parameters are:
+
+name | description
+---- | ----
+query | Required. The search criteria.
+limit | Optional, 10 by default. The number of items to return on one page
+
+
+## Get option series
+
+```shell
+curl
+    -X GET
+    --header 'Accept: application/json'
+    --header 'Authorization: Bearer token'
+    'https://api.just2trade.com/securities/VXX/options/series
+```
+
+> Response
+
+```json
+[
+    "VXX",
+    "VXX1",
+    "VXX2"
+]
+```
+
+Returns an array of option series by the specified underlying security's symbol. Contains at least one element which is the default series.
+
+## Get option expirations
+
+```shell
+curl
+    -X GET
+    --header 'Accept: application/json'
+    --header 'Authorization: Bearer token'
+    'https://api.just2trade.com/securities/{{symbol}}/options/expirations?series={{series}}
+```
+
+> Response
+
+```json
+[
+    "2017-11-17",
+    "2017-11-24",
+    "2017-12-01",
+    "2017-12-15",
+    "2018-01-19",
+    "2018-02-16",
+    "2018-04-20",
+    "2018-06-15",
+    "2018-09-21",
+    "2019-01-18"
+]
+```
+
+Returns an array of all available option expiration dates formatted as yyyy-mm-dd. Parameters are:
+
+name | description
+---- | ----
+symbol | Required. The root symbol.
+series | Optional. By default the series is the same as the the root symbol
+
+## Get option chain
+
+```shell
+curl
+    -X GET
+    --header 'Accept: application/json'
+    --header 'Authorization: Bearer token'
+    'https://api.just2trade.com/securities/{{symbol}}/options?expiration={{expiration}}&series={{series}}
+```
+
+> Response exsample
+
+```json
+[
+    {
+        "symbol": "VXX2  171117C00008000",
+        "type": "call",
+        "strike": 8
+    },
+    {
+        "symbol": "VXX2  171117P00008000",
+        "type": "put",
+        "strike": 8
+    },
+    {
+        "symbol": "VXX2  171117C00009000",
+        "type": "call",
+        "strike": 9
+    },
+    ...
+]
+```
+
+Returns an array of option contracts by the specified expiration date and series. Parameters are:
+
+name | description
+---- | ----
+symbol | Required. The root symbol.
+expiration | Required. Contract expiration date, formatted as yyyy-mm-dd
+series | Optional. By default the series is the same as the the root symbol

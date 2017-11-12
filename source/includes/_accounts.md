@@ -118,7 +118,7 @@ security_type | the type of security, the most common values are `common_stock`,
 ```shell
 curl
     -X GET
-    'https://api.just2trade.com/accounts/{account_number}/trades/{mode}?filter.limit={limit}&filter.skip={skip}'
+    'https://api.just2trade.com/accounts/{account_number}/trades/{mode}?limit={limit}&skip={skip}'
 ```
 
 > Response example
@@ -161,8 +161,8 @@ name | description
 ---- | ----
 account | Required. The account number
 mode | Optional. Possible options are `close`, `current` or empty by default. `close` denotes the historical mode to return the trades by the end of the previous trading day, `current` shows the intraday activity, empty combines both
-filter.limit | Optional, 10 by default. The number of items to return on one page
-filter.skip | Optional, 0 by default. The number of items to skip
+limit | Optional, 10 by default. The number of items to return on one page
+skip | Optional, 0 by default. The number of items to skip
 
 ### Response
 
