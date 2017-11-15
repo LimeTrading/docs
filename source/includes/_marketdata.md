@@ -52,7 +52,7 @@ curl
     -X GET
     --header 'Accept: application/json'
     --header 'Authorization: Bearer token'
-    'https://api.just2trade.com/marketdata/history?symbol=AAPL&period=day&from=1483228800&to=1483488000
+    'https://api.just2trade.com/marketdata/history?symbol=AAPL&period=day&from=1483228800&to=1483488000'
 ```
 
 > Returns an array of candles:
@@ -61,7 +61,7 @@ curl
 [
   {
     "timestamp": 1483074000,
-    "period": "Day",
+    "period": "day",
     "open": 116.65,
     "high": 117.2,
     "low": 115.43,
@@ -70,7 +70,7 @@ curl
   },
   {
     "timestamp": 1483419600,
-    "period": "Day",
+    "period": "day",
     "open": 115.8,
     "high": 116.33,
     "low": 114.76,
@@ -85,7 +85,7 @@ The query returns candle structures aggregated by specified period
 parameter | description
 ---- | ----
 symbol | Required. The security symbol, stocks in Nasdaq CMS convention. Options are not supported
-period | Required. The supported periods are: `minute`, `hour`, `day`, `week`, `month`, `quarter`, `year`
+period | Required. The supported periods are: `minute`, `minute_5`, `minute_15`, `minute_30`, `hour`, `day`, `week`, `month`, `quarter`, `year`
 from | Required. Start of the period, unix timestamp
 to | Required. End of the period, unix timestamp
 
@@ -97,7 +97,7 @@ curl
     -X GET
     --header 'Accept: application/json'
     --header 'Authorization: Bearer token'
-    'https://api.just2trade.com/securities?query=ba&limit=4
+    'https://api.just2trade.com/securities?query=ba&limit=4'
 ```
 
 > Response
@@ -141,7 +141,7 @@ curl
     -X GET
     --header 'Accept: application/json'
     --header 'Authorization: Bearer token'
-    'https://api.just2trade.com/securities/VXX/options/series
+    'https://api.just2trade.com/securities/VXX/options/series'
 ```
 
 > Response
@@ -163,7 +163,7 @@ curl
     -X GET
     --header 'Accept: application/json'
     --header 'Authorization: Bearer token'
-    'https://api.just2trade.com/securities/{{symbol}}/options/expirations?series={{series}}
+    'https://api.just2trade.com/securities/{{symbol}}/options/expirations?series={{series}}'
 ```
 
 > Response
@@ -197,7 +197,7 @@ curl
     -X GET
     --header 'Accept: application/json'
     --header 'Authorization: Bearer token'
-    'https://api.just2trade.com/securities/{{symbol}}/options?expiration={{expiration}}&series={{series}}
+    'https://api.just2trade.com/securities/{{symbol}}/options?expiration={{expiration}}&series={{series}}'
 ```
 
 > Response exsample
