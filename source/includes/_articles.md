@@ -30,9 +30,9 @@ Preferred (class A) Convertible | PRACV
 Preferred (class A) when Distributed | PRAWD
 Rights | RT
 Units | U
-When issued	 | WI
+When issued | WI
 Rights when issued | RTWI
-Preferred when issued	 | PRWI
+Preferred when issued | PRWI
 Class "A" when issued | AWI
 Warrrant when issued | WSWI
 

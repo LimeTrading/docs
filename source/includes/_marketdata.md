@@ -154,7 +154,7 @@ curl
 ]
 ```
 
-Returns an array of option series by the specified underlying security's symbol. Contains at least one element which is the default series.
+Returns an array of option series by the specified underlying security's symbol. Contains at least one element which is the default series. Option Series is a specific set of calls or puts on the same underlying security, with the same strike price and expiration date. For the most part there is just one series name that matches the symbol but in some cases related to corporate actions on the underlying security additional series are issued.
 
 ## Get option expirations
 
