@@ -10,8 +10,8 @@ message | the error description
 ### HTTP Status Codes
 code | description
 ---- | ----
-200 OK | all good
-400 BAD REQUEST | the request is not accepted most likely due to formatting issues
+200&nbsp;OK | all good
+400&nbsp;BAD&nbsp;REQUEST | the request is not accepted most likely due to formatting issues
 401 | authentication denied, access token is incorrect or revoked
-404 NOT FOUND | the requested resource is not found
-500 SERVER ERROR | internal server error, something on our end
+404&nbsp;NOT&nbsp;FOUND | the requested resource is not found
+500&nbsp;SERVER&nbsp;ERROR | internal server error, something on our end
