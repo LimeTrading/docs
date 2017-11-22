@@ -112,6 +112,7 @@ expires_in | the expiration lifetime in seconds
 ```shell
 curl
     -X GET
+    --header 'Authorization: Bearer token'
     'https://api.just2trade.com/userinfo'
 ```
 
