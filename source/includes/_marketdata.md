@@ -134,6 +134,65 @@ query | Required. The search criteria.
 limit | Optional, 10 by default. The number of items to return on one page
 
 
+## *Get time and sales - not live yet*
+
+```shell
+curl
+    -X GET
+    --header 'Accept: application/json'
+    --header 'Authorization: Bearer token'
+    'https://api.just2trade.com/marketdata/trades?symbol=IBM&limit=4&from=1513362185&to=1513362190'
+```
+
+> Response example:
+
+```json
+{
+    "trades": [
+        {
+            "timestamp": 1513362190,
+            "quantity": 100,
+            "price": 152.44,
+            "market": "BOS"
+        },
+        {
+            "timestamp": 1513362190,
+            "quantity": 100,
+            "price": 152.44,
+            "market": "EDGA"
+        },
+        {
+            "timestamp": 1513362188,
+            "quantity": 22,
+            "price": 152.4699,
+            "market": "NDD"
+        },
+        {
+            "timestamp": 1513362185,
+            "quantity": 100,
+            "price": 152.45,
+            "market": "NASDAQ"
+        }
+    ],
+    "count": 12
+}
+```
+
+<aside class="warning">
+Early preview documentation, not available live yet
+</aside>
+
+Retrieves the time and sales history, ordered by descending timestamp. Query parameters are:
+
+name | description
+---- | ----
+symbol | Required. The security symbol, stocks in Nasdaq CMS convention. Options are not supported
+from | Required. Start of the period, unix timestamp
+to | Required. End of the period, unix timestamp
+limit | Optional, 10 by default. The number of items to return on one page
+skip | Optional, 0 by default. The number of items to skip
+
+
 ## Get option series
 
 ```shell

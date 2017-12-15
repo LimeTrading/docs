@@ -12,6 +12,6 @@ code | description
 ---- | ----
 200&nbsp;OK | all good
 400&nbsp;BAD&nbsp;REQUEST | the request is not accepted most likely due to formatting issues
-401 | authentication denied, access token is incorrect or revoked
+401&nbsp;UNAUTHORIZED | authorization denied, access token is incorrect or revoked
 404&nbsp;NOT&nbsp;FOUND | the requested resource is not found
 500&nbsp;SERVER&nbsp;ERROR | internal server error, something on our end
