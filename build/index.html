@@ -240,6 +240,14 @@
               </ul>
           </li>
           <li>
+            <a href="#em-application-not-live-yet-em" class="toc-h1 toc-link" data-title="<em>Application - not live yet</em>"><em>Application - not live yet</em></a>
+              <ul class="toc-list-h2">
+                  <li>
+                    <a href="#em-apply-for-new-account-em" class="toc-h2 toc-link" data-title="<em>Application - not live yet</em>"><em>Apply for new account</em></a>
+                  </li>
+              </ul>
+          </li>
+          <li>
             <a href="#accounts" class="toc-h1 toc-link" data-title="Accounts">Accounts</a>
               <ul class="toc-list-h2">
                   <li>
@@ -281,6 +289,9 @@
                   </li>
                   <li>
                     <a href="#lookup-securities" class="toc-h2 toc-link" data-title="Market data">Lookup securities</a>
+                  </li>
+                  <li>
+                    <a href="#em-get-time-and-sales-not-live-yet-em" class="toc-h2 toc-link" data-title="Market data"><em>Get time and sales - not live yet</em></a>
                   </li>
                   <li>
                     <a href="#get-option-series" class="toc-h2 toc-link" data-title="Market data">Get option series</a>
@@ -506,6 +517,7 @@
 </tbody></table>
 <h2 id='user-profile'>User profile</h2><pre class="highlight shell tab-shell"><code>curl
     -X GET
+    --header <span class="s1">'Authorization: Bearer token'</span>
     <span class="s1">'https://api.just2trade.com/userinfo'</span>
 </code></pre>
 <blockquote>
@@ -537,8 +549,288 @@
 </span><span class="p">}</span><span class="w">
 </span></code></pre>
 <p>This retrieves the basic profile information including new accounts application status and the list of existing account numbers.</p>
+<h1 id='em-application-not-live-yet-em'><em>Application - not live yet</em></h1>
+<aside class="warning">
+Early preview documentation, not available live yet
+</aside>
+<h2 id='em-apply-for-new-account-em'><em>Apply for new account</em></h2>
+<blockquote>
+<p>Request example</p>
+</blockquote>
+<pre class="highlight json tab-json"><code><span class="p">{</span><span class="w">
+    </span><span class="s2">"personal"</span><span class="p">:</span><span class="w">
+    </span><span class="p">{</span><span class="w">
+        </span><span class="s2">"first_name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"John"</span><span class="p">,</span><span class="w">
+        </span><span class="s2">"middle_name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"A"</span><span class="p">,</span><span class="w">
+        </span><span class="s2">"last_name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Doe"</span><span class="p">,</span><span class="w">
+        </span><span class="s2">"residential_address"</span><span class="p">:</span><span class="w">
+        </span><span class="p">{</span><span class="w">
+            </span><span class="s2">"street"</span><span class="p">:</span><span class="w"> </span><span class="s2">"One Penn Plaza"</span><span class="p">,</span><span class="w">
+            </span><span class="s2">"apartment"</span><span class="p">:</span><span class="w"> </span><span class="s2">"1614"</span><span class="p">,</span><span class="w">
+            </span><span class="s2">"city"</span><span class="p">:</span><span class="w"> </span><span class="s2">"New York"</span><span class="p">,</span><span class="w">
+            </span><span class="s2">"state"</span><span class="p">:</span><span class="w"> </span><span class="s2">"NY"</span><span class="p">,</span><span class="w">
+            </span><span class="s2">"zip"</span><span class="p">:</span><span class="w"> </span><span class="s2">"10119"</span><span class="p">,</span><span class="w">
+            </span><span class="s2">"country"</span><span class="p">:</span><span class="w"> </span><span class="s2">"US"</span><span class="w">
+        </span><span class="p">},</span><span class="w">
+        </span><span class="s2">"mobile_phone_country"</span><span class="p">:</span><span class="w"> </span><span class="s2">"1"</span><span class="p">,</span><span class="w">
+        </span><span class="s2">"mobile_phone"</span><span class="p">:</span><span class="w"> </span><span class="s2">"5551234567"</span><span class="p">,</span><span class="w">
+        </span><span class="s2">"email_address"</span><span class="p">:</span><span class="w"> </span><span class="s2">"email@email.com"</span><span class="p">,</span><span class="w">
+        </span><span class="s2">"marital_status"</span><span class="p">:</span><span class="w"> </span><span class="s2">"married"</span><span class="p">,</span><span class="w">
+        </span><span class="s2">"mothers_maiden_name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Doe"</span><span class="p">,</span><span class="w">
+        </span><span class="s2">"date_of_birth"</span><span class="p">:</span><span class="w"> </span><span class="s2">"12/01/1985"</span><span class="p">,</span><span class="w">
+        </span><span class="s2">"ssn"</span><span class="p">:</span><span class="w"> </span><span class="s2">"111-22-3333"</span><span class="p">,</span><span class="w">
+        </span><span class="s2">"citizenship_country"</span><span class="p">:</span><span class="w"> </span><span class="s2">"US"</span><span class="p">,</span><span class="w">
+        </span><span class="s2">"id_number"</span><span class="p">:</span><span class="w"> </span><span class="s2">"75 123123"</span><span class="w">
+    </span><span class="p">},</span><span class="w">
+    </span><span class="s2">"employment"</span><span class="p">:</span><span class="w">
+    </span><span class="p">{</span><span class="w">
+        </span><span class="s2">"status"</span><span class="p">:</span><span class="w"> </span><span class="s2">"employed"</span><span class="p">,</span><span class="w">
+        </span><span class="s2">"job_title"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Seaport Crane Operator"</span><span class="p">,</span><span class="w">
+        </span><span class="s2">"company"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Port Authority"</span><span class="p">,</span><span class="w">
+        </span><span class="s2">"company_years"</span><span class="p">:</span><span class="w"> </span><span class="mi">8</span><span class="p">,</span><span class="w">
+        </span><span class="s2">"employer_address"</span><span class="p">:</span><span class="w">
+        </span><span class="p">{</span><span class="w">
+            </span><span class="s2">"street"</span><span class="p">:</span><span class="w"> </span><span class="s2">"89 South Street"</span><span class="p">,</span><span class="w">
+            </span><span class="s2">"apartment"</span><span class="p">:</span><span class="w"> </span><span class="s2">""</span><span class="p">,</span><span class="w">
+            </span><span class="s2">"city"</span><span class="p">:</span><span class="w"> </span><span class="s2">"New York"</span><span class="p">,</span><span class="w">
+            </span><span class="s2">"state"</span><span class="p">:</span><span class="w"> </span><span class="s2">"NY"</span><span class="p">,</span><span class="w">
+            </span><span class="s2">"zip"</span><span class="p">:</span><span class="w"> </span><span class="s2">"10038"</span><span class="p">,</span><span class="w">
+            </span><span class="s2">"country"</span><span class="p">:</span><span class="w"> </span><span class="s2">"US"</span><span class="w">           
+        </span><span class="p">}</span><span class="w">
+    </span><span class="p">},</span><span class="w">
+    </span><span class="s2">"financial"</span><span class="p">:</span><span class="w">
+    </span><span class="p">{</span><span class="w">
+        </span><span class="s2">"number_of_dependents"</span><span class="p">:</span><span class="w"> </span><span class="mi">2</span><span class="p">,</span><span class="w">
+        </span><span class="s2">"annual_income"</span><span class="p">:</span><span class="w"> </span><span class="s2">"$75,000 - $199,999"</span><span class="p">,</span><span class="w">
+        </span><span class="s2">"net_worth"</span><span class="p">:</span><span class="w"> </span><span class="s2">"$150,000 - $499,000"</span><span class="p">,</span><span class="w">
+        </span><span class="s2">"liquid_net_worth"</span><span class="p">:</span><span class="w"> </span><span class="s2">"$50,000 - $149,999"</span><span class="p">,</span><span class="w">
+        </span><span class="s2">"funding_source"</span><span class="p">:</span><span class="w">
+        </span><span class="p">[</span><span class="w">
+            </span><span class="s2">"income"</span><span class="p">,</span><span class="w"> </span><span class="s2">"funds_from_another_account"</span><span class="w">
+        </span><span class="p">],</span><span class="w">
+        </span><span class="s2">"funding_source_other"</span><span class="p">:</span><span class="w"> </span><span class="s2">""</span><span class="w">
+    </span><span class="p">},</span><span class="w">
+    </span><span class="s2">"investment"</span><span class="p">:</span><span class="w">
+    </span><span class="p">{</span><span class="w">
+        </span><span class="s2">"knowledge"</span><span class="p">:</span><span class="w"> </span><span class="s2">"limited"</span><span class="p">,</span><span class="w">
+        </span><span class="s2">"risk_tolerance"</span><span class="p">:</span><span class="w"> </span><span class="s2">"moderate"</span><span class="p">,</span><span class="w">
+        </span><span class="s2">"objectives"</span><span class="p">:</span><span class="w">
+        </span><span class="p">[</span><span class="w">
+            </span><span class="s2">"capital_appreciation"</span><span class="p">,</span><span class="w"> </span><span class="s2">"preservation_of_capital"</span><span class="p">,</span><span class="w"> </span><span class="s2">"income"</span><span class="p">,</span><span class="w"> </span><span class="s2">"speculation"</span><span class="w">
+        </span><span class="p">],</span><span class="w">
+        </span><span class="s2">"time_horizon"</span><span class="p">:</span><span class="w"> </span><span class="s2">"5_to_10_years"</span><span class="p">,</span><span class="w">
+        </span><span class="s2">"experience"</span><span class="p">:</span><span class="w">
+        </span><span class="p">{</span><span class="w">
+            </span><span class="s2">"stocks"</span><span class="p">:</span><span class="w"> </span><span class="s2">"5_to_10_years"</span><span class="p">,</span><span class="w">
+            </span><span class="s2">"options"</span><span class="p">:</span><span class="w"> </span><span class="s2">"none"</span><span class="p">,</span><span class="w">
+            </span><span class="s2">"bonds"</span><span class="p">:</span><span class="w"> </span><span class="s2">"none"</span><span class="p">,</span><span class="w">
+            </span><span class="s2">"short_sales"</span><span class="p">:</span><span class="w"> </span><span class="s2">"1_to_5_years"</span><span class="p">,</span><span class="w">
+            </span><span class="s2">"mutual_funds"</span><span class="p">:</span><span class="w"> </span><span class="s2">"none"</span><span class="p">,</span><span class="w">
+            </span><span class="s2">"margin"</span><span class="p">:</span><span class="w"> </span><span class="s2">"1_to_5_years"</span><span class="w">
+        </span><span class="p">}</span><span class="w">
+    </span><span class="p">},</span><span class="w">
+    </span><span class="s2">"affiliations"</span><span class="p">:</span><span class="w">
+    </span><span class="p">{</span><span class="w">
+        </span><span class="s2">"employee_of_exchange"</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="p">,</span><span class="w">
+        </span><span class="s2">"employee_of_brokerdealer"</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="p">,</span><span class="w">
+        </span><span class="s2">"employee_of_regulator"</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="p">,</span><span class="w">
+        </span><span class="s2">"employee_of_advisor"</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="p">,</span><span class="w">
+        </span><span class="s2">"person_to_influence_securities"</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="p">,</span><span class="w">
+        </span><span class="s2">"person_to_contribute_major_capital"</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="p">,</span><span class="w">
+        </span><span class="s2">"senior_officer_of_financial_institution"</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="p">,</span><span class="w">
+        </span><span class="s2">"senior_officer_of_public_company"</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="p">,</span><span class="w">
+        </span><span class="s2">"director_of_public_company"</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="p">,</span><span class="w">
+        </span><span class="s2">"major_shareholder_of_public_company"</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="p">,</span><span class="w">
+        </span><span class="s2">"senior_officer_foreign"</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="p">,</span><span class="w">
+        </span><span class="s2">"relationship_to_another_account"</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="p">,</span><span class="w">
+        </span><span class="s2">"realtionship_to_another_entity"</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="w">
+    </span><span class="p">},</span><span class="w">
+    </span><span class="s2">"legal_issues"</span><span class="p">:</span><span class="w">
+    </span><span class="p">{</span><span class="w">
+        </span><span class="s2">"bankruptcy"</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="p">,</span><span class="w">
+        </span><span class="s2">"legal_dispute"</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="p">,</span><span class="w">
+        </span><span class="s2">"unpaid_balance"</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="p">,</span><span class="w">
+        </span><span class="s2">"comment"</span><span class="p">:</span><span class="w"> </span><span class="s2">"lannisters always pay their debts"</span><span class="w">
+    </span><span class="p">},</span><span class="w">
+    </span><span class="s2">"documents"</span><span class="p">:</span><span class="w">
+    </span><span class="p">[</span><span class="w">
+        </span><span class="p">{</span><span class="w">
+            </span><span class="s2">"file"</span><span class="p">:</span><span class="w"> </span><span class="s2">"scan.jpg"</span><span class="p">,</span><span class="w">
+            </span><span class="s2">"content"</span><span class="p">:</span><span class="w"> </span><span class="s2">" -- --- -- - -- base64 content goes here - - -- - - -- "</span><span class="w">
+        </span><span class="p">}</span><span class="w">
+    </span><span class="p">]</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre><h3 id='request'>Request</h3>
+<table><thead>
+<tr>
+<th>Field</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>personal</td>
+<td>Personal information section according to the structure described below</td>
+</tr>
+<tr>
+<td>employment</td>
+<td>Employment information section</td>
+</tr>
+<tr>
+<td>financial</td>
+<td>General financial information</td>
+</tr>
+<tr>
+<td>investment</td>
+<td>Investment experience questionnaire</td>
+</tr>
+<tr>
+<td>affiliatons</td>
+<td>Affiliations information required by law to prevent market manipulation</td>
+</tr>
+<tr>
+<td>legal_issues</td>
+<td>Legal issues background</td>
+</tr>
+<tr>
+<td>documents</td>
+<td>Documents binaries encoded as base64</td>
+</tr>
+</tbody></table>
+
+<table><thead>
+<tr>
+<th>Personal Information</th>
+<th>&nbsp;</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>first_name</td>
+<td>First name as stated on the ID document</td>
+</tr>
+<tr>
+<td>middle_name</td>
+<td>Middle name if applicable</td>
+</tr>
+<tr>
+<td>last_name</td>
+<td>Last name as stated on the ID document</td>
+</tr>
+<tr>
+<td>residential_address</td>
+<td>Permanent address in the format of the <strong>Address Structure</strong> described below</td>
+</tr>
+<tr>
+<td>mobile_phone_country</td>
+<td>Mobile phone country code, digits only</td>
+</tr>
+<tr>
+<td>mobile_phone</td>
+<td>Mobile Phone, digits only, no dashes or brackets</td>
+</tr>
+<tr>
+<td>email_address</td>
+<td>Email Address</td>
+</tr>
+<tr>
+<td>marital_status</td>
+<td>Marital status, one of the following: <code>single</code>, <code>married</code>, <code>divorced</code></td>
+</tr>
+<tr>
+<td>mothers_maiden_name</td>
+<td>Mother&#39;s maiden name to be used as a security question</td>
+</tr>
+<tr>
+<td>date_of_birth</td>
+<td>Date of birth, US format <code>mm/dd/yyyy</code></td>
+</tr>
+<tr>
+<td>ssn</td>
+<td>SSN or ITIN, required for US residents, digits only</td>
+</tr>
+<tr>
+<td>citizenship_country</td>
+<td>Country, two-symbol ISO code</td>
+</tr>
+<tr>
+<td>id_number</td>
+<td>The number of ID document</td>
+</tr>
+</tbody></table>
+
+<table><thead>
+<tr>
+<th>Employment</th>
+<th>&nbsp;</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>status</td>
+<td>Employment status, one of the following values: <code>employed</code>, <code>self-employed</code>, <code>retired</code>, <code>unemployed</code>, <code>student</code></td>
+</tr>
+<tr>
+<td>job_title</td>
+<td>Job title</td>
+</tr>
+<tr>
+<td>company</td>
+<td>Company name</td>
+</tr>
+<tr>
+<td>company_years</td>
+<td>Years with this company</td>
+</tr>
+<tr>
+<td>employer_address</td>
+<td>The address in the format of the <strong>Address Structure</strong> described below</td>
+</tr>
+</tbody></table>
+
+<table><thead>
+<tr>
+<th>Address</th>
+<th>&nbsp;</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>street</td>
+<td>Street address</td>
+</tr>
+<tr>
+<td>apartment</td>
+<td>Apartment or Suite number</td>
+</tr>
+<tr>
+<td>city</td>
+<td>City</td>
+</tr>
+<tr>
+<td>state</td>
+<td>State, two-symbol ISO code, required for United States</td>
+</tr>
+<tr>
+<td>zip</td>
+<td>Postal code</td>
+</tr>
+<tr>
+<td>country</td>
+<td>Country, two-symbol ISO code</td>
+</tr>
+</tbody></table>
+
+<table><thead>
+<tr>
+<th>Financial</th>
+<th>&nbsp;</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>number_of_dependents</td>
+<td>A qualifying child or relative for whom you can claim a tax exemption, including yourself.</td>
+</tr>
+</tbody></table>
 <h1 id='accounts'>Accounts</h1><h2 id='get-accounts-balances'>Get accounts balances</h2><pre class="highlight shell tab-shell"><code>curl
     -X GET
+    --header <span class="s1">'Authorization: Bearer token'</span>
     <span class="s1">'https://api.just2trade.com/accounts'</span>
 </code></pre>
 <blockquote>
@@ -639,6 +931,7 @@
 </tbody></table>
 <h2 id='get-account-positions'>Get account positions</h2><pre class="highlight shell tab-shell"><code>curl
     -X GET
+    --header <span class="s1">'Authorization: Bearer token'</span>
     <span class="s1">'https://api.just2trade.com/accounts/12345678@vision/positions'</span>
 </code></pre><pre class="highlight json tab-json"><code><span class="p">[</span><span class="w">
     </span><span class="p">{</span><span class="w">
@@ -702,6 +995,7 @@
 </tbody></table>
 <h2 id='get-account-trades'>Get account trades</h2><pre class="highlight shell tab-shell"><code>curl
     -X GET
+    --header <span class="s1">'Authorization: Bearer token'</span>
     <span class="s1">'https://api.just2trade.com/accounts/{account_number}/trades/{mode}?limit={limit}&amp;skip={skip}'</span>
 </code></pre>
 <blockquote>
@@ -1220,6 +1514,78 @@
 <td>Optional, 10 by default. The number of items to return on one page</td>
 </tr>
 </tbody></table>
+<h2 id='em-get-time-and-sales-not-live-yet-em'><em>Get time and sales - not live yet</em></h2><pre class="highlight shell tab-shell"><code>curl
+    -X GET
+    --header <span class="s1">'Accept: application/json'</span>
+    --header <span class="s1">'Authorization: Bearer token'</span>
+    <span class="s1">'https://api.just2trade.com/marketdata/trades?symbol=IBM&amp;limit=4&amp;from=1513362185&amp;to=1513362190'</span>
+</code></pre>
+<blockquote>
+<p>Response example:</p>
+</blockquote>
+<pre class="highlight json tab-json"><code><span class="p">{</span><span class="w">
+    </span><span class="s2">"trades"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
+        </span><span class="p">{</span><span class="w">
+            </span><span class="s2">"timestamp"</span><span class="p">:</span><span class="w"> </span><span class="mi">1513362190</span><span class="p">,</span><span class="w">
+            </span><span class="s2">"quantity"</span><span class="p">:</span><span class="w"> </span><span class="mi">100</span><span class="p">,</span><span class="w">
+            </span><span class="s2">"price"</span><span class="p">:</span><span class="w"> </span><span class="mf">152.44</span><span class="p">,</span><span class="w">
+            </span><span class="s2">"market"</span><span class="p">:</span><span class="w"> </span><span class="s2">"BOS"</span><span class="w">
+        </span><span class="p">},</span><span class="w">
+        </span><span class="p">{</span><span class="w">
+            </span><span class="s2">"timestamp"</span><span class="p">:</span><span class="w"> </span><span class="mi">1513362190</span><span class="p">,</span><span class="w">
+            </span><span class="s2">"quantity"</span><span class="p">:</span><span class="w"> </span><span class="mi">100</span><span class="p">,</span><span class="w">
+            </span><span class="s2">"price"</span><span class="p">:</span><span class="w"> </span><span class="mf">152.44</span><span class="p">,</span><span class="w">
+            </span><span class="s2">"market"</span><span class="p">:</span><span class="w"> </span><span class="s2">"EDGA"</span><span class="w">
+        </span><span class="p">},</span><span class="w">
+        </span><span class="p">{</span><span class="w">
+            </span><span class="s2">"timestamp"</span><span class="p">:</span><span class="w"> </span><span class="mi">1513362188</span><span class="p">,</span><span class="w">
+            </span><span class="s2">"quantity"</span><span class="p">:</span><span class="w"> </span><span class="mi">22</span><span class="p">,</span><span class="w">
+            </span><span class="s2">"price"</span><span class="p">:</span><span class="w"> </span><span class="mf">152.4699</span><span class="p">,</span><span class="w">
+            </span><span class="s2">"market"</span><span class="p">:</span><span class="w"> </span><span class="s2">"NDD"</span><span class="w">
+        </span><span class="p">},</span><span class="w">
+        </span><span class="p">{</span><span class="w">
+            </span><span class="s2">"timestamp"</span><span class="p">:</span><span class="w"> </span><span class="mi">1513362185</span><span class="p">,</span><span class="w">
+            </span><span class="s2">"quantity"</span><span class="p">:</span><span class="w"> </span><span class="mi">100</span><span class="p">,</span><span class="w">
+            </span><span class="s2">"price"</span><span class="p">:</span><span class="w"> </span><span class="mf">152.45</span><span class="p">,</span><span class="w">
+            </span><span class="s2">"market"</span><span class="p">:</span><span class="w"> </span><span class="s2">"NASDAQ"</span><span class="w">
+        </span><span class="p">}</span><span class="w">
+    </span><span class="p">],</span><span class="w">
+    </span><span class="s2">"count"</span><span class="p">:</span><span class="w"> </span><span class="mi">12</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre>
+<aside class="warning">
+Early preview documentation, not available live yet
+</aside>
+
+<p>Retrieves the time and sales history, ordered by descending timestamp. Query parameters are:</p>
+
+<table><thead>
+<tr>
+<th>name</th>
+<th>description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>symbol</td>
+<td>Required. The security symbol, stocks in Nasdaq CMS convention. Options are not supported</td>
+</tr>
+<tr>
+<td>from</td>
+<td>Required. Start of the period, unix timestamp</td>
+</tr>
+<tr>
+<td>to</td>
+<td>Required. End of the period, unix timestamp</td>
+</tr>
+<tr>
+<td>limit</td>
+<td>Optional, 10 by default. The number of items to return on one page</td>
+</tr>
+<tr>
+<td>skip</td>
+<td>Optional, 0 by default. The number of items to skip</td>
+</tr>
+</tbody></table>
 <h2 id='get-option-series'>Get option series</h2><pre class="highlight shell tab-shell"><code>curl
     -X GET
     --header <span class="s1">'Accept: application/json'</span>
@@ -1235,7 +1601,7 @@
     </span><span class="s2">"VXX2"</span><span class="w">
 </span><span class="p">]</span><span class="w">
 </span></code></pre>
-<p>Returns an array of option series by the specified underlying security&#39;s symbol. Contains at least one element which is the default series.</p>
+<p>Returns an array of option series by the specified underlying security&#39;s symbol. Contains at least one element which is the default series. Option Series is a specific set of calls or puts on the same underlying security, with the same strike price and expiration date. For the most part there is just one series name that matches the symbol but in some cases related to corporate actions on the underlying security additional series are issued.</p>
 <h2 id='get-option-expirations'>Get option expirations</h2><pre class="highlight shell tab-shell"><code>curl
     -X GET
     --header <span class="s1">'Accept: application/json'</span>
@@ -1350,23 +1716,23 @@
 </tr>
 </thead><tbody>
 <tr>
-<td>200 OK</td>
+<td>200&nbsp;OK</td>
 <td>all good</td>
 </tr>
 <tr>
-<td>400 BAD REQUEST</td>
+<td>400&nbsp;BAD&nbsp;REQUEST</td>
 <td>the request is not accepted most likely due to formatting issues</td>
 </tr>
 <tr>
-<td>401</td>
-<td>authentication denied, access token is incorrect or revoked</td>
+<td>401&nbsp;UNAUTHORIZED</td>
+<td>authorization denied, access token is incorrect or revoked</td>
 </tr>
 <tr>
-<td>404 NOT FOUND</td>
+<td>404&nbsp;NOT&nbsp;FOUND</td>
 <td>the requested resource is not found</td>
 </tr>
 <tr>
-<td>500 SERVER ERROR</td>
+<td>500&nbsp;SERVER&nbsp;ERROR</td>
 <td>internal server error, something on our end</td>
 </tr>
 </tbody></table>

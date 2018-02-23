@@ -18,8 +18,7 @@ Early preview documentation, not available live yet
         "last_name": "Doe",
         "residential_address":
         {
-            "street": "One Penn Plaza",
-            "apartment": "1614",
+            "street": "One Penn Plaza suite 1614",
             "city": "New York",
             "state": "NY",
             "zip": "10119",
@@ -33,6 +32,7 @@ Early preview documentation, not available live yet
         "date_of_birth": "12/01/1985",
         "ssn": "111-22-3333",
         "citizenship_country": "US",
+        "id_type": "passport",
         "id_number": "75 123123"
     },
     "employment":
@@ -44,7 +44,6 @@ Early preview documentation, not available live yet
         "employer_address":
         {
             "street": "89 South Street",
-            "apartment": "",
             "city": "New York",
             "state": "NY",
             "zip": "10038",
@@ -142,6 +141,7 @@ mothers_maiden_name | Mother's maiden name to be used as a security question
 date_of_birth | Date of birth, US format `mm/dd/yyyy`
 ssn | SSN or ITIN, required for US residents, digits only
 citizenship_country | Country, two-symbol ISO code
+id_type | The type of ID document, the following values are supported: `passport`, `us_state_id`, `us_driving_license`, `us_green_card`
 id_number | The number of ID document
 
 
@@ -155,8 +155,7 @@ employer_address | The address in the format of the **Address Structure** descri
 
 Address | &nbsp;
 ---- | ----
-street | Street address
-apartment | Apartment or Suite number
+street | Street address including apartment number if applicable
 city | City
 state | State, two-symbol ISO code, required for United States
 zip | Postal code
