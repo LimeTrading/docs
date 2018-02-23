@@ -565,8 +565,7 @@ Early preview documentation, not available live yet
         </span><span class="s2">"last_name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Doe"</span><span class="p">,</span><span class="w">
         </span><span class="s2">"residential_address"</span><span class="p">:</span><span class="w">
         </span><span class="p">{</span><span class="w">
-            </span><span class="s2">"street"</span><span class="p">:</span><span class="w"> </span><span class="s2">"One Penn Plaza"</span><span class="p">,</span><span class="w">
-            </span><span class="s2">"apartment"</span><span class="p">:</span><span class="w"> </span><span class="s2">"1614"</span><span class="p">,</span><span class="w">
+            </span><span class="s2">"street"</span><span class="p">:</span><span class="w"> </span><span class="s2">"One Penn Plaza suite 1614"</span><span class="p">,</span><span class="w">
             </span><span class="s2">"city"</span><span class="p">:</span><span class="w"> </span><span class="s2">"New York"</span><span class="p">,</span><span class="w">
             </span><span class="s2">"state"</span><span class="p">:</span><span class="w"> </span><span class="s2">"NY"</span><span class="p">,</span><span class="w">
             </span><span class="s2">"zip"</span><span class="p">:</span><span class="w"> </span><span class="s2">"10119"</span><span class="p">,</span><span class="w">
@@ -580,6 +579,7 @@ Early preview documentation, not available live yet
         </span><span class="s2">"date_of_birth"</span><span class="p">:</span><span class="w"> </span><span class="s2">"12/01/1985"</span><span class="p">,</span><span class="w">
         </span><span class="s2">"ssn"</span><span class="p">:</span><span class="w"> </span><span class="s2">"111-22-3333"</span><span class="p">,</span><span class="w">
         </span><span class="s2">"citizenship_country"</span><span class="p">:</span><span class="w"> </span><span class="s2">"US"</span><span class="p">,</span><span class="w">
+        </span><span class="s2">"id_type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"us_driving_license"</span><span class="p">,</span><span class="w">
         </span><span class="s2">"id_number"</span><span class="p">:</span><span class="w"> </span><span class="s2">"75 123123"</span><span class="w">
     </span><span class="p">},</span><span class="w">
     </span><span class="s2">"employment"</span><span class="p">:</span><span class="w">
@@ -591,7 +591,6 @@ Early preview documentation, not available live yet
         </span><span class="s2">"employer_address"</span><span class="p">:</span><span class="w">
         </span><span class="p">{</span><span class="w">
             </span><span class="s2">"street"</span><span class="p">:</span><span class="w"> </span><span class="s2">"89 South Street"</span><span class="p">,</span><span class="w">
-            </span><span class="s2">"apartment"</span><span class="p">:</span><span class="w"> </span><span class="s2">""</span><span class="p">,</span><span class="w">
             </span><span class="s2">"city"</span><span class="p">:</span><span class="w"> </span><span class="s2">"New York"</span><span class="p">,</span><span class="w">
             </span><span class="s2">"state"</span><span class="p">:</span><span class="w"> </span><span class="s2">"NY"</span><span class="p">,</span><span class="w">
             </span><span class="s2">"zip"</span><span class="p">:</span><span class="w"> </span><span class="s2">"10038"</span><span class="p">,</span><span class="w">
@@ -752,6 +751,10 @@ Early preview documentation, not available live yet
 <td>Country, two-symbol ISO code</td>
 </tr>
 <tr>
+<td>id_type</td>
+<td>The type of ID document, the following values are supported: <code>passport</code>, <code>us_state_id</code>, <code>us_driving_license</code>, <code>us_green_card</code></td>
+</tr>
+<tr>
 <td>id_number</td>
 <td>The number of ID document</td>
 </tr>
@@ -793,11 +796,7 @@ Early preview documentation, not available live yet
 </thead><tbody>
 <tr>
 <td>street</td>
-<td>Street address</td>
-</tr>
-<tr>
-<td>apartment</td>
-<td>Apartment or Suite number</td>
+<td>Street address including apartment number if applicable</td>
 </tr>
 <tr>
 <td>city</td>
