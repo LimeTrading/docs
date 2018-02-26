@@ -67,19 +67,19 @@ Early preview documentation, not available live yet
     {
         "knowledge": "limited",
         "risk_tolerance": "moderate",
+        "liquidity_needs": "Important (1 - 5 years)",
         "objectives":
         [
             "capital_appreciation", "preservation_of_capital", "income", "speculation"
         ],
-        "time_horizon": "5_to_10_years",
+        "time_horizon": "1 to 5 Years",
         "experience":
         {
-            "stocks": "5_to_10_years",
-            "options": "none",
-            "bonds": "none",
-            "short_sales": "1_to_5_years",
-            "mutual_funds": "none",
-            "margin": "1_to_5_years"
+            "stocks": "5 to 10 Years",
+            "options": "None",
+            "short_sales": "1 to 5 Years",
+            "mutual_funds": "None",
+            "margin": "6 to 10 Years"
         }
     },
     "affiliations":
@@ -96,7 +96,7 @@ Early preview documentation, not available live yet
         "major_shareholder_of_public_company": false,
         "senior_officer_foreign": false,
         "relationship_to_another_account": false,
-        "realtionship_to_another_entity": false
+        "relationship_to_another_entity": false
     },
     "legal_issues":
     {
@@ -108,6 +108,7 @@ Early preview documentation, not available live yet
     "documents":
     [
         {
+            "type": "identity",
             "file": "scan.jpg",
             "content": " -- --- -- - -- base64 content goes here - - -- - - -- "
         }
@@ -178,6 +179,11 @@ funding_source_other | Please explain if any other funding sources
 Investment | &nbsp;
 ---- | ----
 objectives | An array with all the following 4 values ordered by priority: `capital_appreciation`, `preservation_of_capital`, `income`, `speculation`
+risk_tolerance | One of the following values `low`, `moderate`, `aggressive`, `speculative`
+liquidity_needs | One of the following values `Very Important (Less Than 1 Year)`, `Important (1 - 5 Years)`, `Somewhat Important (5 - 15 Years)`, `Does Not Matter (Over 15 Years)`
+time_horizon | One of the following values `Less than 1 Year`, `1 to 5 Years`, `5 to 10 Years`, `10 to 15 Years`, `Over 15 Years`
+knowledge | `limited`, `good`, `excellent`
+experience | An object that describes experience in different investment areas. The following properties are available: `stocks`, `option`, `margin`, `short_sales`, `mutual_funds`. Each property can have one of the following values: `None`, `Less than 1 Year`, `1 to 5 Years`, `6 to 10 Years`, `Over 10 Years`.
 
 
 Affiliations | &nbsp;
@@ -194,7 +200,7 @@ director_of_public_company | A director of a public company, whether US or non-U
 major_shareholder_of_public_company | A 10% shareholder of a public company, whether US or non-US
 senior_officer_foreign | A current or former senior official of a foreign government or political party, or senior executive of a foreign goverment-owned commercial enterprise, or a family member or close associate of such person
 relationship_to_another_account | Have relationship with another account at Just2Trade that you control, have a beneficial interest in or with which you coordinate trading
-realtionship_to_another_entity | Have relationship with entity which has an account at Just2Trade
+relationship_to_another_entity | Have relationship with entity which has an account at Just2Trade
 
 
 Legal Issues | &nbsp;
@@ -203,3 +209,10 @@ bankruptcy | Have you ever been the subject to a bankruptcy proceeding, receiver
 legal_dispute | Have you ever been in a legal dispute, arbitration, or reparations action related to a securities or commodities account
 unpaid_balance | Have you ever closed an account with an unpaid balance at a securities or commodity firm
 comment | Mandatory comment if any of the above is true
+
+
+Documents | &nbsp;
+---- | ----
+type | Type of the document, only one type is supported: `identity`
+file | File name of the document, should include extenstion. For example, `scan.jpg`
+content | Base-64 encoded content of the file
