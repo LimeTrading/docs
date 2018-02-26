@@ -7,6 +7,14 @@ Early preview documentation, not available live yet
 
 ## *Apply for new account*
 
+```shell
+curl
+    -X POST
+    --header 'Content-Type: application/json'
+    --header 'Authorization: Bearer token'
+    -d 'json goes here' 'https://api.just2trade.com/application'
+```
+
 > Request example
 
 ```json
