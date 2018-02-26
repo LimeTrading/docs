@@ -56,9 +56,10 @@ Early preview documentation, not available live yet
         "annual_income": "$75,000 - $199,999",
         "net_worth": "$150,000 - $499,000",
         "liquid_net_worth": "$50,000 - $149,999",
+        "tax_bracket": "31 - 35%",
         "funding_source":
         [
-            "income", "funds_from_another_account"
+            "earnings", "home_equity_line_of_credit"
         ],
         "funding_source_other": ""
     },
@@ -162,9 +163,21 @@ state | State, two-symbol ISO code, required for United States
 zip | Postal code
 country | Country, two-symbol ISO code
 
+
 Financial | &nbsp;
 ---- | ----
 number_of_dependents | A qualifying child or relative for whom you can claim a tax exemption, including yourself.
+annual_income | Annual income, one of the following values `Under $25,000`, `$25,000 - $74,999`, `$75,000 - $199,999`, `$200,000 - $499,999`, `$500,000 - $999,999`, `$1,000,000+`
+net_worth | One of the following values `Under $50,000`, `$50,000 - $149,999`, `$150,000 - $499,999`, `$500,000 - $999,999`, `$1,000,000 - $4,999,999`, `Over $5,000,000`
+liquid_net_worth | One of the following values `Under $50,000`, `$50,000 - $149,999`, `$150,000 - $499,999`, `$500,000 - $999,999`, `$1,000,000 - $4,999,999`, `Over $5,000,000`
+tax_bracket | One of the following values `0 - 15%`, `16 - 25%`, `26 - 30%`, `31 - 35%`, `Over 35%`
+funding_source | An array with the following available values `earnings`, `pension`, `gift`, `sale_of_business_or_property`, `insurance`, `inhertiance`, `social_security_benefits`, `home_equity_line_of_credit`, `other`
+funding_source_other | Please explain if any other funding sources
+
+
+Investment | &nbsp;
+---- | ----
+objectives | An array with all the following 4 values ordered by priority: `capital_appreciation`, `preservation_of_capital`, `income`, `speculation`
 
 
 Affiliations | &nbsp;
@@ -182,6 +195,7 @@ major_shareholder_of_public_company | A 10% shareholder of a public company, whe
 senior_officer_foreign | A current or former senior official of a foreign government or political party, or senior executive of a foreign goverment-owned commercial enterprise, or a family member or close associate of such person
 relationship_to_another_account | Have relationship with another account at Just2Trade that you control, have a beneficial interest in or with which you coordinate trading
 realtionship_to_another_entity | Have relationship with entity which has an account at Just2Trade
+
 
 Legal Issues | &nbsp;
 ---- | ----
