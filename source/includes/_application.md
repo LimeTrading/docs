@@ -48,6 +48,7 @@ curl
         "status": "employed",
         "job_title": "Seaport Crane Operator",
         "company": "Port Authority",
+        "nature": "Logistics",
         "company_years": 8,
         "employer_address":
         {
@@ -143,7 +144,7 @@ first_name | First name as stated on the ID document
 middle_name | Middle name if applicable
 last_name | Last name as stated on the ID document
 residential_address | Permanent address in the format of the **Address Structure** described below
-mobile_phone_country | Mobile phone country code, digits only
+mobile_phone_country | Mobile phone country code, a mandatory plus sign and digits. For example, for US it is `+1`
 mobile_phone | Mobile Phone, digits only, no dashes or brackets
 email_address | Email Address
 marital_status | Marital status, one of the following: `single`, `married`, `divorced`
@@ -161,6 +162,7 @@ status | Employment status, one of the following values: `employed`, `self_emplo
 job_title | Job title
 company | Company name
 company_years | Years with this company
+nature | Nature of the business
 employer_address | The address in the format of the **Address Structure** described below
 
 
