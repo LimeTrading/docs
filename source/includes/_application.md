@@ -1,7 +1,7 @@
 
-# *Application*
+# Application
 
-## *Apply for new account*
+## Apply for new account
 
 ```shell
 curl
