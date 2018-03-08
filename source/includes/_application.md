@@ -1,9 +1,5 @@
 
-# *Application - not live yet*
-
-<aside class="warning">
-Early preview documentation, not available live yet
-</aside>
+# *Application*
 
 ## *Apply for new account*
 
