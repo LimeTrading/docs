@@ -110,6 +110,15 @@ curl
         "unpaid_balance": true,
         "comment": "lannisters always pay their debts"
     },
+    "agreements": {
+        "just2trade": true,
+        "vision": true,
+        "vision_margin": true,
+        "nyse": true,
+        "nasdaq": true,
+        "extended_hours": true,
+        "otc": true
+    },
     "documents":
     [
         {
@@ -131,6 +140,7 @@ financial | General financial information
 investment | Investment experience questionnaire
 affiliatons | Affiliations information required by law to prevent market manipulation. Set to true if you or any immediate family member (spouse, brother, sister, parent, child, mother-in-law, sister-in-law, brother-in-law, daugher-in-law, son-in-law), or other person who supports you or who you support to a material extent, or an additional account holder, is a person described here.
 legal_issues | Legal issues background
+agreements | Agreements and signatures. Set to true if the corresponding document is read and agreed to.
 documents | Documents binaries encoded as base64
 
 
@@ -215,6 +225,17 @@ bankruptcy | Have you ever been the subject to a bankruptcy proceeding, receiver
 legal_dispute | Have you ever been in a legal dispute, arbitration, or reparations action related to a securities or commodities account
 unpaid_balance | Have you ever closed an account with an unpaid balance at a securities or commodity firm
 comment | Mandatory comment if any of the above is true
+
+
+Agreements | &nbsp;
+---- | ----
+just2trade | Just2Trade Market Agreement
+vision | Vision Account Agreement
+vision_margin | Vision Margin Supplement
+nyse | NYSE Market Data Agreement
+nasdaq | NASDAQ Market Data Agreement
+extended_hours | Extended Hours Trading Risk Agreement
+otc | OTC Market Data Agreement
 
 
 Documents | &nbsp;
