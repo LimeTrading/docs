@@ -6,7 +6,7 @@
 curl
     -X GET
     --header 'Accept: application/json'
-    --header 'Authorization: Bearer token'
+    --header 'Authorization: Bearer {token here}'
     'https://api.just2trade.com/marketdata/quote?symbol=AAPL'
 ```
 
@@ -51,7 +51,7 @@ The data depends on current time of day.
 curl
     -X GET
     --header 'Accept: application/json'
-    --header 'Authorization: Bearer token'
+    --header 'Authorization: Bearer {token here}'
     'https://api.just2trade.com/marketdata/history?symbol=AAPL&period=day&from=1483228800&to=1483488000'
 ```
 
@@ -96,7 +96,7 @@ to | Required. End of the period, unix timestamp
 curl
     -X GET
     --header 'Accept: application/json'
-    --header 'Authorization: Bearer token'
+    --header 'Authorization: Bearer {token here}'
     'https://api.just2trade.com/securities?query=ba&limit=4'
 ```
 
@@ -140,7 +140,7 @@ limit | Optional, 10 by default. The number of items to return on one page
 curl
     -X GET
     --header 'Accept: application/json'
-    --header 'Authorization: Bearer token'
+    --header 'Authorization: Bearer {token here}'
     'https://api.just2trade.com/marketdata/trades?symbol=IBM&limit=4&from=1513362185&to=1513362190'
 ```
 
@@ -199,7 +199,7 @@ skip | Optional, 0 by default. The number of items to skip
 curl
     -X GET
     --header 'Accept: application/json'
-    --header 'Authorization: Bearer token'
+    --header 'Authorization: Bearer {token here}'
     'https://api.just2trade.com/securities/VXX/options/series'
 ```
 
@@ -221,8 +221,8 @@ Returns an array of option series by the specified underlying security's symbol.
 curl
     -X GET
     --header 'Accept: application/json'
-    --header 'Authorization: Bearer token'
-    'https://api.just2trade.com/securities/{{symbol}}/options/expirations?series={{series}}'
+    --header 'Authorization: Bearer {token here}'
+    'https://api.just2trade.com/securities/{symbol}/options/expirations?series={series}'
 ```
 
 > Response
@@ -255,8 +255,8 @@ series | Optional. By default the series is the same as the the root symbol
 curl
     -X GET
     --header 'Accept: application/json'
-    --header 'Authorization: Bearer token'
-    'https://api.just2trade.com/securities/{{symbol}}/options?expiration={{expiration}}&series={{series}}'
+    --header 'Authorization: Bearer {token here}'
+    'https://api.just2trade.com/securities/{symbol}/options?expiration={expiration}&series={series}'
 ```
 
 > Response exsample

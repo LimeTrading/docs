@@ -2,6 +2,8 @@
 
 All requests are authenticated with tokens issued by common OAuth 2.0 compatible flow. In order to use the API, the application should be registered with us first to get the `client_id` and `client_secret`. Please contact us at support@just2trade.com in order to do that. We support two authorization flows suitable for different scenarios. The `password` type is short and simple to be used by clients trading directly on their account. The `authorization_code` type is longer and more complicated but allows third parties to get authorized access to client accounts. For security reasons, the third party applications will need to add one or more callback urls to the whitelist on our side first.
 
+Successful authentication issues a security token that needs to be specified with every authenticated request in the Authentication HTTP header: `Authentication: Bearer {token goes here}`
+
 ## Password Flow
 Create an access token by logging in with a valid username and password. The access token is issued for 24 hours by default and prolonged with every method call. In the most common scenario this is the first method to be called at the application start. The POST parameters are:
 
@@ -10,7 +12,7 @@ curl
     -X POST
     --header 'Accept: application/json'
     --header 'Content-Type: application/x-www-form-urlencoded'
-    -d 'grant_type=password&client_id={{client_id}}&client_secret={{your_client_secret}}&username={{username}}&password={{password}}'
+    -d 'grant_type=password&client_id={client_id}&client_secret={your_client_secret}&username={username}&password={password}'
     'https://auth.just2trade.com/connect/token'
 ```
 
@@ -74,7 +76,7 @@ curl
     -X POST
     --header 'Accept: application/json'
     --header 'Content-Type: application/x-www-form-urlencoded'
-    -d 'grant_type=authorization_code&code={{code}}&client_id={{client_id}}&client_secret={{your_client_secret}}&redirect_uri={{your_redirect_uri}}'
+    -d 'grant_type=authorization_code&code={code}&client_id={client_id}&client_secret={your_client_secret}&redirect_uri={your_redirect_uri}'
     'https://auth.just2trade.com/connect/token'
 ```
 
@@ -112,7 +114,7 @@ expires_in | the expiration lifetime in seconds
 ```shell
 curl
     -X GET
-    --header 'Authorization: Bearer token'
+    --header 'Authorization: Bearer {token here}'
     'https://api.just2trade.com/userinfo'
 ```
 

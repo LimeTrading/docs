@@ -7,7 +7,7 @@
 curl
     -X POST
     --header 'Content-Type: application/json'
-    --header 'Authorization: Bearer token'
+    --header 'Authorization: Bearer {token here}'
     -d 'json goes here' 'https://api.just2trade.com/application'
 ```
 

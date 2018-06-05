@@ -5,7 +5,7 @@
 ```shell
 curl
     -X GET
-    --header 'Authorization: Bearer token'
+    --header 'Authorization: Bearer {token here}'
     'https://api.just2trade.com/accounts'
 ```
 
@@ -68,8 +68,8 @@ unsettled_cash | unsettled cash for cash accounts
 ```shell
 curl
     -X GET
-    --header 'Authorization: Bearer token'
-    'https://api.just2trade.com/accounts/12345678@vision/positions'
+    --header 'Authorization: Bearer {token here}'
+    'https://api.just2trade.com/accounts/{account_number}/positions'
 ```
 
 ```json
@@ -120,7 +120,7 @@ security_type | the type of security, the most common values are `common_stock`,
 ```shell
 curl
     -X GET
-    --header 'Authorization: Bearer token'
+    --header 'Authorization: Bearer {token here}'
     'https://api.just2trade.com/accounts/{account_number}/trades/{mode}?limit={limit}&skip={skip}'
 ```
 

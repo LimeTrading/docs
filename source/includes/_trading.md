@@ -7,7 +7,7 @@
 curl -X POST
   --header 'Content-Type: application/json'
   --header 'Accept: application/json'
-  --header 'Authorization: Bearer token'
+  --header 'Authorization: Bearer {token here}'
   -d '{ \ 
    "account_number": "12345678@vision", \ 
    "symbol": "string", \ 
@@ -79,7 +79,7 @@ validation_message | Optional reject reason
 curl -X POST
   --header 'Content-Type: application/json'
   --header 'Accept: application/json'
-  --header 'Authorization: Bearer token'
+  --header 'Authorization: Bearer {token here}'
   -d '{ \ 
    "account_number": "12345678@vision", \ 
    "symbol": "BAC", \ 
@@ -134,8 +134,8 @@ data | the id assigned to the order
 ```shell
 curl -X GET
   --header 'Accept: application/json'
-  --header 'Authorization: Bearer token'
-  'https://api.just2trade.com/orders/{{id}}'
+  --header 'Authorization: Bearer {token here}'
+  'https://api.just2trade.com/orders/{id}'
 ```
 
 > Response example
@@ -185,7 +185,7 @@ symbol | security symbol
 curl -X POST
   --header 'Content-Type: application/json'
   --header 'Accept: application/json'
-  --header 'Authorization: Bearer token'
+  --header 'Authorization: Bearer {token here}'
   -d '{ \ 
    "message": "string" \ 
  }' 'https://api.just2trade.com/orders/20171003209384646/cancel'
