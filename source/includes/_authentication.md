@@ -131,10 +131,12 @@ curl
     "accounts": [
         {
             "account_number": "12345678@vision",
+            "account_name": "John Doe Individual",
             "trade_platform": "ETNA"
         },
         {
             "account_number": "11111111@cor",
+            "account_name": "John Doe and Jane Doe Joint",
             "trade_platform": "ETNA"
         }
     ],
