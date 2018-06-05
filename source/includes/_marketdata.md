@@ -44,6 +44,36 @@ symbol | Required. The security symbol
 ### Response
 The data depends on current time of day.
 
+## Get current quotes array
+
+```shell
+curl
+    -X POST
+    --header 'Content-Type: application/json'
+    --header 'Accept: application/json'
+    --header 'Authorization: Bearer {token here}'
+  -d '["GOOG", "AAPL", "MSFT"]'
+  'https://api.just2trade.com/marketdata/quotes'
+```
+
+> Returns an array of quotes:
+
+```json
+[
+    {
+        "symbol": "GOOG",
+        ...
+    },
+    {
+        "symbol": "AAPL",
+        ...
+    },
+    {
+        "symbol": "MSFT",
+        ...
+    }
+]
+```
 
 ## Get quotes history
 
