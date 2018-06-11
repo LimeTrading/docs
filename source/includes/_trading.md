@@ -138,6 +138,35 @@ curl -X GET
   'https://api.just2trade.com/orders/{id}'
 ```
 
+```cpp
+string GetOrderDetails(string access_token, string id)
+{
+  //--- REST client's HTTP vars
+  string header;
+  char result[];
+  char post[];
+  string headersResult;
+  int res;
+  string uri = "https://api.just2trade.com/orders/" + id;
+     
+  //--- Form the request body 
+  header += "Accept: application/json\r\n";     
+  header += "Authorization: Bearer " + access_token + "\r\n";
+          
+  //--- post data to REST API
+  res = WebRequest("GET", uri, header, 5000, post, result, headersResult);
+     
+  if(res == -1)
+  {
+    Print("Error code = ", GetLastError());
+  }
+  else
+  {
+    Print("Successful, server response: " + CharArrayToString(result, 0, -1) + " Res: " + (string)res);
+  }  
+  return CharArrayToString(result, 0, -1);
+}
+```
 > Response example
 
 ```json
