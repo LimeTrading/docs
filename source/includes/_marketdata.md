@@ -74,6 +74,8 @@ curl
     }
 ]
 ```
+The query retrieves current realtime quotes for all symbols specified on the request array
+
 
 ## Get quotes history
 

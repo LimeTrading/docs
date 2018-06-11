@@ -22,6 +22,44 @@ curl -X POST
  }' 'https://api.just2trade.com/orders/validate'
 ```
 
+```cpp--mql
+void ValidateOrder(string access_token, string account_number)
+{
+  //--- REST client's HTTP vars
+  string uri = "https://api.just2trade.com/orders/validate";
+  char post[];
+  char result[];
+  string headersResult;
+  string header;
+  int res;
+   
+  //--- Form the request body 
+  header = "Content-Type: application/json\r\n"; 
+  header += "Accept: application/json\r\n";     
+  header += "Authorization: Bearer "+access_token+"\r\n";
+  string postData = "{ \"account_number\": \"" + account_number + "\", \"symbol\": \"ZVZZT\", \"quantity\": 50, \"price\": 10.00, \"order_type\": \"limit\", \"side\": \"buy\" }";
+  
+  ArrayResize(post, StringToCharArray(postData, post, 0, WHOLE_ARRAY, CP_UTF8) - 1);
+
+  //--- reset last error
+  ResetLastError();
+
+  //--- post data to REST API
+  res = WebRequest("POST", uri, header, 50, post, result, headersResult);
+   
+  //--- check errors
+  if (res == -1)
+  {
+    Print("Error code =", GetLastError());
+  }
+  else
+  {
+    //--- successful
+    Print("Server response: ", CharArrayToString(result, 0, -1));
+  }          
+}
+```
+
 > Request example
 
 ```json
@@ -94,6 +132,45 @@ curl -X POST
  }' 'https://api.just2trade.com/orders/place'
 ```
 
+```cpp--mql
+void PlaceOrder(string access_token, string account_number)
+{
+  //--- REST client's HTTP vars
+  string uri = "https://api.just2trade.com/orders/place";
+  char post[];
+  char result[];
+  string headersResult;
+  string header;
+  int res;
+   
+  //--- Form the request body 
+  header = "Content-Type: application/json\r\n"; 
+  header += "Accept: application/json\r\n";     
+  header += "Authorization: Bearer "+access_token+"\r\n";
+  string postData = "{ \"account_number\": \"" + account_number + "\", \"symbol\": \"ZVZZT\", \"quantity\": 50, \"price\": 10.00, \"order_type\": \"limit\", \"side\": \"buy\" }";
+  
+  ArrayResize(post, StringToCharArray(postData, post, 0, WHOLE_ARRAY, CP_UTF8) - 1);
+
+  //--- reset last error
+  ResetLastError();
+
+  //--- post data to REST API
+  res = WebRequest("POST", uri, header, 50, post, result, headersResult);
+   
+  //--- check errors
+  if (res == -1)
+  {
+    Print("Error code =", GetLastError());
+  }
+  else
+  {
+    //--- successful
+    Print("Server response: ", CharArrayToString(result, 0, -1));
+  }          
+}
+```
+
+
 > Request example
 
 ```json
@@ -138,7 +215,7 @@ curl -X GET
   'https://api.just2trade.com/orders/{id}'
 ```
 
-```cpp
+```cpp--mql
 string GetOrderDetails(string access_token, string id)
 {
   //--- REST client's HTTP vars
