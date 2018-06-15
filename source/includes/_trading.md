@@ -277,7 +277,7 @@ client_id | the order id
 exchange | the routing instructions
 quantity | number of shares or contracts requested by the order
 executed_quantity | number of shares or contracts executed by this time
-order_status | the order status. Possible values are `new`, `pending_new`, `partially_filled`, `filled`, `pending_cancel`, `cancel`, `pending_replace`, `replaced`, `rejected`, `done_for_day`
+order_status | the order status. Possible values are `new`, `pending_new`, `partially_filled`, `filled`, `pending_cancel`, `canceled`, `pending_replace`, `replaced`, `rejected`, `done_for_day`, `expired`
 price | limit price if applicable
 stop_price | stop price is applicable
 time_in_force | order duration instructions
