@@ -194,6 +194,7 @@ curl
 ```json
 {
     "account_type": "Joint WROS",
+    "account_name": "John Doe and Jane Doe Joint WROS"
     "holders":
     [
         {
