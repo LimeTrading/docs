@@ -179,3 +179,40 @@ quantity | number of shares or option contracts, negative for sells, positive fo
 price | the trade price
 amount | the trade amount, which is the quantity multiplied by the lot size and price,
 side | `buy`, `sell`, `sell_short` or `buy_to_cover`
+
+## *Get account holder info - not live yet*
+
+```shell
+curl
+    -X GET
+    --header 'Authorization: Bearer {token here}'
+    'https://api.just2trade.com/holders/{account_number}'
+```
+
+> Response example
+
+```json
+{
+    "account_type": "Joint WROS",
+    "holders":
+    [
+        {
+            "name": "John Doe",
+            "primary": true,
+            "address": "One Penn Plaza suite 1614, New York, NY, 10119",
+            "phone": "111-22-3333",
+            "email_address": "email@email.com"
+        },
+        {
+            "name": "Jane Doe",
+            "primary": false,
+            "address": "One Penn Plaza suite 1614, New York, NY, 10119",
+            "phone": "111-22-3333",
+            "email_address": "email@email.com"
+        }
+    ]
+}
+```
+
+Returns non-trading account information, including holders contact info
+
