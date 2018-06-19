@@ -122,6 +122,32 @@ from | Required. Start of the period, unix timestamp
 to | Required. End of the period, unix timestamp
 
 
+
+## *Get trading schedule - not live yet*
+
+```shell
+curl
+    -X GET
+    --header 'Accept: application/json'
+    --header 'Authorization: Bearer {token here}'
+    'https://api.just2trade.com/marketdata/schedule'
+```
+
+> Response example:
+
+```json
+{
+    "session": "regular_market",
+}
+```
+
+Returns trading session info depending on current date and time:
+
+name | description
+---- | ----
+session | One of the following values: `pre_market`, `regular_market`, `after_market`, `closed`.
+
+
 ## Lookup securities
 
 ```shell
@@ -291,7 +317,7 @@ curl
     'https://api.just2trade.com/securities/{symbol}/options?expiration={expiration}&series={series}'
 ```
 
-> Response exsample
+> Response example
 
 ```json
 [
