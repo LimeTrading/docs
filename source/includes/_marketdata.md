@@ -137,7 +137,7 @@ curl
 
 ```json
 {
-    "session": "regular_market",
+    "session": "regular_market"
 }
 ```
 
