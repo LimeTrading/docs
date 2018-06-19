@@ -186,7 +186,7 @@ side | `buy`, `sell`, `sell_short` or `buy_to_cover`
 curl
     -X GET
     --header 'Authorization: Bearer {token here}'
-    'https://api.just2trade.com/holders/{account_number}'
+    'https://api.just2trade.com/accounts/{account_number}/holders'
 ```
 
 > Response example
