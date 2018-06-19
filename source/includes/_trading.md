@@ -298,6 +298,15 @@ curl -X POST
  }' 'https://api.just2trade.com/orders/20171003209384646/cancel'
 ```
 
+> Response example
+
+```json
+{
+  "success": true,
+  "data": "201710041710516537"
+}
+```
+
 Cancel the specified order
 
 ### Request
@@ -309,4 +318,10 @@ name | description
 message | Optional, any string
 
 
+### Response
+
+name | value
+---- | ----
+success | true
+data | the cancellation request id
 
