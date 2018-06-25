@@ -5,22 +5,27 @@ All requests are authenticated with tokens issued by common OAuth 2.0 compatible
 Successful authentication issues a security token that needs to be specified with every authenticated request in the Authentication HTTP header: `Authentication: Bearer {token goes here}`
 
 ## Create username
-A user must have an identity with Just2Trade in order to use Just2Trade services. The identity is authenticated by username and password created by this method. This does not open a trading account
+A user must have an identity with Just2Trade in order to use Just2Trade services. The identity is authenticated by username and password created by this endpoint. This does not open a trading account.
 
 ```shell
 curl
     -X POST
     --header 'Accept: application/json'
-    --header 'Authorization: Basic {client_id}:{client_secret}'
-    --header 'Content-Type: application/x-www-form-urlencoded'
-    -d 'email={email}&first_name={first_name}&last_name={last_name}&username={username}&password={password}'
-    'https://auth.just2trade.com/api/register'
+    --header 'Authorization: Basic {auth}'
+    --header 'Content-Type: application/json'
+    -d '{ \ 
+        "auth": "YXBwOm15X3NlY3JldA==", \ 
+        "email": "myemail@domain.com", \ 
+        "first_name": "John", \ 
+        "last_name": "Doe", \ 
+        "username": john.doe.login, \ 
+        "password": "passwordhere"
+        }' 'https://auth.just2trade.com/api/register'
 ```
 
 &nbsp; | &nbsp;
 ---- | ----
-client_id | Required. The client id issued to the service
-client_secret | Required. The client secret issued to the service
+auth | Required. This is base 64-encoded string of {client_id}:{client_secret}. For example, if client_id is `app` and client_secret is `my_secret` then the auth string is the base64-encoded `app:my_secret` which is `YXBwOm15X3NlY3JldA==`
 email | Required.
 first_name | Required.
 last_name | Required.
