@@ -13,9 +13,7 @@ curl
     --header 'Accept: application/json'
     --header 'Authorization: Basic {client_id}:{client_secret}'
     --header 'Content-Type: application/x-www-form-urlencoded'
-    -d 'email={email}
-        &first_name={first_name}&last_name={last_name}
-        &username={username}&password={password}'
+    -d 'email={email}&first_name={first_name}&last_name={last_name}&username={username}&password={password}'
     'https://auth.just2trade.com/api/register'
 ```
 
