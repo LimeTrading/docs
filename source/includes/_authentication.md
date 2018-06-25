@@ -7,7 +7,7 @@ Successful authentication issues a security token that needs to be specified wit
 ## Create username
 A user must have an identity with Just2Trade in order to use Just2Trade services. The identity is authenticated by username and password created by this method. This does not open a trading account
 
-```
+```shell
 curl
     -X POST
     --header 'Accept: application/json'
