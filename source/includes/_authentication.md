@@ -1,8 +1,35 @@
 # Authentication
 
-All requests are authenticated with tokens issued by common OAuth 2.0 compatible flow. In order to use the API, the application should be registered with us first to get the `client_id` and `client_secret`. Please contact us at support@just2trade.com in order to do that. We support two authorization flows suitable for different scenarios. The `password` type is short and simple to be used by clients trading directly on their account. The `authorization_code` type is longer and more complicated but allows third parties to get authorized access to client accounts. For security reasons, the third party applications will need to add one or more callback urls to the whitelist on our side first.
+All requests are authenticated with tokens issued by common OAuth 2.0 compatible flow. In order to use the API, the application should be registered with us first to get the `client_id` and `client_secret`. Please contact us at support@just2trade.com in order to do that. We support two authorization flows suitable for different scenarios. The `password` type is short and simple to be used by users trading directly on their account. The `authorization_code` type is longer and more complicated but allows third parties to get authorized access to client accounts. For security reasons, the third party applications will need to add one or more callback urls to the whitelist on our side first.
 
 Successful authentication issues a security token that needs to be specified with every authenticated request in the Authentication HTTP header: `Authentication: Bearer {token goes here}`
+
+## Create username
+A user must have an identity with Just2Trade in order to use Just2Trade services. The identity is authenticated by username and password created by this method. This does not open a trading account
+
+```
+curl
+    -X POST
+    --header 'Accept: application/json'
+    --header 'Authorization: Basic {client_id}:{client_secret}'
+    --header 'Content-Type: application/x-www-form-urlencoded'
+    -d 'email={email}
+        &first_name={first_name}&last_name={last_name}
+        &username={username}&password={password}'
+    'https://auth.just2trade.com/api/register'
+```
+
+&nbsp; | &nbsp;
+---- | ----
+client_id | Required. The client id issued to the service
+client_secret | Required. The client secret issued to the service
+email | Required.
+first_name | Required.
+last_name | Required.
+username | Required.
+password | Required. Password complexity requirements are enforced
+
+Returns HTTP 200 OK if the identity is successfully created, HTTP 400 Bad Request with human readable error message in case of any validation errors
 
 ## Password Flow
 Create an access token by logging in with a valid username and password. The access token is issued for 24 hours by default and prolonged with every method call. In the most common scenario this is the first method to be called at the application start. The POST parameters are:
