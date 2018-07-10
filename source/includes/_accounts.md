@@ -290,7 +290,7 @@ curl
                 { "name": "ORF", "amount": -0.04 },
                 { "name": "OCC", "amount": -0.05 }
             ]
-        },
+        }
     ],
     "count": 237
 }
