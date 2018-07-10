@@ -28,7 +28,7 @@ curl
             "zip": "10119",
             "country": "US"
         },
-        "mobile_phone_country": "1",
+        "mobile_phone_country": "+1",
         "mobile_phone": "5551234567",
         "email_address": "email@email.com",
         "marital_status": "married",
@@ -59,20 +59,20 @@ curl
     {
         "number_of_dependents": 2,
         "annual_income": "$75,000 - $199,999",
-        "net_worth": "$150,000 - $499,000",
+        "net_worth": "$150,000 - $499,999",
         "liquid_net_worth": "$50,000 - $149,999",
         "tax_bracket": "31 - 35%",
         "funding_source":
         [
             "earnings", "home_equity_line_of_credit"
         ],
-        "funding_source_other": ""
+        "funding_source_other": "line of credit"
     },
     "investment":
     {
         "knowledge": "limited",
         "risk_tolerance": "moderate",
-        "liquidity_needs": "Important (1 - 5 years)",
+        "liquidity_needs": "Important (1 - 5 Years)",
         "objectives":
         [
             "capital_appreciation", "preservation_of_capital", "income", "speculation"
@@ -80,11 +80,11 @@ curl
         "time_horizon": "1 to 5 Years",
         "experience":
         {
-            "stocks": "5 to 10 Years",
-            "options": "None",
+            "stocks": "1 to 5 Years",
+            "options": "1 to 5 Years",
             "short_sales": "1 to 5 Years",
-            "mutual_funds": "None",
-            "margin": "6 to 10 Years"
+            "mutual_funds": "1 to 5 Years",
+            "margin": "1 to 5 Years"
         }
     },
     "affiliations":

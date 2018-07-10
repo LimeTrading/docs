@@ -162,7 +162,7 @@ Get the trades history on the specified account, ordered by descending timestamp
 
 name | description
 ---- | ----
-account | Required. The account number
+account_number | Required. The account number
 mode | Optional. Possible options are `close`, `current` or empty by default. `close` denotes the historical mode to return the trades by the end of the previous trading day, `current` shows the intraday activity, empty combines both
 limit | Optional, 10 by default. The number of items to return on one page
 skip | Optional, 0 by default. The number of items to skip
@@ -217,3 +217,91 @@ curl
 
 Returns non-trading account information, including holders contact info
 
+## *Transactions journal - not live yet*
+
+```shell
+curl
+    -X GET
+    --header 'Authorization: Bearer {token here}'
+    'https://api.just2trade.com/accounts/{account_number}/transactions?start_date={start_date}&end_date={end_date}&limit={limit}&skip={skip}'
+```
+
+> Response example
+
+```json
+{
+    "transactions":
+    [
+        {
+            "id": "1650655",
+            "type": "SELL-SHORT:EXCH:STD",
+            "description": "Sell to Open 1 TSLA Jul 2018 145 Put @0.36",
+            "date": "2018-05-31",
+            "trade":
+            {
+                "symbol": "TSLA 180720P00145000",
+                "symbol_description": "TSLA Jul 2018 145 Put",
+                "quantity": 1,
+                "price": 0.36
+            },
+            "gross_amount": 36,
+            "net_amount": 34.45,
+            "fees":
+            [
+                { "name": "Broker", "amount": -1.45 },
+                { "name": "ORF", "amount": -0.04 },
+                { "name": "OCC", "amount": -0.05 },
+                { "name": "SEC", "amount": -0.01 }
+            ]
+        },
+        {
+            "id": "1644233",
+            "type": "INSTRUM:IN:EXP",
+            "description": "Option Expired AMD May 2018 8.5 Put",
+            "date": "2018-05-29",
+            "gross_amount": 0,
+            "net_amount": 0
+        },
+        {
+            "id": "1644455",
+            "type": "MONEY:OUT:CHRG",
+            "description": "CHRG MANDATORY REORG FEE REF:260494-112670 4474721,,PUT PROSHARES",
+            "date": "2018-05-29",
+            "gross_amount": -30,
+            "net_amount": -30
+        },
+        {
+            "id": "1632569",
+            "type": "BUY-BTC:EXCH:STD",
+            "description": "Buy to Close FB May 2018 137 Put",
+            "date": "2018-05-22",
+            "trade":
+            {
+                "symbol": "FB 180525P00137000",
+                "symbol_description": "FB May 2018 137 Put",
+                "quantity": 1,
+                "price": 0.01
+            },
+            "gross_amount": -1,
+            "net_amount": -2.54,
+            "fees":
+            [
+                { "name": "Broker", "amount": -1.45 },
+                { "name": "ORF", "amount": -0.04 },
+                { "name": "OCC", "amount": -0.05 }
+            ]
+        },
+    ],
+    "count": 237
+}
+```
+
+Returns all account activity. Query parameters are:
+
+name | description
+---- | ----
+account_number | Required. The account number
+start_date | Required. The period start date in the format of yyyy-MM-dd
+end_date | Required. The period end date in the format of yyyy-MM-dd
+limit | Optional, 10 by default. The number of items to return on one page
+skip | Optional, 0 by default. The number of items to skip
