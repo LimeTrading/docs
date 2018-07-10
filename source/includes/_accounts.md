@@ -244,7 +244,7 @@ curl
                 "quantity": 1,
                 "price": 0.36
             },
-            "gross_amount": 36,
+            "gross_amount": 36.00,
             "net_amount": 34.45,
             "fees":
             [
@@ -259,16 +259,16 @@ curl
             "type": "INSTRUM:IN:EXP",
             "description": "Option Expired AMD May 2018 8.5 Put",
             "date": "2018-05-29",
-            "gross_amount": 0,
-            "net_amount": 0
+            "gross_amount": 0.00,
+            "net_amount": 0.00
         },
         {
             "id": "1644455",
             "type": "MONEY:OUT:CHRG",
             "description": "CHRG MANDATORY REORG FEE REF:260494-112670 4474721,,PUT PROSHARES",
             "date": "2018-05-29",
-            "gross_amount": -30,
-            "net_amount": -30
+            "gross_amount": -30.00,
+            "net_amount": -30.00
         },
         {
             "id": "1632569",
@@ -282,7 +282,7 @@ curl
                 "quantity": 1,
                 "price": 0.01
             },
-            "gross_amount": -1,
+            "gross_amount": -1.00,
             "net_amount": -2.54,
             "fees":
             [
