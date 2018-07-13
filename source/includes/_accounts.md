@@ -233,70 +233,96 @@ curl
     "transactions":
     [
         {
-            "id": "1650655",
-            "type": "SELL-SHORT:EXCH:STD",
-            "description": "Sell to Open 1 TSLA Jul 2018 145 Put @0.36",
-            "date": "2018-05-31",
-            "trade":
-            {
-                "symbol": "TSLA 180720P00145000",
-                "symbol_description": "TSLA Jul 2018 145 Put",
-                "quantity": 1,
-                "price": 0.36
-            },
-            "gross_amount": 36.00,
-            "net_amount": 34.45,
-            "fees":
-            [
-                { "name": "Broker", "amount": -1.45 },
-                { "name": "ORF", "amount": -0.04 },
-                { "name": "OCC", "amount": -0.05 },
-                { "name": "SEC", "amount": -0.01 }
-            ]
-        },
-        {
-            "id": "1644233",
-            "type": "INSTRUM:IN:EXP",
-            "description": "Option Expired AMD May 2018 8.5 Put",
-            "date": "2018-05-29",
-            "gross_amount": 0.00,
-            "net_amount": 0.00
-        },
-        {
             "id": "1644455",
             "type": "MONEY:OUT:CHRG",
-            "description": "CHRG MANDATORY REORG FEE REF:260494-112670 4474721,,PUT PROSHARES",
+            "description": "CHRG MANDATORY REORG FEE REF:11111-222222,PUT PROSHARES",
             "date": "2018-05-29",
             "gross_amount": -30.00,
             "net_amount": -30.00
         },
         {
-            "id": "1632569",
-            "type": "BUY-BTC:EXCH:STD",
-            "description": "Buy to Close FB May 2018 137 Put",
-            "date": "2018-05-22",
-            "trade":
-            {
-                "symbol": "FB 180525P00137000",
-                "symbol_description": "FB May 2018 137 Put",
-                "quantity": 1,
-                "price": 0.01
+            "id": "1681283",
+            "type": "INSTRUM:IN:EXP",
+            "description": "EXP PUT SOLAREDGE TECHS A $25 EXP 06/15/18",
+            "date": "2018-06-18",
+            "asset": {
+                "symbol": "SEDG  180615P00025000",
+                "symbol_description": "SEDG Jun 2018 25 Put",
+                "quantity": 8,
+                "price": 0
             },
-            "gross_amount": -1.00,
-            "net_amount": -2.54,
-            "fees":
-            [
-                { "name": "Broker", "amount": -1.45 },
-                { "name": "ORF", "amount": -0.04 },
-                { "name": "OCC", "amount": -0.05 }
+            "cash": {
+                "gross_amount": 0,
+                "net_amount": 0
+            },
+            "fees": []
+        },
+        {
+            "id": "1681278",
+            "type": "INSTRUM:IN:ASG",
+            "description": "ASG CALL RUBICON PROJECT INC $2.50 EXP 06/15/18",
+            "date": "2018-06-18",
+            "asset": {
+                "symbol": "RUBI  180615C00002500",
+                "symbol_description": "RUBI Jun 2018 2.5 Call",
+                "quantity": 20,
+                "price": 0
+            },
+            "cash": {
+                "gross_amount": 0,
+                "net_amount": 0
+            },
+            "fees": []
+        },
+        {
+            "id": "1681293",
+            "type": "SALE:EXCH:ASG",
+            "description": "ASG CALL RUBICON PROJECT INC $2.50 EXP 06/15/18",
+            "date": "2018-06-18",
+            "asset": {
+                "symbol": "RUBI",
+                "symbol_description": "THE RUBICON PROJECT Inc",
+                "quantity": -2000,
+                "price": 2.5
+            },
+            "cash": {
+                "gross_amount": 5000,
+                "net_amount": 4980
+            },
+            "fees": [
+                { "name": "Broker fee", "amount": -20 }
             ]
-        }
+        },
+        {
+            "id": "1677793",
+            "type": "SELL-SHORT:EXCH:STD",
+            "description": "Sell to Open 20 'NCMI Dec 2018 7.5 Call' @0.75",
+            "date": "2018-06-15",
+            "asset": {
+                "symbol": "NCMI  181221C00007500",
+                "symbol_description": "NCMI Dec 2018 7.5 Call",
+                "quantity": -20,
+                "price": 0.75
+            },
+            "cash": {
+                "gross_amount": 1500,
+                "net_amount": 1486.6845
+            },
+            "fees": [
+                { "name": "Broker fee", "amount": -2.5 },
+                { "name": "Broker fee", "amount": -9 },
+                { "name": "TAF", "amount": -0.04 },
+                { "name": "ORF", "amount": -0.756 },
+                { "name": "OCC fee", "amount": -1 },
+                { "name": "SEC fee", "amount": -0.0195 }
+            ]
+        },
     ],
     "count": 237
 }
 ```
 
-Returns all account activity. Query parameters are:
+Query parameters are:
 
 name | description
 ---- | ----
@@ -305,3 +331,22 @@ start_date | Required. The period start date in the format of yyyy-MM-dd
 end_date | Required. The period end date in the format of yyyy-MM-dd
 limit | Optional, 10 by default. The number of items to return on one page
 skip | Optional, 0 by default. The number of items to skip
+
+
+Returns an array of trasnactions and a counter of total transactions in the specified time period. Every transaction has the following structure:
+
+name | description
+---- | ----
+id | internal transaction id. It is globally unique and it is not necessarily sequentually incremented
+type | transaction type
+description | human-readable transaction description
+date | date in the format of yyyy-MM-dd
+asset | a structure describing the asset side of the transaction
+asset.symbol | symbol
+asset.symbol_description | company name for stocks or human-readable name for options
+asset.quantity | transaction quantity, can be positive or negative
+asset.price | the price for each unit
+cash | describes the cash side of the transaction
+cash.gross_amount | dollar amount not including fees, can be positive or negative
+cash.net_amount | net dollar amount including fees charged for the transaction, can be positive or negative
+fees | array of fees charged by the current transaction. Every fee item has a `name` and `amount` properties
