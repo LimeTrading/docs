@@ -236,9 +236,11 @@ curl
             "id": "1644455",
             "type": "MONEY:OUT:CHRG",
             "description": "CHRG MANDATORY REORG FEE REF:11111-222222,PUT PROSHARES",
-            "date": "2018-05-29",
-            "gross_amount": -30.00,
-            "net_amount": -30.00
+            "date": "2018-06-30",
+            "cash": {
+                "gross_amount": -30.00,
+                "net_amount": -30.00
+            }
         },
         {
             "id": "1681283",

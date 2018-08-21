@@ -4,7 +4,7 @@ We use standard HTTP codes to indicate the result of a request. Generally speaki
 
 parameter | description
 ---- | ----
-code | `not_found`, `validation_error`, `authorization_error`
+code | `not_found`, `validation_error`, `api_error`
 message | the error description
 
 ### HTTP Status Codes
