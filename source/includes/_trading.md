@@ -287,6 +287,38 @@ order_side | side of the order
 symbol | security symbol
 
 
+## *Get active orders - not live yet*
+
+```shell
+curl -X GET
+  --header 'Accept: application/json'
+  --header 'Authorization: Bearer {token here}'
+  'https://api.just2trade.com/accounts/{account_number}/activeorders'
+```
+
+> Response example
+
+```json
+[
+  {
+    "client_id": "20171003209384646",
+    "exchange": "Auto",
+    "quantity": 1,
+    "executed_quantity": 0,
+    "order_status": "new",
+    "price": 20,
+    "stop_price": 0,
+    "time_in_force": "day",
+    "order_type": "limit",
+    "order_side": "buy",
+    "symbol": "BAC"
+  }
+]
+```
+
+Get an array of active orders
+
+
 ## Cancel an order
 ```shell
 curl -X POST
