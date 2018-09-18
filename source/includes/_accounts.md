@@ -25,7 +25,8 @@ curl
         "margin_buying_power": 15243,
         "non_margin_buying_power": 7621.5,
         "position_market_value": 4597.2406,
-        "unsettled_cash": 0
+        "unsettled_cash": 0,
+        "cash_to_withdraw": 7621.5
     },
     {
         "account_number": "11111111@cor",
@@ -40,7 +41,8 @@ curl
         "margin_buying_power": 0,
         "non_margin_buying_power": 0,
         "position_market_value": 0,
-        "unsettled_cash": 0
+        "unsettled_cash": 0,
+        "cash_to_withdraw": 0
     }
 ]
 ```
@@ -62,6 +64,7 @@ margin_buying_power | the buying power for marginable securities
 non_margin_buying_power | the buying power for non-marginable securities
 position_market_value | sum of all positions current market values. The value is negative for short positions
 unsettled_cash | unsettled cash for cash accounts
+cash_to_withdraw | cash available to withdraw from the account
 
 ## Get account positions
 
