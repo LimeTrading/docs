@@ -220,7 +220,7 @@ curl
 
 Returns non-trading account information, including holders contact info
 
-## *Transactions journal - not live yet*
+## Transactions journal
 
 ```shell
 curl
