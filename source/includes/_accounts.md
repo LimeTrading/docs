@@ -72,7 +72,7 @@ cash_to_withdraw | cash available to withdraw from the account
 curl
     -X GET
     --header 'Authorization: Bearer {token here}'
-    'https://api.just2trade.com/accounts/{account_number}/positions'
+    'https://api.just2trade.com/accounts/{account_number}/positions?date={date}'
 ```
 
 ```json
@@ -108,7 +108,14 @@ curl
 ]
 ```
 
-Get specified account positions as an array of the following json structures:
+Query parameters are:
+
+name | description
+---- | ----
+account_number | Required. The account number
+date | Optional. Date in the format of yyyy-MM-dd. If not specified, the method returns current intraday positions 
+
+Returns an array of the following json structures:
 
 name | description
 ---- | ----
