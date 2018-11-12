@@ -248,6 +248,7 @@ string GetOrderDetails(string access_token, string id)
 
 ```json
 {
+  "account_number": "12345678@vision",
   "client_id": "20171003209384646",
   "exchange": "Auto",
   "quantity": 1,
@@ -287,7 +288,7 @@ order_side | side of the order
 symbol | security symbol
 
 
-## *Get active orders - not live yet*
+## Get active orders
 
 ```shell
 curl -X GET
@@ -301,6 +302,7 @@ curl -X GET
 ```json
 [
   {
+    "account_number": "12345678@vision",
     "client_id": "20171003209384646",
     "exchange": "Auto",
     "quantity": 1,
