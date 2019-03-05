@@ -376,19 +376,7 @@ curl -X POST
  }' 'https://api.just2trade.com/pricing/fees'
 ```
 
-The method returns estimated fees for specified order parameters, breaking down all charges by type
-
-### Request
-
-name | description
----- | ----
-commission_plan | Optional. Available values are `per_share`, `per_trade`, `zero`. Default is `per_trade`
-symbol | Required. A stock or an option
-quantity | Required. Order quantity
-side | Required. Available values are `buy`, `sell`, `sell_short`, `buy_to_cover`
-direct_route | Optional boolean value. `false` by default.
-
-## Response
+> Response example
 
 ```json
 [
@@ -410,3 +398,24 @@ direct_route | Optional boolean value. `false` by default.
   }
 ]
 ```
+
+The method returns estimated fees for specified order parameters, breaking down all charges by type
+
+### Request
+
+name | description
+---- | ----
+commission_plan | Optional. Available values are `per_share`, `per_trade`, `zero`. Default is `per_trade`
+symbol | Required. A stock or an option
+quantity | Required. Order quantity
+side | Required. Available values are `buy`, `sell`, `sell_short`, `buy_to_cover`
+direct_route | Optional boolean value. `false` by default.
+
+## Response
+
+An array of items breaking down all charges
+
+name | description
+---- | ----
+amount | Dollar amount
+type | Charge description
