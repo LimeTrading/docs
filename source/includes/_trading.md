@@ -359,3 +359,54 @@ name | value
 success | true
 data | the cancellation request id
 
+
+## *Estimate fee charges - not live yet*
+
+```shell
+curl -X POST
+  --header 'Content-Type: application/json'
+  --header 'Accept: application/json'
+  --header 'Authorization: Bearer {token here}'
+  -d '{ \ 
+   "commission_plan": "per_trade", \ 
+   "symbol": "TSLA", \ 
+   "quantity": 50, \ 
+   "side": "sell", \ 
+   "direct_route": true \ 
+ }' 'https://api.just2trade.com/pricing/fees'
+```
+
+The method returns estimated fees for specified order parameters, breaking down all charges by type
+
+### Request
+
+name | description
+---- | ----
+commission_plan | Optional. Available values are `per_share`, `per_trade`, `zero`. Default is `per_trade`
+symbol | Required. A stock or an option
+quantity | Required. Order quantity
+side | Required. Available values are `buy`, `sell`, `sell_short`, `buy_to_cover`
+direct_route | Optional boolean value. `false` by default.
+
+## Response
+
+```json
+[
+  {
+    "amount": "2.5000",
+    "type": "Broker commission"
+  },
+  {
+    "amount": "0.1500",
+    "type": "ECN"
+  },
+  {
+    "amount": "0.1827",
+    "type": "SEC"
+  },
+  {
+    "amount": "0.0060",
+    "type": "TAF"
+  }
+]
+```
