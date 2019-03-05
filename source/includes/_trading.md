@@ -411,7 +411,7 @@ quantity | Required. Order quantity
 side | Required. Available values are `buy`, `sell`, `sell_short`, `buy_to_cover`
 direct_route | Optional boolean value. `false` by default.
 
-## Response
+### Response
 
 An array of items breaking down all charges
 
