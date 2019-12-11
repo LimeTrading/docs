@@ -1,5 +1,81 @@
 # Market data
 
+## *Streaming feed - beta*
+
+```shell
+wscat
+    -H "Authorization: Bearer {token here}" -c wss://api-streaming.just2trade.com/marketdata
+```
+
+> Command examples
+
+```json
+{ "action":"subscribe","symbols":["AAPL","MSFT","GOOG"] }
+
+{ "action":"unsubscribe","symbols":["AAPL","MSFT","GOOG"] }
+```
+
+> Feed example
+
+```json
+{"t":"a","s":"AAPL","ls":210,"lm":"EDGX","a":268.81,"as":5,"b":268.68,"bs":11,"l":268.68,"high":270.07,"low":265.86,"open":268.6,"close":268.48,"change":1.560000,"change_pc":0.58,"d":1576018013,"v":21118864}
+{"t":"a","s":"MSFT","ls":670,"lm":"FINR","a":151.23,"as":1,"b":151.15,"bs":2,"l":151.21,"high":151.89,"low":150.765,"open":151.29,"close":151.13,"change":-0.230000,"change_pc":-0.15,"d":1576011600,"v":15483417}
+{"t":"a","s":"GOOG","ls":1068,"lm":"FINR","a":1345.75,"as":2,"b":1343.51,"bs":1,"l":1344.66,"high":1349.975,"low":1336.04,"open":1341.5,"close":1344.66,"change":1.100000,"change_pc":0.08,"d":1576011600,"v":1054746}
+{"t":"t","s":"AAPL","ls":298,"lm":"EDGX","l":268.79,"d":1576018263}
+{"t":"t","s":"AAPL","ls":200,"lm":"EDGX","l":268.8,"d":1576018325}
+```
+
+If authentication is denied the websocket connection is terminated immediately. The client should implement reconnection logic to maintain the opened connection. The following commands are supported:
+
+parameter | description
+---- | ----
+action | Required. `subscribe` or `unsubscribe`
+symbols | An array of symbols
+
+Subscription command for a symbol that has already been subscribed is ignored. Same behavior applies to Unsubscribe.
+
+### Trade
+
+field | description
+---- | ----
+t | Type `t`
+s | Symbol
+ls | Last Size. Trade quantity
+lm | Last Market. Trade market center
+l | Last. Trade Price
+d | Date. Timestamp in unix format
+
+### Aggregate
+
+The server sends a snapshot of current quote data as the first message after successful subscription. All subsequent `aggregate` messages contain only fields changed since last update.
+
+field | description
+---- | ----
+t | Type `a`
+s | Symbol
+ls | Last Size. Trade quantity
+l | Last. Trade price
+a | Ask
+as | Ask Size
+b | Bid
+bs | Bid Size
+o | Open price
+h | High
+low | Low price
+c | Close price
+ch | Change
+chpc | Change percent
+d | Date. Timestamp in unix format
+
+### Error
+
+field | description
+---- | ----
+t | Type `e`
+code | Error code
+description | Error description
+
+
 ## Get current quote
 
 ```shell
