@@ -1,10 +1,10 @@
 # Market data
 
-## *Streaming feed - beta*
+## Streaming feed
 
 ```shell
 wscat
-    -H "Authorization: Bearer {token here}" -c wss://api-streaming.just2trade.com/marketdata
+    -H "Authorization: Bearer {token here}" -c wss://api.just2trade.com/marketdata
 ```
 
 > Command examples

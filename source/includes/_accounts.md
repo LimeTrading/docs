@@ -1,5 +1,40 @@
 # Accounts
 
+## *Streaming feed - not live yet*
+
+```shell
+wscat
+    -H "Authorization: Bearer {token here}" -c wss://api.just2trade.com/accounts
+```
+
+> Command examples
+
+```json
+{ "action":"subscribeBalance","account":"12345678@vision" }
+{ "action":"subscribePositions","account":"12345678@vision" }
+{ "action":"subscribeOrders","account":"12345678@vision" }
+{ "action":"subscribeTrades","account":"12345678@vision" }
+
+{ "action":"unsubscribeBalance","account":"12345678@vision" }
+{ "action":"unsubscribePositions","account":"12345678@vision" }
+{ "action":"unsubscribeOrders","account":"12345678@vision" }
+{ "action":"unsubscribeTrades","account":"12345678@vision" }
+```
+
+> Feed example
+
+```json
+
+```
+
+If authentication is denied the websocket connection is terminated immediately. The client should implement reconnection logic to maintain the opened connection. The following commands are supported:
+
+parameter | description
+---- | ----
+action | Required. `subscribeTrades`, `subscribeBalance`, `subscribePositions`, `subscribeOrders`
+account | Required. An account number
+
+
 ## Get accounts balances
 
 ```shell
