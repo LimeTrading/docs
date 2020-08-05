@@ -374,8 +374,8 @@ Query parameters are:
 name | description
 ---- | ----
 account_number | Required. The account number
-start_date | Required. The period start date in the format of yyyy-MM-dd
-end_date | Required. The period end date in the format of yyyy-MM-dd
+start_date | Optional. The period start date in the format of yyyy-MM-dd
+end_date | Optional, current date by default. The period end date in the format of yyyy-MM-dd
 limit | Optional, 10 by default. The number of items to return on one page
 skip | Optional, 0 by default. The number of items to skip
 
