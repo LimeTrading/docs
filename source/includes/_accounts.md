@@ -166,7 +166,7 @@ security_type | the type of security, the most common values are `common_stock`,
 curl
     -X GET
     --header 'Authorization: Bearer {token here}'
-    'https://api.just2trade.com/accounts/{account_number}/trades/{mode}?limit={limit}&skip={skip}'
+    'https://api.just2trade.com/accounts/{account_number}/trades/{date}?limit={limit}&skip={skip}'
 ```
 
 > Response example
@@ -208,7 +208,7 @@ Get the trades history on the specified account, ordered by descending timestamp
 name | description
 ---- | ----
 account_number | Required. The account number
-mode | Optional. Possible options are `close`, `current` or empty by default. `close` denotes the historical mode to return the trades by the end of the previous trading day, `current` shows the intraday activity, empty combines both
+date | Required. The date yyyy-MM-dd
 limit | Optional, 10 by default. The number of items to return on one page
 skip | Optional, 0 by default. The number of items to skip
 
