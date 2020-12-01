@@ -1,5 +1,7 @@
 # Market data
 
+All data is 15 min delayed.
+
 ## Streaming feed
 
 ```shell
@@ -110,7 +112,7 @@ curl
   "open_interest": 0
 }
 ```
-The query retrieves current realtime quote for the specified symbol.
+The query retrieves current quote for the specified symbol.
 
 ### Request
 parameter | description
@@ -150,7 +152,7 @@ curl
     }
 ]
 ```
-The query retrieves current realtime quotes for all symbols specified on the request array
+The query retrieves current quotes for all symbols specified on the request array
 
 
 ## Get quotes history
