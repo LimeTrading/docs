@@ -1,6 +1,6 @@
 # Accounts
 
-## *Streaming feed - not live yet*
+## Streaming feed
 
 ```shell
 wscat
@@ -24,16 +24,87 @@ wscat
 > Feed example
 
 ```json
-
+{
+    "t":"p",
+    "data":[{
+        "account":"12345678@vision",
+        "positions":[
+            {"symbol":"AAPL","average_open_price":135.2398,"current_price":174.5800,"quantity":50,"security_type":"common_stock"},
+            {"symbol":"AMZN","average_open_price":2815.0761,"current_price":3008.8150,"quantity":2,"security_type":"common_stock"},
+            {"symbol":"GOOGL","average_open_price":1422.3236,"current_price":2974.0100,"quantity":3,"security_type":"common_stock"},
+            {"symbol":"INTC","average_open_price":50.0000,"current_price":49.1150,"quantity":20,"security_type":"common_stock"},
+            {"symbol":"LYFT","average_open_price":76.5289,"current_price":38.6000,"quantity":50,"security_type":"common_stock"}
+        ]
+    }]
+}
+{
+    "t":"b",
+    "data":[{
+        "account_number":"12345678@vision",
+        "trade_platform":"transaq",
+        "margin_type":"marginx2",
+        "restriction":"none",
+        "account_value_total":27009.0400,
+        "cash":419.78,
+        "margin_buying_power":27428.83,
+        "non_margin_buying_power":13714.41,
+        "position_market_value":26589.2550,
+        "unsettled_cash":0,
+        "cash_to_withdraw":13112.03
+    }]
+}
 ```
 
-If authentication is denied the websocket connection is terminated immediately. The client should implement reconnection logic to maintain the opened connection. The following commands are supported:
+If authentication is denied the websocket connection is terminated immediately. The client should implement reconnection logic to maintain the opened connection. Subscription command for an account that has already been subscribed is ignored. Same behavior applies to Unsubscribe. Any recognized command will result an Error sent back to the subscriber. The following commands are supported:
 
 parameter | description
 ---- | ----
 action | Required. `subscribeTrades`, `subscribeBalance`, `subscribePositions`, `subscribeOrders`
 account | Required. An account number
 
+### Position
+
+The server sends a full list of positions for all subscribed accounts on each update of any field value. Since during market hours the prices keep changing the update is going to be sent on each throttling period
+
+field | description
+---- | ----
+t | Type `p`
+data | An array of structures where `account` is an account number and `positions` is an array of **position** structures
+symbol | security symbol
+quantity | number of shares or option contracts
+average_open_price | average historical cost basis
+current_price | current price
+security_type | the type of security, the most common values are `common_stock`, `preferred_stock`, `option`
+
+### Balance
+
+The server sends a full list of balance for all subscribed accounts on each update of any field value. Since during market hours the prices keep changing the update is going to be sent on each throttling period
+
+field | description
+---- | ----
+t | Type `b`
+data | An array of structures **balance** structures
+account_number | the account number
+trade_platform | the trading platform this account is traded on
+margin_type | the margin type, possible values are `cash`, `marginx1`, `marginx2`, `daytrader`
+restriction | restriction level effective on the account, possible values are `none` - no restrictions, `restricted` - opening transactions are not allowed but closing orders are accepted, `disabled` - no activity is allowed in the account, `closed` - the account is closed
+restriction_reason | optional description explaining why the account is restricted
+account_value_total | total account liquidation value
+cash | account debit balance when negative, credit balance when positive
+day_trading_buying_power | day trading buying power for marginable securities
+margin_buying_power | the buying power for marginable securities
+non_margin_buying_power | the buying power for non-marginable securities
+position_market_value | sum of all positions current market values. The value is negative for short positions
+unsettled_cash | unsettled cash for cash accounts
+cash_to_withdraw | cash available to withdraw from the account
+
+### Error
+
+field | description
+---- | ----
+t | Type `e`
+code | Error code
+description | Error description
 
 ## Get accounts balances
 
