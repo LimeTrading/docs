@@ -41,5 +41,6 @@ jobs:
         github_token: $\{{ secrets.GITHUB_TOKEN }}
         # Destination branch to push changes
         branch: develop
+        force: true
         # Directory to change to before pushing.
         directory: build
