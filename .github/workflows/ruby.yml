@@ -43,4 +43,4 @@ jobs:
         branch: develop
         force: true
         # Directory to change to before pushing.
-        directory: build
+        directory: ./build
