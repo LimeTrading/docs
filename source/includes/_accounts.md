@@ -134,7 +134,7 @@ The server sends a full list of balance for all subscribed accounts on each upda
 field | description
 ---- | ----
 t | Type `b`
-data | An array of structures **balance** structures
+data | An array of **balance** structures
 account_number | the account number
 trade_platform | the trading platform this account is traded on
 margin_type | the margin type, possible values are `cash`, `marginx1`, `marginx2`, `daytrader`
@@ -156,7 +156,7 @@ The server sends a notification when an order changes status. After initial conn
 name | description
 ---- | ----
 t | Type `o`
-data | An array of structures **order** structures
+data | An array of **order** structures
 account_number | the account number in the format of `12345678@vision`
 client_id | the order id
 exchange | the routing instructions
@@ -180,7 +180,7 @@ The server sends a notification when a trade executes. After initial connection,
 name | description
 ---- | ----
 t | Type `t`
-data | An array of structures **trade** structures
+data | An array of **trade** structures
 account_number | the account number
 symbol | security symbol
 timestamp | unix time stamp of the trade
