@@ -106,7 +106,7 @@ wscat
 }
 ```
 
-If authentication is denied the websocket connection is terminated immediately. The client should implement reconnection logic to maintain the opened connection. Subscription command for an account that has already been subscribed is ignored. Same behavior applies to Unsubscribe. Any recognized command will result an Error sent back to the subscriber. The following commands are supported:
+If authentication is denied the websocket connection is terminated immediately. The client should implement reconnection logic to maintain the opened connection. The server will disconnect after some inactivity period. Subscription command for an account that has already been subscribed is ignored. Same behavior applies to Unsubscribe. Any recognized command will result an Error sent back to the subscriber. The following commands are supported:
 
 parameter | description
 ---- | ----
