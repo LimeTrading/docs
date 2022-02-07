@@ -53,6 +53,57 @@ wscat
         "cash_to_withdraw":13112.03
     }]
 }
+{
+    "t":"o",
+    "data":[{
+        "account_number":"12345678@vision",
+        "client_id":"4596252142",
+        "exchange":"auto",
+        "quantity":1,
+        "executed_quantity":0,
+        "order_status":"new",
+        "price":378,
+        "stop_price":0,
+        "time_in_force":"day",
+        "order_type":"limit",
+        "order_side":"buy",
+        "symbol":"MA",
+        "executed_price":0,
+        "comment":""
+    }]
+}
+{
+    "t":"o",
+    "data":[{
+        "account_number":"12345678@vision",
+        "client_id":"4596252142",
+        "exchange":"auto",
+        "quantity":1,
+        "executed_quantity":1,
+        "order_status":"filled",
+        "price":378,
+        "stop_price":0,
+        "time_in_force":"day",
+        "order_type":"limit",
+        "order_side":"buy",
+        "symbol":"MA",
+        "executed_price":377.6392,
+        "executed_timestamp":1644258422,
+        "comment":""
+    }]
+}
+{
+    "t":"t",
+    "data":[{
+        "account_number":"12345678@vision",
+        "symbol":"MA",
+        "timestamp":1644258422,
+        "quantity":1,
+        "price":377.6392,
+        "amount":377.6392,
+        "side":"buy"
+    }]
+}
 ```
 
 If authentication is denied the websocket connection is terminated immediately. The client should implement reconnection logic to maintain the opened connection. Subscription command for an account that has already been subscribed is ignored. Same behavior applies to Unsubscribe. Any recognized command will result an Error sent back to the subscriber. The following commands are supported:
@@ -97,6 +148,46 @@ non_margin_buying_power | the buying power for non-marginable securities
 position_market_value | sum of all positions current market values. The value is negative for short positions
 unsettled_cash | unsettled cash for cash accounts
 cash_to_withdraw | cash available to withdraw from the account
+
+### Order
+
+The server sends a notification when an order changes status. After initial connection, the server sends a list of all orders in current status on current trading day.
+
+name | description
+---- | ----
+t | Type `o`
+data | An array of structures **order** structures
+account_number | the account number in the format of `12345678@vision`
+client_id | the order id
+exchange | the routing instructions
+quantity | number of shares or contracts requested by the order
+executed_quantity | number of shares or contracts executed by this time
+order_status | the order status. Possible values are `new`, `pending_new`, `partially_filled`, `filled`, `pending_cancel`, `canceled`, `pending_replace`, `replaced`, `rejected`, `done_for_day`, `expired`
+price | limit price if applicable
+stop_price | stop price is applicable
+time_in_force | order duration instructions
+order_type | type of the order
+order_side | side of the order
+symbol | security symbol
+executed_price | the average price of execution, only populated when an order has been executed, partially or fully
+executed_timestamp | unix time stamp of the last execution, only populated when an order has been executed, partially or fully
+comment | a comment from executing venue, if any
+
+### Trade
+
+The server sends a notification when a trade executes. After initial connection, the server sends a list of all trades on current trading day.
+
+name | description
+---- | ----
+t | Type `t`
+data | An array of structures **trade** structures
+account_number | the account number
+symbol | security symbol
+timestamp | unix time stamp of the trade
+quantity | number of shares or option contracts, negative for sells, positive for buys
+price | the trade price
+amount | the trade amount, which is the quantity multiplied by the lot size and price,
+side | `buy`, `sell`, `sell_short` or `buy_to_cover`
 
 ### Error
 
