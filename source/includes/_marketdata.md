@@ -2,7 +2,7 @@
 
 All data is 15 min delayed.
 
-## Streaming feed
+## Market data streaming feed
 
 ```shell
 wscat
