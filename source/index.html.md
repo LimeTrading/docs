@@ -1,13 +1,13 @@
 ---
-title: Just2Trade API Reference
+title: Lime Trader API Reference
 
 language_tabs: # must be one of https://git.io/vQNgJ
   - shell: cURL
   - cpp--mql: MQL5
 
-toc_footers:
-  - <a href='https://trading.just2trade.com'>J2T trading platform</a>
-  - <a href='https://cabinet.just2trade.com'>J2T personal cabinet</a>
+# toc_footers:
+#  - <a href='https://trading.just2trade.com'>J2T trading platform</a>
+#  - <a href='https://cabinet.just2trade.com'>J2T personal cabinet</a>
 
 includes:
   - authentication
