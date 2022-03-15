@@ -23,5 +23,5 @@ search: true
 
 # Introduction
 
-We believe that modern financial mechanics is a problem of IT and code, not finance. We seek for elegance of integrations by eliminating the unnecessary complexity of financial infrastructure. Our API calls are based on REST concepts and can be made with any language that supports standard HTTP. Trading is made as easy as possible, just plain JSON and POST.
+We believe that modern financial mechanics is a problem of IT and code, not finance. We seek for elegance of integrations by eliminating the unnecessary complexity of financial infrastructure. Our API calls are based on REST concepts and can be made with any language that supports standard HTTP. Trading is made easier, just plain JSON and POST.
 

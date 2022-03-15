@@ -215,8 +215,8 @@ senior_officer_of_public_company | An executive officer of a public company, whe
 director_of_public_company | A director of a public company, whether US or non-US
 major_shareholder_of_public_company | A 10% shareholder of a public company, whether US or non-US
 senior_officer_foreign | A current or former senior official of a foreign government or political party, or senior executive of a foreign goverment-owned commercial enterprise, or a family member or close associate of such person
-relationship_to_another_account | Have relationship with another account at Just2Trade that you control, have a beneficial interest in or with which you coordinate trading
-relationship_to_another_entity | Have relationship with entity which has an account at Just2Trade
+relationship_to_another_account | Have relationship with another account at Lime Trading Corp that you control, have a beneficial interest in or with which you coordinate trading
+relationship_to_another_entity | Have relationship with entity which has an account at Lime Trading Corp
 
 
 Legal Issues | &nbsp;
@@ -229,7 +229,7 @@ comment | Mandatory comment if any of the above is true
 
 Agreements | &nbsp;
 ---- | ----
-just2trade | Just2Trade Market Agreement
+just2trade | Lime Trading Market Agreement
 vision | Vision Account Agreement
 vision_margin | Vision Margin Supplement
 nyse | NYSE Market Data Agreement

@@ -1,11 +1,11 @@
 # Authentication
 
-All requests are authenticated with tokens issued by common OAuth 2.0 compatible flow. In order to use the API, the application should be registered with us first to get the `client_id` and `client_secret`. Please contact us at support@just2trade.com in order to do that. We support two authorization flows suitable for different scenarios. The `password` type is short and simple to be used by users trading directly on their account. The `authorization_code` type is longer and more complicated but allows third parties to get authorized access to client accounts. For security reasons, the third party applications will need to add one or more callback urls to the whitelist on our side first.
+All requests are authenticated with tokens issued by common OAuth 2.0 compatible flow. In order to use the API, the application should be registered with us first to get the `client_id` and `client_secret`. Please contact us at support@lime.co in order to do that. We support two authorization flows suitable for different scenarios. The `password` type is short and simple to be used by users trading directly on their account. The `authorization_code` type is longer and more complicated but allows third parties to get authorized access to client accounts. For security reasons, the third party applications will need to add one or more callback urls to the whitelist on our side first.
 
 Successful authentication issues a security token that needs to be specified with every authenticated request in the Authentication HTTP header: `Authentication: Bearer {token goes here}`
 
 ## Create username
-A user must have an identity with Just2Trade in order to use Just2Trade services. The identity is authenticated by username and password created by this endpoint. This does not open a trading account.
+A user must have an identity with Lime Trading in order to use Lime Trading services. The identity is authenticated by username and password created by this endpoint. This does not open a trading account.
 
 ```shell
 curl
@@ -75,7 +75,7 @@ expires_in | the expiration lifetime in seconds
 
 
 ## Code Flow - Authorize
-The user browser should be directed to the following authentication url. The user will see the Just2Trade login form to input the credentials.
+The user browser should be directed to the following authentication url. The user will see the Lime Trading login form to input the credentials.
 
 ```shell
 curl
