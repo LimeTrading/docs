@@ -37,6 +37,138 @@ html, body {
 }
 
 ////////////////////////////////////////////////////////////////////////////////
+// TOP MENU
+////////////////////////////////////////////////////////////////////////////////
+
+#header {
+  position: fixed;
+  top:0;
+  left:0;
+  width: 100%;
+  height: $top-menu-height;
+  z-index: 100;
+
+  display: -ms-flexbox;
+  display: flex;
+
+  border-bottom: 1px solid #D8E5FF;
+  background: #fff;  
+
+  a.logo-wrapper {
+    display: -ms-flexbox;
+    display: flex;
+    flex: 0 0 50%;
+    align-items: center;
+    box-sizing: border-box;
+    text-decoration: none;
+    padding-left: 40px;
+    
+    @media (max-width: $tablet-width) {
+      padding-left: 24px;
+    }
+
+    img {
+      max-width: 130px;
+      width: 130px;      
+      height: auto;
+
+      
+      @media (max-width: $tablet-width) {
+        max-width: 120px;
+        width: 100px;
+      }
+    }
+
+    .docs {
+      margin-left: 14px;
+      color: #082559;
+      font-size: 18px;
+      font-weight: bolder;
+    }
+  }
+
+  nav.navigation {
+    display: -ms-flexbox;
+    display: flex;
+    flex: 0 0 50%;
+    align-items: flex-end;
+    flex-wrap: nowrap;
+    flex-direction: column;    
+
+    ul.header-list {
+      margin-right: 40px;
+
+      @media (max-width: $tablet-width) {
+        margin-right: 24px;
+      }
+
+      li.nav-item {
+        float: left;
+        list-style:none;
+        text-decoration: none;
+        position: relative;
+
+        a.menu-link {
+          text-align: center;
+          font-style: normal;
+          // font-family: Inter;
+          font-weight: 600;
+          font-size: 14px;
+          letter-spacing: -0.004em;
+          line-height: 20px;
+          color: #8297BE;
+          margin: 0 8px;
+          text-decoration: none;
+          -webkit-transition: color 0.3s ease-in-out, opacity 0.3s ease-in-out;
+          transition: color 0.3s ease-in-out, opacity 0.3s ease-in-out;
+
+          &:hover {
+            color: #8DB938;
+            // font-weight: 600;
+          }
+
+          &.dropdown-trigger::after {
+            content: '▾';
+            margin-left: 4px;
+          }
+        }
+
+        .menu-dropdown-content {
+          display: none;
+          position: absolute;
+          top: $top-menu-height/2 + 4;
+          right: 0;
+          background-color: #fff;
+          box-shadow: 0 3px 10px rgba(0,0,0,.16);
+          z-index: 100000;
+          min-width: 140px;
+
+          a {
+            float: none;            
+            padding: 8px 32px 8px 16px;
+            text-decoration: none;
+            display: block;
+            text-align: left;
+            white-space: nowrap;
+
+            * {
+              vertical-align: middle;
+            }
+
+            span {
+              padding: 5px;
+            }
+            svg {
+              
+            }
+          }
+        }
+      }
+    }
+  }
+}
+
+////////////////////////////////////////////////////////////////////////////////
 // TABLE OF CONTENTS
 ////////////////////////////////////////////////////////////////////////////////
 
@@ -54,7 +186,7 @@ html, body {
   overflow-x: hidden;
   position: fixed;
   z-index: 30;
-  top: 0;
+  top: $top-menu-height;
   left: 0;
   bottom: 0;
   width: $nav-width;
@@ -72,11 +204,11 @@ html, body {
   }
 
   // This is the logo at the top of the ToC
-  .logo {
-    display: block;
-    max-width: 100%;
-    margin: $logo-margin auto;
-  }
+  // .logo {
+  //   display: block;
+  //   max-width: 100%;
+  //   margin: $logo-margin auto;
+  // }
 
   &>.search {
     position: relative;
@@ -223,7 +355,7 @@ html, body {
   padding: 0 1.5em 5em 0; // increase touch size area
   display: none;
   position: fixed;
-  top: 0;
+  top: $top-menu-height;
   left: 0;
   z-index: 100;
   color: #000;
@@ -254,6 +386,7 @@ html, body {
   background-color: $main-bg;
   min-height: 100%;
 
+  margin-top: $top-menu-height;
   padding-bottom: 1px; // prevent margin overflow
 
   // The dark box is what gives the code samples their dark background.
@@ -327,6 +460,11 @@ html, body {
     clear: both;
   }
 
+  .content-anchor {
+    position: absolute;
+    top: $top-menu-height * -1;
+  }
+
   &>h1, &>h2, &>h3, &>h4, &>h5, &>h6, &>p, &>table, &>ul, &>ol, &>aside, &>dl {
     margin-right: $examples-width;
     padding: 0 $main-padding;
@@ -338,6 +476,10 @@ html, body {
 
   &>ul, &>ol {
     padding-left: $main-padding + 15px;
+  }
+
+  &>h1, &>h2, &>h3 {
+    position: relative;
   }
 
   // the div is the tocify hidden div for placeholding stuff

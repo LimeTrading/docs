@@ -19,6 +19,6 @@ class UniqueHeadCounter < Middleman::Renderers::MiddlemanRedcarpetHTML
     if @head_count[friendly_text] > 1
       friendly_text += "-#{@head_count[friendly_text]}"
     end
-    return "<h#{header_level} id='#{friendly_text}'>#{text}</h#{header_level}>"
+    return "<h#{header_level} data-id='#{friendly_text}'><span class='title'>#{text}</span><div id='#{friendly_text}' class='content-anchor'></div></h1>"
   end
 end
