@@ -51,7 +51,7 @@ html, body {
   display: -ms-flexbox;
   display: flex;
 
-  border-bottom: 1px solid #D8E5FF;
+  // border-bottom: 1px solid #D8E5FF;
   background: #fff;  
 
   a.logo-wrapper {
@@ -93,7 +93,8 @@ html, body {
     flex: 0 0 50%;
     align-items: flex-end;
     flex-wrap: nowrap;
-    flex-direction: column;    
+    flex-direction: column;
+    padding-top: 4px;
 
     ul.header-list {
       margin-right: 40px;
@@ -116,7 +117,7 @@ html, body {
           font-size: 14px;
           letter-spacing: -0.004em;
           line-height: 20px;
-          color: #8297BE;
+          color: #3B5462;
           margin: 0 8px;
           text-decoration: none;
           -webkit-transition: color 0.3s ease-in-out, opacity 0.3s ease-in-out;
@@ -193,6 +194,7 @@ html, body {
   background-color: $nav-bg;
   font-size: 13px;
   font-weight: bold;
+  border-right: 1px solid #ccc;
 
   // language selector for mobile devices
   .lang-selector {
@@ -490,13 +492,13 @@ html, body {
   h1 {
     @extend %header-font;
     font-size: 25px;
-    padding-top: 0.5em;
+    padding-top: 1.5em;
     padding-bottom: 0.5em;
     margin-bottom: $h1-margin-bottom;
     margin-top: 2em;
     border-top: 1px solid #ccc;
-    border-bottom: 1px solid #ccc;
-    background-color: #fdfdfd;
+    //border-bottom: 1px solid #ccc;
+    //background-color: #fdfdfd;
   }
 
   h1:first-child, div:first-child + h1 {
@@ -509,7 +511,7 @@ html, body {
     font-size: 19px;
     margin-top: 4em;
     margin-bottom: 0;
-    border-top: 1px solid #ccc;
+    //border-top: 1px solid #ccc;
     padding-top: 1.2em;
     padding-bottom: 1.2em;
     background-image: linear-gradient(to bottom, rgba(#fff, 0.2), rgba(#fff, 0));
