@@ -17,14 +17,14 @@ class UniqueHeadCounter < Middleman::Renderers::MiddlemanRedcarpetHTML
     @section = nil?
 
     @doc.children.each { |el|
-      if el.name[ /h([1-6])/i, 1 ].to_i > 0
+      if el.name[ /h([1-2])/i, 1 ].to_i > 0
         if @section != nil?
           @sections.push(@section)
         end
 
         @section = @doc.document.create_element "section", :class => "method"
-        @section.add_child '<div class="left content"></div>'
-        @section.add_child '<div class="right content"></div>'
+        @section.add_child '<div class="left"></div>'
+        @section.add_child '<div class="right"></div>'
       end
 
       next if el.text?
