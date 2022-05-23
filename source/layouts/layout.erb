@@ -33,7 +33,7 @@ under the License.
       <% current_page.data.meta.each do |meta| %>
         <meta
           <% meta.each do |key, value| %>
-            <%= "#{key}=\"#{value}\"" %>
+            <%= "property=\"#{key}\" content=\"#{value}\"" %>
           <% end %>
         >
       <% end %>
