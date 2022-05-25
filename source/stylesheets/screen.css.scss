@@ -490,7 +490,7 @@ section.method {
   // fixes webkit rendering bug for some: see #538
   -webkit-transform: translateZ(0);
   // to place content above the dark box
-  position: relative;  
+  position: relative;
   z-index: 30;
 
   &:after {
