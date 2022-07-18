@@ -1,0 +1,12 @@
+.idea/
+.vs/
+.vscode/
+.DS_Store
+*.DS_Store
+*.DotSettings
+
+/build/
+**/bin/
+**/obj/
+
+__pycache__
