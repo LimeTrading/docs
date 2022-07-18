@@ -2,6 +2,7 @@ import lime_trading_api as lb
 from argparse import ArgumentParser
 import time
 import sys
+from colorama import init, Fore
 
 #Example usage: python3 example.py -host <hostname> -a <account> -u <user> -p <password>
 class Listener(lb.Listener):
@@ -16,202 +17,221 @@ class Listener(lb.Listener):
         self.cancel_rejected_orders = {}
         self.cancel_replace_rejected_orders = {}
 
-
     def on_login_accepted(self, event_id):
-        print("logged in!")
         self.logged_in = True
 
-
     def on_login_failed(self, reason):
-        print("Login failed! reason = {}".format(reason))
+        print(f"{Fore.RED} [ERROR]{Fore.RESET} Login failed! Reason = {reason}")
     
     def on_connection_busy(self) -> None:
-        print("Connection Busy!")
+        print(f"{Fore.RED} [ERROR]{Fore.RESET} Connection busy!")
 
     def on_order_accept(self, order_id, lime_order_id, attributes, event_id):
-        print("order %d accepted!" % order_id)
+        # print("Order %d accepted!" % order_id)
         self.accepted_orders[order_id] = attributes
     
     def on_order_fill(self, order_id, fill_info, event_id):
-        print("order %d Filled!" % order_id)
+        # print("Order %d Filled!" % order_id)
         self.filled_orders[order_id] = fill_info
 
     def on_order_replace(self, order_id, replace_order_id, lime_replace_order_id, attributes, event_id):
-        print("order %d Replaced!" % order_id)
+        # print("Order %d Replaced!" % order_id)
         self.replaced_orders[replace_order_id] = (order_id, attributes)
     
     def on_order_cancel(self, order_id, event_id):
-        print("order %d Canceled!" % order_id)
+        # print("Order %d Canceled!" % order_id)
         self.canceled_orders[order_id] = order_id
     
     def on_order_reject(self, order_id: int, reason: str, event_id: int) -> None:
-        print("order {} Rejected! Reason = {}".format(order_id, reason))
+        # print("Order {} Rejected! Reason = {}".format(order_id, reason))
         self.rejected_orders[order_id] = reason
     
     def on_order_cancel_reject(self, order_id, reason, event_id):
-        print("order {} Rejected! Reason = {}".format(order_id, reason))
+        # print("Order {} Rejected! Reason = {}".format(order_id, reason))
         self.cancel_rejected_orders[order_id] = reason
     
     def on_order_cancel_replace_reject(self, order_id: int, replace_order_id: int, reason: str, event_id: int) -> None:
         print("CR order {} on order id {} Rejected! Reason = {}".format(order_id, replace_order_id, reason))
         self.cancel_replace_rejected_orders[order_id] = (replace_order_id, reason)
 
-
-
-
 def waitForCallback(condition) -> bool:
-    timeout = time.time() + 2 # 1 second timeouts
+    timeout = time.time() + 5 # 5 second timeouts
     while True:
         if (time.time() > timeout):
             return False
         if condition():
             return True
 
+def printStart(message):
+    # the escape sequence magic clears the rest of the line and returns carriage
+    print(f"         {message}...", end="\033[K\r", flush=True)
+
+def printSuccess(message):
+    # the escape sequence magic clears the rest of the line and starts new line
+    print(f"{Fore.GREEN} [PASS] {Fore.RESET} {message}", end="\033[K\n")
+
+def printError(message):
+    # the escape sequence magic clears the rest of the line and starts new line
+    print(f"{Fore.RED} [ERROR]{Fore.RESET} {message}", end="\033[K\n")
+
+
+def testBuyLimitAndFullFill(api: lb.TradingApi, order_id) -> bool:
+    """
+    Buy limit order and receive full fill
+    """
+
+    printStart("Buy limit order and receive full fill")
+    api.place_order(order_id = order_id, symbol = "AAPL", quantity = 100, price = 145.21, side = lb.Side.Buy, route = "ARCP")
+
+    if not waitForCallback(lambda : order_id in listener.accepted_orders):
+        printError(f"Order id {order_id} was not accepted!")
+        return False
+
+    if not waitForCallback(lambda : order_id in listener.filled_orders):
+        printError(f"Order id {order_id} was not filled!")
+        return False
+
+    printSuccess(f"Buy limit order and receive full fill")
+    return True
+
+def testBuyMarketAndFullFill(api: lb.TradingApi, order_id) -> bool:
+    """
+    Buy market order and receive full fill
+    """
+
+    printStart("Buy market order and receive full fill")
+    api.place_order(order_id = order_id, symbol = "AAPL", quantity = 100, price = lb.MARKET_PRICE, side = lb.Side.Buy, route = "ARCP")
+
+    if not waitForCallback(lambda : order_id in listener.accepted_orders):
+        printError(f"Order id {order_id} was not accepted!")
+        return False
+
+    if not waitForCallback(lambda : order_id in listener.filled_orders):
+        printError(f"Order id {order_id} was not filled!")
+        return False
+
+    printSuccess(f"Buy market order and receive full fill")
+    return True
+
+def testSellLimitAndFullFill(api: lb.TradingApi, order_id) -> bool:
+    """
+    Sell limit order and receive full fill
+    """
+
+    printStart("Sell limit order and receive full fill")
+    api.place_order(order_id = order_id, symbol = "AAPL", quantity = 100, price = 145.21, side = lb.Side.Sell, route = "ARCP")
+
+    if not waitForCallback(lambda : order_id in listener.accepted_orders):
+        printError(f"Order id {order_id} was not accepted!")
+        return False
+
+    if not waitForCallback(lambda : order_id in listener.filled_orders):
+        printError(f"Order id {order_id} was not filled!")
+        return False
+
+    printSuccess(f"Sell limit order and receive full fill")
+    return True
+
+def testSellMarketAndFullFill(api: lb.TradingApi, order_id) -> bool:
+    """
+    Sell market order and receive full fill
+    """
+
+    printStart("Sell market order and receive full fill")
+    api.place_order(order_id = order_id, symbol = "AAPL", quantity = 100, price = lb.MARKET_PRICE, side = lb.Side.Sell, route = "ARCP")
+
+    if not waitForCallback(lambda : order_id in listener.accepted_orders):
+        printError(f"Order id {order_id} was not accepted!")
+        return False
+
+    if not waitForCallback(lambda : order_id in listener.filled_orders):
+        printError(f"Order id {order_id} was not filled!")
+        return False
+
+    printSuccess(f"Sell market order and receive full fill")
+    return True
+
+def testBuyReplaceCancel(api: lb.TradingApi, order_id, replace_order_id) -> bool:
+    """
+    Buy, replace and cancel an order
+    """
+
+    printStart("Sending buy limit")
+    api.place_order(order_id = order_id, symbol = "MSFT", quantity = 100, price = 240, side = lb.Side.Buy, route = "ARCP")
+    if not waitForCallback(lambda : order_id in listener.accepted_orders):
+        printError(f"Order id {order_id} was not accepted!")
+        return False
+        
+    printStart("Replacing quantity and price")
+    api.cancel_replace_order(order_id, replace_order_id, quantity = 200, price = 240)
+    if not waitForCallback(lambda : replace_order_id in listener.replaced_orders):
+        printError(f"Order id {replace_order_id} did not replace order id {order_id}")
+        return False
+    
+    printStart("Cancelling")
+    api.cancel_order(replace_order_id)
+    if not waitForCallback(lambda : replace_order_id in listener.canceled_orders):
+        printError(f"Order id {replace_order_id} was not cancelled!")
+        return False
+
+    printSuccess("Buy, replace and cancel an order")
+    return True
+
+def testBuyMarketPartialFillAndCancel(api: lb.TradingApi, order_id) -> bool:
+    """
+    Buy at market, receive partial fill and cancel the rest
+    """
+
+    printStart("Buy market order")
+    api.place_order(order_id = order_id, symbol = "PAR", quantity = 1000, price = lb.MARKET_PRICE, side = lb.Side.Buy, route = "ARCP")
+
+    if not waitForCallback(lambda : order_id in listener.accepted_orders):
+        printError(f"Order id {order_id} was not accepted!")
+        return False
+
+    if not waitForCallback(lambda : order_id in listener.filled_orders):
+        printError(f"Order id {order_id} was not filled!")
+        return False
+
+    printStart("Cancelling")
+    api.cancel_order(order_id)
+    if not waitForCallback(lambda : order_id in listener.canceled_orders):
+        printError(f"Order id {order_id} was not cancelled!")
+        return False
+
+    printSuccess(f"Buy at market, receive partial fill and cancel the rest")
+    return True
+
 if __name__  == "__main__":
-    parser = ArgumentParser(description="Python Trading API US Equities Example")
+    init()
+
+    parser = ArgumentParser(description="Python trading API example")
     parser.add_argument("-host", dest="host", required=True, help="Trading Server host name", type=str)
     parser.add_argument("-a", dest="account", required=True, help="Account name", type=str)
     parser.add_argument("-u", dest="user", required=True, help="Username", type=str)
     parser.add_argument("-p", dest="password", required=True, help="Password", type=str)
-    args=parser.parse_args()
+    args = parser.parse_args()
     host, account, user, password = args.host, args.account, args.user, args.password
-    
-    symbol = "MSFT" #Orders using this symbol will stay open when using test server
-    fill_symbol = "AAPL" #Orders using this symbol will auto fill when using test server
-    limit_price = 277.79
-    example_quantity = 100
-    route = "ARCP"
-    order_id = 1
-    
-    listener = Listener()    
-    
-    api = lb.TradingApi(listener,
-                        account   = account,
-                        user      = user,
-                        password  = password,
-                        event_id  = 0,
-                        host_name = host,
-                        cancel_all_on_disconnect = True)
+
+    # Successful login process
+    printStart("Logging in")
+    listener = Listener()
+    api = lb.TradingApi(listener, account, user, password, 0, host, True)
     
     if not waitForCallback(lambda : listener.logged_in):
-        raise Exception("Api failed to login")
+        printError("Login failed")
+        raise Exception("Login failed")
+    else:
+        printSuccess("Logged in")
+
+    testBuyLimitAndFullFill(api, 0)
+    testBuyMarketAndFullFill(api, 1)
+    testSellLimitAndFullFill(api, 2)
+    testSellMarketAndFullFill(api, 3)
+    testBuyReplaceCancel(api, 4, 5)
+    testBuyMarketPartialFillAndCancel(api, 6)
     
-    #Regular Limit Order Buy, FILL
-    print("\n\nExample 1: Regular Limit Order Buy, FILL \n\n")
-    api.place_order(order_id = order_id,
-                    symbol = fill_symbol,
-                    quantity = example_quantity,
-                    price = limit_price,
-                    side = lb.Side.Buy,
-                    route = route)
-    
-    if not waitForCallback(lambda : order_id in listener.accepted_orders):
-        print("order_id: {} was not accepted!".format(order_id))
-        
-    if not waitForCallback(lambda : order_id in listener.filled_orders):
-        print("order_id: {} was not filled!".format(order_id))
-    
-    
-    print("Order Ack Attributes:")
-    print(listener.accepted_orders[order_id])
-    print("Order Fill Attributes:")
-    print(listener.filled_orders[order_id])
-    order_id += 1
-    
-    #Regular Market order buy, FILL
-    print("\n\nExample 2: Regular Market Order Buy, FILL \n\n")
-    api.place_order(order_id = order_id,
-                    symbol = fill_symbol,
-                    quantity = example_quantity,
-                    price = lb.MARKET_PRICE,
-                    side = lb.Side.Buy,
-                    route = route)
-    
-    if not waitForCallback(lambda : order_id in listener.accepted_orders):
-        print("order_id: {} was not accepted!".format(order_id))
-        
-    if not waitForCallback(lambda : order_id in listener.filled_orders):
-        print("order_id: {} was not filled!".format(order_id))
-    
-    order_id += 1
-    
-    
-    #Regular Limit Order Sell, FILL
-    print("\n\nExample 2: Regular Limit Order Sell, FILL \n")
-    api.place_order(order_id = order_id,
-                    symbol = fill_symbol,
-                    quantity = example_quantity,
-                    price = limit_price,
-                    side = lb.Side.Buy,
-                    route = route)
-    
-    if not waitForCallback(lambda : order_id in listener.accepted_orders):
-        print("order_id: {} was not accepted!".format(order_id))
-        
-    if not waitForCallback(lambda : order_id in listener.filled_orders):
-        print("order_id: {} was not filled!".format(order_id))
-    
-    order_id += 1
-    
-    
-    
-    #Regular Limit Order buy, Cancel Replace, Cancel
-    print("\n\nExample 3: Regular Limit Order Buy, Cancel Replace, Cancel \n\n")
-    #Limit Order buy - Open
-    api.place_order(order_id = order_id,
-                    symbol = symbol,
-                    quantity = example_quantity,
-                    price = limit_price,
-                    side = lb.Side.Buy,
-                    route = route)
-    
-    if not waitForCallback(lambda : order_id in listener.accepted_orders):
-        print("order_id: {} was not accepted!".format(order_id))
-        
-    order_id += 1
-        
-    #Cancel replace previous order, change price and quantity
-    api.cancel_replace_order(order_id = order_id - 1,
-                             replace_order_id=order_id,
-                             quantity = 200,
-                             price = 300)
-    
-    
-    if not waitForCallback(lambda : order_id in listener.replaced_orders):
-        print("order id -> {} did not replace order id {}".format(order_id, order_id-1))
-    
-    
-    #Cancel
-    api.cancel_order(order_id = order_id)
-    
-    if not waitForCallback(lambda : order_id in listener.canceled_orders):
-        print("order id {} was not cancelled!".format(order_id))
-    
-    order_id += 1
-    
-    #Regular limit, IOC - Cancelled
-    props = lb.OrderProperties()
-    props.time_in_force = lb.TimeInForce.Ioc
-    api.place_order(order_id = order_id,
-                    symbol = symbol,
-                    quantity = example_quantity,
-                    price = limit_price,
-                    side = lb.Side.Buy,
-                    route = route,
-                    properties = props)
-    
-    if not waitForCallback(lambda : order_id in listener.accepted_orders):
-        print("order_id: {} was not accepted!".format(order_id))
-        
-    
-    if not waitForCallback(lambda : order_id in listener.canceled_orders):
-        print("order id {} was not cancelled!".format(order_id))
-    
-    #Not using with statements to create listener and api objects so we close
+    # Close connections
     listener.close()
     api.close()
-    
-     
-    
-    
     
