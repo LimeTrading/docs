@@ -30,7 +30,7 @@ internal class Callback : ICallback
 
     public void OnInternalError(string errorMessage, Exception ex)
     {
-        _logger.LogError(ex, "Error message: " + errorMessage);
+        _logger.LogError(ex, $"Error message: {errorMessage}");
     }
 
     public void OnHeartBeat(long eventId)
@@ -60,7 +60,7 @@ internal class Callback : ICallback
 
     public void OnDisconnect(string reason)
     {
-        _logger.LogInformation("Disconnected " + reason);
+        _logger.LogInformation($"Disconnected: {reason}");
     }
 
     public void OnOrderAck(long eventId, long orderId, long limeOrderId, AckOptions options)
