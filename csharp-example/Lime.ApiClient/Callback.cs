@@ -115,7 +115,7 @@ internal class Callback : ICallback
         int quantityLeft, DateTime transactTime, string symbol, FillOptions options)
     {
         _logger.LogInformation(
-            $"Shares fill: {eventId}, order id: {orderId}, symbol: {symbol}, quantity filled: {quantityFilled}/{quantityLeft}, fill price {fillPrice}");
+            $"TransactTime: {transactTime}, Shares fill: {eventId}, order id: {orderId}, symbol: {symbol}, quantity filled: {quantityFilled}/{quantityLeft}, fill price {fillPrice}");
         if (quantityLeft == 0) _activeOrders.Remove(orderId);
     }
 
