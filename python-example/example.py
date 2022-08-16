@@ -2,6 +2,7 @@ import lime_trading_api as lb
 from argparse import ArgumentParser
 import time
 import sys
+from decimal import *
 from colorama import init, Fore
 
 #Example usage: python3 example.py -host <hostname> -a <account> -u <user> -p <password>
@@ -29,10 +30,14 @@ class Listener(lb.Listener):
     def on_order_accept(self, order_id, lime_order_id, attributes, event_id):
         # print("Order %d accepted!" % order_id)
         self.accepted_orders[order_id] = attributes
+        # print(f"AckAttr structure for order {order_id}:", end="\033[K\n");
+        # print(str(attributes), end="\033[K\n")
     
     def on_order_fill(self, order_id, fill_info, event_id):
         # print("Order %d Filled!" % order_id)
         self.filled_orders[order_id] = fill_info
+        # print(f"FillInfo structure for order {order_id}:", end="\033[K\n");
+        # print(str(fill_info), end="\033[K\n")
 
     def on_order_replace(self, order_id, replace_order_id, lime_replace_order_id, attributes, event_id):
         # print("Order %d Replaced!" % order_id)
@@ -43,7 +48,7 @@ class Listener(lb.Listener):
         self.canceled_orders[order_id] = order_id
     
     def on_order_reject(self, order_id: int, reason: str, event_id: int) -> None:
-        # print("Order {} Rejected! Reason = {}".format(order_id, reason))
+        print("Order {} Rejected! Reason = {}".format(order_id, reason))
         self.rejected_orders[order_id] = reason
     
     def on_order_cancel_reject(self, order_id, reason, event_id):
@@ -80,8 +85,8 @@ def testBuyLimitAndFullFill(api: lb.TradingApi, order_id) -> bool:
     Buy limit order and receive full fill
     """
 
-    printStart("Buy limit order and receive full fill")
-    api.place_order(order_id = order_id, symbol = "AAPL", quantity = 100, price = 145.21, side = lb.Side.Buy, route = "ARCP")
+    printStart("BuyToCover limit order and receive full fill")
+    api.place_order(order_id = order_id, symbol = "AAPL", quantity = 100, price = Decimal('153.21'), side = lb.Side.BuyToCover, route = "ARCP")
 
     if not waitForCallback(lambda : order_id in listener.accepted_orders):
         printError(f"Order id {order_id} was not accepted!")
@@ -92,6 +97,10 @@ def testBuyLimitAndFullFill(api: lb.TradingApi, order_id) -> bool:
         return False
 
     printSuccess(f"Buy limit order and receive full fill")
+
+    # print(f"FillInfo structure for order {order_id}:", end="\033[K\n");
+    # print(str(listener.filled_orders[order_id]), end="\033[K\n")
+
     return True
 
 def testBuyMarketAndFullFill(api: lb.TradingApi, order_id) -> bool:
@@ -119,7 +128,7 @@ def testSellLimitAndFullFill(api: lb.TradingApi, order_id) -> bool:
     """
 
     printStart("Sell limit order and receive full fill")
-    api.place_order(order_id = order_id, symbol = "AAPL", quantity = 100, price = 145.21, side = lb.Side.Sell, route = "ARCP")
+    api.place_order(order_id = order_id, symbol = "AAPL", quantity = 100, price = Decimal('153.21'), side = lb.Side.Sell, route = "ARCP")
 
     if not waitForCallback(lambda : order_id in listener.accepted_orders):
         printError(f"Order id {order_id} was not accepted!")
@@ -175,6 +184,16 @@ def testBuyReplaceCancel(api: lb.TradingApi, order_id, replace_order_id) -> bool
         return False
 
     printSuccess("Buy, replace and cancel an order")
+
+    # print(f"AckAttr structure for order {order_id}:", end="\033[K\n")
+    # print(str(listener.accepted_orders[order_id]), end="\033[K\n")
+
+    # print(f"AckAttr structure for order {replace_order_id}:", end="\033[K\n")
+    # print(str(listener.replaced_orders[replace_order_id]), end="\033[K\n")
+
+    # print(f"AckAttr structure for order {replace_order_id}:", end="\033[K\n")
+    # print(str(listener.canceled_orders[replace_order_id]), end="\033[K\n")
+
     return True
 
 def testBuyMarketPartialFillAndCancel(api: lb.TradingApi, order_id) -> bool:
@@ -201,6 +220,35 @@ def testBuyMarketPartialFillAndCancel(api: lb.TradingApi, order_id) -> bool:
 
     printSuccess(f"Buy at market, receive partial fill and cancel the rest")
     return True
+
+def testAlgoOrder(api: lb.TradingApi, order_id) -> bool:
+    """
+   Send algo order
+    """
+
+    printStart("Buy and route to algo")
+    api.place_algo_order(order_id = order_id, symbol = "CURV", quantity = 1, price = Decimal('6.31'), side = lb.Side.Buy, route = "LARE", strategy = "LSR")
+
+    if not waitForCallback(lambda : order_id in listener.accepted_orders):
+        printError(f"Order id {order_id} was not accepted!")
+        return False
+
+    printSuccess(f"Buy and route to algo")
+    return True
+
+def testCancelAll(api: lb.TradingApi) -> bool:
+    printStart(f"Cancelling all open orders")
+    if api.cancel_all_open_orders() != api.CallStatus.Success:
+        printSuccess(f"Cancel all open orders call failed")
+        return False
+
+    if not waitForCallback(lambda : len(listener.filled_orders) + len(listener.canceled_orders) >= len(listener.accepted_orders)):
+        printError(f"Some orders left open")
+        return False
+
+    printSuccess(f"Cancelling all open orders")
+    return True
+
 
 if __name__  == "__main__":
     init()
@@ -230,6 +278,8 @@ if __name__  == "__main__":
     testSellMarketAndFullFill(api, 3)
     testBuyReplaceCancel(api, 4, 5)
     testBuyMarketPartialFillAndCancel(api, 6)
+    testAlgoOrder(api, 7)
+    testCancelAll(api)
     
     # Close connections
     listener.close()
