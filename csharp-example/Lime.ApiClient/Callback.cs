@@ -60,7 +60,7 @@ internal class Callback : ICallback
 
     public void OnDisconnect(string reason)
     {
-        _logger.LogInformation($"Disconnected: {reason}");
+        _logger.LogInformation($"Disconnected with reason: '{reason}'");
     }
 
     public void OnOrderAck(long eventId, long orderId, long limeOrderId, AckOptions options)

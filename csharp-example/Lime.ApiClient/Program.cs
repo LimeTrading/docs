@@ -37,7 +37,7 @@ async Task Run(string host, int port, string account, string user, string passwo
     ILoggerFactory factory = LoggerFactory.Create(builder =>
         builder.AddSimpleConsole(options =>
         {
-            options.IncludeScopes = true;
+            options.IncludeScopes = false;
             options.SingleLine = true;
             options.TimestampFormat = "hh:mm:ss.ffffff";
         }).SetMinimumLevel(LogLevel.Trace));
