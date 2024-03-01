@@ -1,0 +1,6 @@
+Streaming feed
+===================
+
+.. automodule:: lime_trader.clients.account_feed_client
+   :members:
+   :exclude-members: run

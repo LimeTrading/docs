@@ -1,0 +1,7 @@
+Errors
+==========
+
+
+.. automodule:: lime_trader.models.errors
+   :members:
+   :show-inheritance:

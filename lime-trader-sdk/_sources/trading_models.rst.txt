@@ -1,0 +1,5 @@
+Trading models
+===================
+
+.. automodule:: lime_trader.models.trading
+   :members:

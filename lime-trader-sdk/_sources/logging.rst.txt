@@ -1,0 +1,48 @@
+Logging
+==========
+
+
+LimeClient supports using custom logger. When you instantiate LimeClient just pass logger and that same logger will
+be used throughout all clients. For example, to use DEBUG level just create Python logger and set level to DEBUG:
+
+.. code-block:: python
+   :linenos:
+
+   import logging
+   from lime_trader import LimeClient
+
+   logger = logging.getLogger(__name__)
+   logger.setLevel(logging.DEBUG)
+
+   client = LimeClient.from_file("credentials.json", logger=logger)
+
+Output:
+
+
+.. code:: console
+
+   2023-04-06 06:04:55,870 [DEBUG] Executing GET request https://ftru03.just2trade.com/tst/usaapi/marketdata/quote, params={
+     "symbol": "AAPL"
+   }
+   2023-04-06 06:04:57,100 [DEBUG] Response: {
+     "symbol": "AAPL",
+     "ask": 163.63,
+     "ask_size": 6,
+     "bid": 163.55,
+     "bid_size": 86,
+     "last": 163.76,
+     "last_size": 4582912,
+     "volume": 0,
+     "date": 1680724800,
+     "high": 165.05,
+     "low": 161.8,
+     "open": 164.74,
+     "close": 165.65,
+     "week52_high": 176.15,
+     "week52_low": 124.17,
+     "change": -1.87,
+     "change_pc": -1.13,
+     "open_interest": 0
+   }
+
+DEBUG logger will log raw requests and responses to and from the API.

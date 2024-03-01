@@ -1,0 +1,6 @@
+Market Data client
+===================
+
+.. automodule:: lime_trader.clients.market_data_client
+   :members:
+   :show-inheritance:
