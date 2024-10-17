@@ -1,0 +1,146 @@
+Configuring client
+==================
+
+In our examples, credentials are loaded from a JSON file. However, there are multiple ways to configure
+LimeClient and you can use any of the ways you like.
+
+Initializing the client is a one-time job so there are no default values. You must explicitly set all settings,
+including urls. That way you can easily change between paper trading and live accounts.
+
+
+1. Using credentials in json file (used in examples)
+
+   Structure of JSON file is:
+
+.. code-block:: json
+
+   {
+       "username": "<your_username>",
+       "password": "<your_password>",
+       "client_id": "<client_id>",
+       "client_secret": "<client_secret>",
+       "grant_type": "password",
+       "base_url": "https://api.lime.co",
+       "auth_url": "https://auth.lime.co"
+   }
+
+
+.. code-block:: python
+   :linenos:
+
+   from lime_trader import LimeClient
+
+   client = LimeClient.from_file("credentials.json")
+
+2. Using json string. This might be useful if you don’t want to use a file with credentials or you want to
+   inject credentials using an environment variable:
+
+Using JSON string directly:
+
+.. code-block:: python
+   :linenos:
+
+   from lime_trader import LimeClient
+
+   client = LimeClient.from_json("""{
+       "username": "<your_username>",
+       "password": "<your_password>",
+       "client_id": "<client_id>",
+       "client_secret": "<client_secret>",
+       "grant_type": "password",
+       "base_url": "https://api.lime.co",
+       "auth_url": "https://auth.lime.co"
+   }""")
+
+Using JSON from environment:
+
+.. code-block:: python
+   :linenos:
+
+   import os
+   from lime_trader import LimeClient
+
+   json_str = os.environ.get("LIME_JSON_CREDENTIALS")
+   client = LimeClient.from_json(json_str)
+
+3. Using Python dictionary. If you are fetching credentials from some credentials store or getting them from
+   an external source, you can construct them as a Python dictionary:
+
+.. code-block:: python
+   :linenos:
+
+   from lime_trader import LimeClient
+
+   def get_credentials():
+      return {
+          "username": "<your_username>",
+          "password": "<your_password>",
+          "client_id": "<client_id>",
+          "client_secret": "<client_secret>",
+          "grant_type": "password",
+          "base_url": "https://api.lime.co",
+          "auth_url": "https://auth.lime.co"
+      }
+
+   credentials = get_credentials()
+   client = LimeClient.from_dict(credentials)
+
+
+4. From environment. If you are injecting credentials as environment variables you can use the `from_env` method
+   to initialize client:
+
+
+   The following environment variables must be set for client to initialize properly:
+
+* LIME_SDK_USERNAME - username
+* LIME_SDK_PASSWORD - password
+* LIME_SDK_CLIENT_ID - client id
+* LIME_SDK_CLIENT_SECRET - client secret
+* LIME_SDK_GRANT_TYPE - grant type. Usually `password`
+* LIME_SDK_BASE_URL - base url for the Lime REST API
+* LIME_SDK_AUTH_URL - url for the Lime Authorization server
+
+
+.. code-block:: python
+   :linenos:
+
+   from lime_trader import LimeClient
+
+   client = LimeClient.from_env()
+
+5. From `.env` file. If you are loading credentials from an `.env` file you can use the `from_env_file` method.
+   An ENV file is a file that contains key value pairs. Example with required keys:
+
+.. code-block:: console
+
+   LIME_SDK_USERNAME=username
+   LIME_SDK_PASSWORD=password
+   LIME_SDK_CLIENT_ID=client_id
+   LIME_SDK_CLIENT_SECRET=secret
+   LIME_SDK_GRANT_TYPE=password
+   LIME_SDK_BASE_URL=https://api.lime.co
+   LIME_SDK_AUTH_URL=https://auth.lime.co
+
+
+.. code-block:: python
+   :linenos:
+
+   from lime_trader import LimeClient
+
+   client = LimeClient.from_env_file(".env")
+
+6. Instantiate it yourself. If none of the above methods work for you, you can always create a credentials object
+   and instantiate client yourself:
+
+.. code-block:: python
+   :linenos:
+
+   from lime_trader import LimeClient
+
+   cr = Credentials(username="your_username", password="your_password",
+                    client_id="your_client_id",
+                    client_secret="your_client_password",
+                    grant_type="password")
+   client = LimeClient(base_url="https://api.lime.co/",
+                       credentials=cr,
+                       auth_url="https://auth.lime.co")

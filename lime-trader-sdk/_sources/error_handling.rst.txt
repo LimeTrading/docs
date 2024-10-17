@@ -1,0 +1,46 @@
+Error Handling
+===============
+
+Most of the errors you will see while using LimeTrader SDK are errors returned from REST API.
+These errors are *not* modified and are returned with details from the REST API.
+
+
+Handle order place error:
+
+.. code-block:: python
+   :linenos:
+
+    from _decimal import Decimal
+    from http import HTTPStatus
+    from pprint import pprint
+
+    from lime_trader import LimeClient
+    from lime_trader.exceptions.api_error import ApiError
+    from lime_trader.models.trading import Order, TimeInForce, OrderType, OrderSide
+
+    client = LimeClient.from_file(file_path="credentials.json")
+
+    accounts = client.account.get_balances()  # need to get account numbers first
+
+    account_number = accounts[0].account_number  # get account number of first account in a list
+
+    order = Order(account_number=account_number,
+                  symbol="AAPADL",
+                  quantity=Decimal(1),
+                  price=Decimal("140.0"),
+                  stop_price=Decimal("159.00"),
+                  time_in_force=TimeInForce.DAY,
+                  order_type=OrderType.LIMIT,
+                  side=OrderSide.BUY,
+                  exchange="auto",
+                  )
+    try:
+        placed_order_response = client.trading.place_order(order=order)
+        pprint(placed_order_response)
+    except ApiError as e:
+        if e.error.status_code == HTTPStatus.NOT_FOUND:
+            print(f"Not found: {e.error.message}")
+    except Exception as e:
+        print("Unexpected error")
+
+

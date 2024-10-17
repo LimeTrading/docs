@@ -1,0 +1,53 @@
+New to Python?
+================
+
+On this page you can find resources on how configure your Python development environment for the first time.
+
+
+Install latest Python Version
+---------------------------
+Go to the |python_download| page and install the latest Python version
+(minimum supported version is 3.10)
+
+After installation is complete proceed to the next step and install the IDE.
+
+Install PyCharm Community
+---------------------------
+PyCharm is a Python IDE (Integrated Development Environment) that is used both by new and professional developers.
+You will use it to write Python code.
+
+To download and install PyCharm go to the next link. If you have licence you can download Professional version,
+otherwise, download and install Community version:
+
+|pycharm_download|
+
+Install Poetry
+-------------------
+Follow the official Poetry installation tutorial located |install_poetry| to
+install Poetry on your operating system.
+
+
+Create new project
+----------------------
+A complete tutorial on how to create a new Python project in PyCharm can be found at this
+|pycharm_project_tutorial|. In the section for configuring interpreter
+remember to select "New environment using" and choose "Poetry".
+
+.. image:: images/create_new_project.png
+   :width: 600
+
+.. |python_download| raw:: html
+
+   <a href="https://www.python.org/downloads/" target="_blank">Python Download</a>
+
+.. |pycharm_download| raw:: html
+
+   <a href="https://www.jetbrains.com/pycharm/download/" target="_blank">Download PyCharm</a>
+
+.. |pycharm_project_tutorial| raw:: html
+
+   <a href="https://www.jetbrains.com/help/pycharm/creating-empty-project.html" target="_blank">Link</a>
+
+.. |install_poetry| raw:: html
+
+   <a href="https://python-poetry.org/docs/#installing-with-the-official-installer" target="_blank">here</a>
