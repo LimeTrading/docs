@@ -1,0 +1,43 @@
+Getting started
+===============
+
+About
+-------
+We believe that modern financial mechanics is a problem of IT and code, not finance.
+We seek for elegance of integrations by eliminating the unnecessary complexity of financial infrastructure.
+
+lime-trader-sdk is a wrapper around |lime_trader_rest_api|.
+
+Installation
+-------------
+The Python package is hosted on the |pypi_link|.
+
+The latest published version of ``lime-trader-sdk`` package can be installed using Pip:
+
+.. code:: console
+
+    $ pip install lime-trader-sdk
+
+If you use Poetry, you can install it by running:
+
+.. code:: console
+
+    $ poetry add lime-trader-sdk
+
+Next steps
+------------
+If you are new to Python  jump to "New to Python" section. Instead, you can jump straight to examples,
+copy/paste code and run it!
+
+Supported Python versions
+---------------------------
+``lime-trader-sdk`` supports Python version 3.10+.
+
+
+.. |pypi_link| raw:: html
+
+   <a href="https://pypi.org/project/lime-trader-sdk/" target="_blank">Python Package Index (PyPI)</a>
+
+.. |lime_trader_rest_api| raw:: html
+
+   <a href="https://docs.lime.co/trader/" target="_blank">Lime Trader REST API</a>

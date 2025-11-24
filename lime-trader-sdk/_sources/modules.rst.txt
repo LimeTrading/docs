@@ -1,0 +1,14 @@
+Clients
+================
+
+.. toctree::
+   :caption: Lime trader SDK documentation
+   :maxdepth: 4
+
+   accounts
+   market_data
+   trading
+   page
+   errors
+   lime_client
+   async_lime_client

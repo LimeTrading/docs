@@ -1,0 +1,166 @@
+Trading
+=========
+
+Place an order
+--------------------
+
+The order is accepted immediately, the method returns assigned id.
+The order is still validated with exactly same logic as in validate method and is sent to market
+on successful validation pass.
+Otherwise, the order will reject asynchronously and you can query its status by
+calling the order details method.
+
+.. code-block:: python
+   :linenos:
+
+    from _decimal import Decimal
+    from pprint import pprint
+
+    from lime_trader import LimeClient
+    from lime_trader.models.trading import Order, TimeInForce, OrderType, OrderSide
+
+    client = LimeClient.from_file(file_path="credentials.json")
+
+    accounts = client.account.get_balances()  # need to get account numbers first
+
+    account_number = accounts[0].account_number  # get account number of first account in a list
+
+    order = Order(account_number=account_number,
+                  symbol="AAPL",
+                  quantity=Decimal(1),
+                  price=Decimal("140.0"),
+                  stop_price=Decimal("159.00"),
+                  time_in_force=TimeInForce.DAY,
+                  order_type=OrderType.LIMIT,
+                  side=OrderSide.BUY,
+                  exchange="auto",
+                  client_order_id="01HWYX297HG2J9V607VSY4GQ3S",
+                  tag="order #12"
+                  )
+    placed_order_response = client.trading.place_order(order=order)
+    pprint(placed_order_response)
+
+Validate order
+----------------------
+
+The method verifies an order and responds with the validation message if the order can not be placed at the moment.
+The order is not sent to market.
+
+.. code-block:: python
+   :linenos:
+
+    from _decimal import Decimal
+    from pprint import pprint
+
+    from lime_trader import LimeClient
+    from lime_trader.models.trading import Order, TimeInForce, OrderType, OrderSide
+
+    client = LimeClient.from_file(file_path="credentials.json")
+
+    accounts = client.account.get_balances()  # need to get account numbers first
+
+    account_number = accounts[0].account_number  # get account number of first account in a list
+
+    order = Order(account_number=account_number,
+                  symbol="AAPL",
+                  quantity=Decimal(1),
+                  price=Decimal("140.0"),
+                  stop_price=Decimal("159.00"),
+                  time_in_force=TimeInForce.DAY,
+                  order_type=OrderType.LIMIT,
+                  side=OrderSide.BUY,
+                  exchange="auto",
+                  client_order_id="01HWYX297HG2J9V607VSY4GQ3S",
+                  tag="order #12"
+                  )
+    validation_response = client.trading.validate_order(order=order)
+    pprint(validation_response)
+
+
+Get Order Details
+--------------------------
+
+Get the order details by the specified order id:
+
+.. code-block:: python
+   :linenos:
+
+    from pprint import pprint
+
+    from lime_trader import LimeClient
+
+    client = LimeClient.from_file(file_path="credentials.json")
+    details = client.trading.get_order_details(order_id="123456789")
+    pprint(details)
+
+
+Get Active Orders
+---------------------------------
+
+Get list of active orders for the account
+
+.. code-block:: python
+   :linenos:
+
+    from pprint import pprint
+
+    from lime_trader import LimeClient
+
+    client = LimeClient.from_file(file_path="credentials.json")
+
+    accounts = client.account.get_balances()  # need to get account numbers first
+
+    account_number = accounts[0].account_number  # get account number of first account in a list
+
+    validation_response = client.trading.get_active_orders(account_number=account_number)
+    pprint(validation_response)
+
+
+Cancel an order
+---------------------------------
+
+Cancels order by id, providing optional cancel reason:
+
+
+.. code-block:: python
+   :linenos:
+
+    from pprint import pprint
+
+    from lime_trader import LimeClient
+
+    client = LimeClient.from_file(file_path="credentials.json")
+
+    accounts = client.account.get_balances()  # need to get account numbers first
+
+    account_number = accounts[0].account_number  # get account number of first account in a list
+
+    cancel_response = client.trading.cancel_order(order_id="123456789", message="Optional cancel reason")
+    pprint(cancel_response)
+
+
+
+Estimate fee charges
+---------------------------------------
+
+The method returns estimated fees for specified order parameters, breaking down all charges by type:
+
+.. code-block:: python
+   :linenos:
+
+    from _decimal import Decimal
+    from pprint import pprint
+
+    from lime_trader import LimeClient
+    from lime_trader.models.accounts import TradeSide
+
+    client = LimeClient.from_file(file_path="credentials.json")
+
+    accounts = client.account.get_balances()  # need to get account numbers first
+
+    account_number = accounts[0].account_number  # get account number of first account in a list
+
+    fees = client.trading.estimate_fee_charges(account_number=account_number, symbol="AAPL",
+                                              quantity=Decimal("150"),
+                                              side=TradeSide.SELL, price=Decimal("100.50"))
+    pprint(fees)

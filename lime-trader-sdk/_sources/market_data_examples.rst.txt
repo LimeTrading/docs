@@ -1,0 +1,177 @@
+Market Data
+============
+
+Get current quote
+--------------------
+
+Retrieves current quote for the specified symbol:
+
+.. code-block:: python
+   :linenos:
+
+    import pprint
+
+    from lime_trader import LimeClient
+
+    client = LimeClient.from_file(file_path="credentials.json")
+    quote = client.market.get_current_quote(symbol="AAPL")
+    pprint.pprint(quote)
+
+Get current quotes list
+------------------------
+
+Retrieves current quotes for all symbols specified on the request list:
+
+.. code-block:: python
+   :linenos:
+
+    import pprint
+
+    from lime_trader import LimeClient
+
+    client = LimeClient.from_file(file_path="credentials.json")
+    quotes = client.market.get_current_quotes(symbols=["AAPL", "AMZN"])
+    pprint.pprint(quotes)
+
+Get quotes history
+--------------------
+
+Returns candle structures aggregated by 5 minutes for the last 7 days:
+
+.. code-block:: python
+   :linenos:
+
+    import datetime
+    import pprint
+
+    from lime_trader import LimeClient
+    from lime_trader.models.market import Period
+
+    client = LimeClient.from_file(file_path="credentials.json")
+    quotes = client.market.get_quotes_history(symbol="AAPL", period=Period.MINUTE_5,
+                                              from_date=datetime.datetime.now() - datetime.timedelta(days=7),
+                                              to_date=datetime.datetime.now())
+    pprint.pprint(quotes)
+
+Get trading schedule
+--------------------
+
+Returns trading session info depending on current date and time:
+
+.. code-block:: python
+   :linenos:
+
+    import pprint
+
+    from lime_trader import LimeClient
+
+    client = LimeClient.from_file(file_path="credentials.json")
+    schedule = client.market.get_trading_schedule()
+    pprint.pprint(schedule)
+
+
+Lookup securities
+--------------------
+
+Searches the securities reference by the specified criteria.
+The criteria can be a symbol, part of a symbol or part of a company name. Gets first 100 items.
+
+.. code-block:: python
+   :linenos:
+
+    import pprint
+
+    from lime_trader import LimeClient
+    from lime_trader.models.page import PageRequest
+
+    client = LimeClient.from_file(file_path="credentials.json")
+    result = client.market.lookup_securities(query="AA",
+                                             page=PageRequest(size=100))
+    pprint.pprint(result)
+
+
+Get time and sales history page
+-----------------------------------
+
+Retrieves the time and sales history, first page of size 20, ordered by descending timestamp:
+
+.. code-block:: python
+   :linenos:
+
+    import datetime
+    import pprint
+
+    from lime_trader import LimeClient
+    from lime_trader.models.page import PageRequest
+
+    client = LimeClient.from_file(file_path="credentials.json")
+    result = client.market.time_and_sales(symbol="AAPL",
+                                         from_date=datetime.datetime.now() - datetime.timedelta(days=7),
+                                         to_date=datetime.datetime.now(),
+                                         page=PageRequest(page=1, size=20)
+                                         )
+    pprint.pprint(result)
+
+
+Iterate through all pages of time and sales history
+-------------------------------------------------
+
+Iterates pages of the time and sales history for the last 7 days,
+starting with page 1, size 20, ordered by descending timestamp:
+
+.. code-block:: python
+   :linenos:
+
+    import datetime
+    import pprint
+
+    from lime_trader import LimeClient
+    from lime_trader.models.page import PageRequest
+
+    client = LimeClient.from_file(file_path="credentials.json")
+
+    for page in client.market.iterate_time_and_sales(symbol="AAPL",
+                                                     from_date=datetime.datetime.now() - datetime.timedelta(days=7),
+                                                     to_date=datetime.datetime.now(),
+                                                     start_page=PageRequest(page=1, size=20)
+                                                     ):
+        pprint.pprint(page)
+
+
+Get option series
+-----------------------------------
+
+Returns an array of option series by the specified underlying security's symbol.
+Contains at least one element which is the default series.
+Option Series is a specific set of calls or puts on the same underlying security,
+with the same strike price and expiration date.
+For the most part there is just one series name that matches the symbol
+but in some cases related to corporate actions on the underlying security additional series are issued.
+
+.. code-block:: python
+   :linenos:
+
+    import pprint
+
+    from lime_trader import LimeClient
+
+    client = LimeClient.from_file(file_path="credentials.json")
+    result = client.market.get_option_series(symbol="AAPL")
+    pprint.pprint(result)
+
+
+Get option chain
+-----------------------------------
+
+Returns option contracts for specified symbol, expiration date and series.
+
+.. code-block:: python
+   :linenos:
+
+    import pprint
+
+    from lime_trader import LimeClient
+
+    client = LimeClient.from_file(file_path="credentials.json")
+    result = client.market.get_option_chain(symbol="AAPL", expiration=datetime.date(2026, 12, 18), series="AAPL")
+    pprint.pprint(result)

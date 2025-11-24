@@ -1,0 +1,43 @@
+.. lime-trader-sdk documentation master file, created by
+   sphinx-quickstart on Fri Mar 31 23:16:16 2023.
+   You can adapt this file completely to your liking, but it should at least
+   contain the root `toctree` directive.
+
+Welcome to lime-trader-sdk's documentation!
+===========================================
+
+.. toctree::
+    :caption: Lime trader SDK documentation
+    :maxdepth: 3
+    :hidden:
+
+    Getting started <getting_started>
+    New to Python? <new_to_python>
+    Configuring client <configuring_client>
+    Examples <examples>
+    Pagination <pagination>
+    Error Handling <error_handling>
+    Logging <logging>
+    Async Support <async_support>
+    Modules <modules>
+    Changelog <changelog>
+    Github <https://github.com/LimeTrading/lime-trader-sdk>
+    PyPI <https://pypi.org/project/lime-trader-sdk/>
+    Lime Trader REST API docs <https://docs.lime.co/trader/>
+
+:doc:`examples`
+    Examples of using lime-trader-sdk.
+
+Changelog
+----------
+
+:doc:`changelog`
+    The sdk development changelog.
+
+
+
+Indices and tables
+-------------------
+
+* :ref:`genindex`
+* :ref:`search`

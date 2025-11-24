@@ -1,0 +1,7 @@
+Lime Client
+============
+
+
+.. autoclass:: lime_trader.LimeClient
+   :members:
+   :show-inheritance:

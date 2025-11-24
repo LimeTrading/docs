@@ -1,0 +1,5 @@
+Account client
+===================
+
+.. automodule:: lime_trader.clients.account_client
+   :members:

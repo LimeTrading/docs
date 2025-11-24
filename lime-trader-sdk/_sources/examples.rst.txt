@@ -1,0 +1,35 @@
+Examples
+============
+
+.. toctree::
+   :caption: Lime trader SDK documentation
+   :maxdepth: 4
+
+   account_examples
+   market_data_examples
+   trading_examples
+
+
+All examples are complete, and should run "as is".
+
+Setup
+--------
+1. Install `lime-trader-sdk. You can find installation guide here :doc:`installing`
+2. Get credentials for your Lime trading account and save them as `credentials.json` file inside your project directory.
+3. Copy example script in your project directory.
+
+To update path to credentials file update next line with new path:
+
+.. code-block:: python
+   :linenos:
+   :emphasize-lines: 3
+
+   from lime_trader import LimeClient
+
+   client = LimeClient.from_json("credentials.json")
+
+
+NOTE: You can put credentials file and example script in any directory you want. If you change path of `credentials.json` file
+make sure to update it in example script.
+
+

@@ -1,0 +1,34 @@
+Async client
+==================
+
+Lime client has async support for all methods. Just instantiate `AsyncLimeClient` instead of `LimeClient` and use it
+same as you would use `LimeClient`
+
+
+Instantiate client:
+
+.. code-block:: python
+   :linenos:
+
+    from lime_trader import AsyncLimeClient
+
+    client = AsyncLimeClient.from_file("credentials.json")
+
+Example for getting account balances:
+
+.. code-block:: python
+   :linenos:
+
+    import asyncio
+    import pprint
+
+    from lime_trader import AsyncLimeClient
+
+
+    async def main():
+        client = AsyncLimeClient.from_file(file_path="credentials.json")
+        balances = await client.account.get_balances()
+        pprint.pprint(balances)
+
+
+    asyncio.run(main())

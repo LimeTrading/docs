@@ -1,0 +1,103 @@
+*********
+Changelog
+*********
+
+v0.3.11 - October 16 2024.
+===========================
+
+- Performance optimization: Add http connection reuse
+
+v0.3.10 - October 15 2024.
+===========================
+
+- Add new `TimeInForce` enum values: `ON_OPEN`, `ON_CLOSE`, `IOC`, `FOK`
+
+v0.3.9 - July 17 2024.
+=============================
+
+- Add `trade_id` field to `AccountTrade` model
+- Add `rho` value to `Quote` model
+- Mark all options related fields in `Quote` model as optional
+
+v0.3.8 - May 9 2024.
+=============================
+
+- Add `client_order_id` order field - ability to specify client order id with an order
+- Add `tag` order field - ability to specify comment with an order
+- Add new trading client method - `get_order_details_by_client_order_id`
+- Add new market data method - `get_option_series`
+- Add new market data method - `get_option_chain`
+
+v0.3.7 - February 12 2024.
+=============================
+
+- Add util method `lime_trader.utils.date_utils.datetime_to_milliseconds`
+
+v0.3.6 - February 9 2024.
+=============================
+
+- Make `stop_price` optional in  `lime_trader.models.trading.OrderDetails`
+
+v0.3.5 - November 17 2023.
+===========================
+
+- New API method - Get account routes - fetches the list of available routes for an account to use in Place order method.
+- New time-in-force value - 'ext' - Extended hours.
+- Strategy support in Get account positions method
+- Removed PENDING_REPLACE and EXPIRED order statuses, added SUSPENDED order status
+
+v0.3.4 - November 3 2023.
+===========================
+
+- Remove market data feed
+
+BREAKING CHANGES:
+
+- Market data feed is not available anymore
+
+v0.3.3 - September 5 2023.
+===========================
+- Remove `comment` and `stop_price` parameters from `lime_trader.models.trading.Order`
+- Remove unsupported order types `STOP`, `STOP_LIMIT`, `MARKET_ON_CLOSE` and `LIMIT_ON_CLOSE` from `lime_trader.models.trading.OrderType`
+- Remove unsupported trade side values `SELL_SHORT` and `BUY_TO_COVER` from `lime_trader.models.accounts.TradeSide`
+
+BREAKING CHANGES:
+
+- If you use any of the above classes make sure you are not using one of the removed attributes
+
+
+v0.3.2 - July 12 2023.
+========================
+- Remove unsupported TimeInForce values for order (GOOD_TILL_CANCEL, GOOD_TILL_CROSSING)
+
+v0.3.1 - June 28 2023.
+========================
+- Fix `ApiError` `__repr__` method. Modify it to return `str` instead of `Error`
+
+v0.3.0 - June 15 2023.
+========================
+- Add option specific parameters to quote
+    - implied_volatility: Decimal
+    - theoretical_price: Decimal
+    - delta: Decimal
+    - gamma: Decimal
+    - theta: Decimal
+    - vega: Decimal
+- Add request timeout option to API clients
+- Handle network transport errors and raise `ApiError` with `code="transport_error"` instead of throwing `httpx`
+  exceptions to abstract communication errors
+- Use datetime.datetime for `date` field in `Quote` model instead of int
+- Fix `stream_market_data_feed` method for `AsyncMarketDataClient`
+
+
+(POSSIBLY) BREAKING CHANGES:
+
+- If you used `date` field in `lime_trader.models.market.Quote` object you will need to update your code as type was
+  changed from `int`
+  to `datetime.datetime`
+
+
+v0.2.0 - April 19 2023.
+========================
+
+* Initial version

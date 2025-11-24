@@ -1,0 +1,225 @@
+Account
+=========
+
+Get Account Balances
+--------------------
+
+Get balance information for all user accounts as a list and print it to console:
+
+.. code-block:: python
+   :linenos:
+
+    import pprint
+
+    from lime_trader import LimeClient
+
+    client = LimeClient.from_file(file_path="credentials.json")
+    balances = client.account.get_balances()
+    pprint.pprint(balances)
+
+Get Account Positions
+----------------------
+
+Get list of all account positions:
+
+.. code-block:: python
+   :linenos:
+
+    import pprint
+
+    from lime_trader import LimeClient
+
+    client = LimeClient.from_file(file_path="credentials.json")
+
+    accounts = client.account.get_balances()  # need to get account numbers first
+
+    account_number = accounts[0].account_number # get account number of first account in a list
+
+    positions = client.account.get_positions(account_number=account_number)
+    pprint.pprint(positions)
+
+
+Get Page Of Account Trades
+--------------------------
+
+Get first page of 20 trades of account trades history on current day, ordered by descending timestamp:
+
+.. code-block:: python
+   :linenos:
+
+    import datetime
+    import pprint
+
+    from lime_trader.models.page import PageRequest
+    from lime_trader import LimeClient
+
+    client = LimeClient.from_file(file_path="credentials.json")
+
+    accounts = client.account.get_balances()  # need to get account numbers first
+
+    account_number = accounts[0].account_number # get account number of first account in a list
+
+    trades = client.account.get_trades(account_number=account_number, date=datetime.date.today(),
+                                       page=PageRequest(page=1, size=20))
+    pprint.pprint(trades)
+
+
+Iterate Through Pages Of Account Trades
+---------------------------------
+
+Iterate all pages, starting from page 2 and size of 3, of account trades history on current day,
+ordered by descending timestamp:
+
+.. code-block:: python
+   :linenos:
+
+    import datetime
+    import pprint
+
+    from lime_trader.models.page import PageRequest
+    from lime_trader import LimeClient
+
+    client = LimeClient.from_file(file_path="credentials.json")
+
+    accounts = client.account.get_balances()  # need to get account numbers first
+
+    account_number = accounts[0].account_number # get account number of first account in a list
+
+    for trades_page in client.account.iterate_trades(account_number=account_number, date=datetime.date.today(),
+                                                     start_page=PageRequest(page=2, size=3)):
+        pprint.pprint(trades)
+
+
+Get Routes
+----------------------
+
+Get list of all routes available for specified account:
+
+.. code-block:: python
+   :linenos:
+
+    import pprint
+
+    from lime_trader import LimeClient
+
+    client = LimeClient.from_file(file_path="credentials.json")
+
+    accounts = client.account.get_balances()  # need to get account numbers first
+
+    account_number = accounts[0].account_number # get account number of first account in a list
+
+    routes = client.account.get_routes(account_number=account_number)
+    pprint.pprint(routes)
+
+
+Get Page Of Transactions Journal
+---------------------------------
+
+Get first page of 20 items in transaction journal for last 7 days:
+
+
+.. code-block:: python
+   :linenos:
+
+    import datetime
+    import pprint
+
+    from lime_trader.models.page import PageRequest
+    from lime_trader import LimeClient
+
+    client = LimeClient.from_file(file_path="credentials.json")
+
+    accounts = client.account.get_balances()  # need to get account numbers first
+
+    account_number = accounts[0].account_number # get account number of first account in a list
+
+    journal = client.account.get_transactions_journal(account_number=account_number,
+                                                 start_date=datetime.date.today() - datetime.timedelta(days=7),
+                                                 end_date=datetime.date.today(),
+                                                 page=PageRequest(page=1, size=20))
+    pprint.pprint(journal)
+
+
+
+Iterate Through Pages Of Transactions Journal
+---------------------------------------
+
+Iterate all pages, starting from page 2 and size of 10, of transaction journal for previous 7 days:
+
+
+.. code-block:: python
+   :linenos:
+
+    import datetime
+    import pprint
+
+    from lime_trader.models.page import PageRequest
+    from lime_trader import LimeClient
+
+    client = LimeClient.from_file(file_path="credentials.json")
+
+    accounts = client.account.get_balances()  # need to get account numbers first
+
+    account_number = accounts[0].account_number  # get account number of first account in a list
+
+    for journal_page in client.account.iterate_transactions_journal(
+            account_number=account_number,
+            start_date=datetime.date.today() - datetime.timedelta(days=7),
+            end_date=datetime.date.today(),
+            start_page=PageRequest(page=2, size=10)):
+        pprint.pprint(journal_page)
+
+Stream account feed
+---------------------------------------
+
+Stream Account feed data
+
+
+.. code-block:: python
+   :linenos:
+
+    from typing import Any
+
+    from lime_trader import LimeClient
+    from lime_trader.handlers.account_feed_handler import AccountFeedHandler
+    from lime_trader.models.accounts import AccountFeedError, AccountTrade, AccountPositions, AccountDetails
+    from lime_trader.models.trading import OrderDetails
+
+
+    class MyHandler(AccountFeedHandler):
+
+        def on_account_balance(self, account: AccountDetails):
+            print(account)
+
+        def on_account_position(self, position: AccountPositions):
+            print(position)
+
+        def on_account_order_status_change(self, order: OrderDetails):
+            print(order)
+
+        def on_account_trade_execution(self, trade: AccountTrade):
+            print(trade)
+
+        def on_stream_error(self, error: AccountFeedError):
+            print(f"Stream error: {error}")
+
+        def on_client_error(self, error: Any):
+            print(f"Client error: {error}")
+
+
+    client = LimeClient.from_file(file_path="credentials.json")
+    accounts = client.account.get_balances()  # need to get account numbers first
+
+    account_number = accounts[0].account_number  # get account number of first account in a list
+
+    stream = client.account.stream_account_feed(callback_client=MyHandler())
+
+    # subscribe to changes
+    stream.subscribe_orders(account_number=account_number)
+    stream.subscribe_positions(account_number=account_number)
+    stream.subscribe_balance(account_number=account_number)
+    stream.subscribe_trades(account_number=account_number)
+
+    # subscribe to non-existing account
+    # we expect stream error
+    stream.subscribe_balance(account_number="NON_EXISTING_ACCOUNT")
